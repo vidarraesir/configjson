@@ -3,6 +3,7 @@ SQLAlchemy async models for paper trading persistence.
 """
 import enum
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 
 from sqlalchemy import (
@@ -11,7 +12,10 @@ from sqlalchemy import (
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DATABASE_URL = "sqlite+aiosqlite:///data/paper_trading.db"
+# Use absolute path so it works regardless of working directory (Windows/Linux)
+_DB_DIR = Path(__file__).resolve().parent.parent.parent / "data"
+_DB_DIR.mkdir(parents=True, exist_ok=True)
+DATABASE_URL = f"sqlite+aiosqlite:///{_DB_DIR / 'paper_trading.db'}"
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)

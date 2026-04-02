@@ -37,22 +37,26 @@ from src.strategies.bull_put_spread import BullPutSpreadStrategy, BearCallSpread
 from src.strategies.cash_secured_put import CashSecuredPutStrategy, CoveredCallStrategy
 from src.strategies.straddle import LongStraddleStrategy, ShortStrangleStrategy
 
+# ── Dirs (Windows + Linux compatible) ────────────────────────────────────────
+_ROOT = Path(__file__).resolve().parent.parent
+(_ROOT / "logs").mkdir(parents=True, exist_ok=True)
+(_ROOT / "data").mkdir(parents=True, exist_ok=True)
+
 # ── Logging ───────────────────────────────────────────────────────────────────
-Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler("logs/xtb_bot.log"),
+        logging.FileHandler(str(_ROOT / "logs" / "xtb_bot.log")),
     ],
 )
 logger = logging.getLogger("xtb_bot")
 
 # ── Config ───────────────────────────────────────────────────────────────────
-load_dotenv()
+load_dotenv(dotenv_path=_ROOT / ".env")
 
-with open("config.yaml") as f:
+with open(_ROOT / "config.yaml") as f:
     cfg = yaml.safe_load(f)
 
 XTB_USER = os.getenv("XTB_USER", "")

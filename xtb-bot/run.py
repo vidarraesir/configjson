@@ -13,8 +13,10 @@ import os
 import sys
 from pathlib import Path
 
-# Ensure project root is on the path
-sys.path.insert(0, str(Path(__file__).parent))
+# Always run from the directory where run.py lives (works on Windows & Linux)
+_HERE = Path(__file__).resolve().parent
+os.chdir(_HERE)
+sys.path.insert(0, str(_HERE))
 
 import uvicorn
 
