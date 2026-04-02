@@ -10,6 +10,7 @@ import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 import yfinance as yf
@@ -17,6 +18,26 @@ import yfinance as yf
 from src.engine.options_math import historical_volatility, implied_volatility
 
 logger = logging.getLogger(__name__)
+
+# ── Market hours check ────────────────────────────────────────────────────────
+
+def is_market_open() -> bool:
+    """
+    Returns True if the US stock market (NYSE/NASDAQ) is currently open.
+    Hours: Monday–Friday 09:30–16:00 Eastern Time.
+    Does not account for holidays (Yahoo Finance returns no data on those days anyway).
+    """
+    try:
+        et = ZoneInfo("America/New_York")
+    except Exception:
+        et = ZoneInfo("US/Eastern")
+    now = datetime.now(et)
+    if now.weekday() >= 5:          # Saturday=5, Sunday=6
+        return False
+    market_open  = now.replace(hour=9,  minute=30, second=0, microsecond=0)
+    market_close = now.replace(hour=16, minute=0,  second=0, microsecond=0)
+    return market_open <= now <= market_close
+
 
 # ── Ticker mapping ────────────────────────────────────────────────────────────
 # Maps display names used in the bot to Yahoo Finance tickers

@@ -57,15 +57,16 @@ ws_manager = ConnectionManager()
 
 @router.get("/api/status")
 async def get_status():
-    trader = _app_state.get("trader")
+    from src.api.market_data import is_market_open
+    trader    = _app_state.get("trader")
     evaluator = _app_state.get("evaluator")
-    xtb = _app_state.get("xtb")
     return {
-        "timestamp": datetime.utcnow().isoformat(),
-        "xtb_connected": xtb.is_connected if xtb else False,
+        "timestamp":     datetime.utcnow().isoformat(),
+        "market_open":   is_market_open(),
+        "data_source":   "yahoo_finance",
         "paper_trading": True,
         "live_strategy": evaluator.live_strategy if evaluator else None,
-        "portfolio": trader.summary() if trader else {},
+        "portfolio":     trader.summary() if trader else {},
     }
 
 

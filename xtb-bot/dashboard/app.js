@@ -279,7 +279,7 @@ async function fetchBacktest() {
 
 // ─── Live strategy indicator ──────────────────────────────────────────────────
 
-function updateLiveStrategy(liveStrategy, mode) {
+function updateLiveStrategy(liveStrategy, marketOpen, dataSource) {
   const el = $('val-live');
   const badge = $('mode-badge');
 
@@ -288,11 +288,18 @@ function updateLiveStrategy(liveStrategy, mode) {
     el.className = 'kpi-value positive';
     badge.textContent = 'LIVE';
     badge.className = 'badge live';
-  } else {
-    el.textContent = mode === 'simulation' ? 'Simulación' : 'Paper trading';
+  } else if (marketOpen === false) {
+    el.textContent = 'Mercado cerrado';
     el.className = 'kpi-value neutral';
-    badge.textContent = mode === 'simulation' ? 'SIMULATION' : 'PAPER';
+    badge.textContent = 'CLOSED';
     badge.className = 'badge';
+    badge.style.background = 'var(--text-dim)';
+  } else {
+    el.textContent = 'Paper trading';
+    el.className = 'kpi-value neutral';
+    badge.textContent = 'PAPER';
+    badge.className = 'badge';
+    badge.style.background = '';
   }
 }
 
@@ -321,11 +328,11 @@ function connectWS() {
   ws.onmessage = evt => {
     try {
       const msg = JSON.parse(evt.data);
-      if (msg.type === 'update') {
+      if (msg.type === 'update' || msg.type === 'market_status') {
         renderPortfolio(msg.portfolio);
         renderMarket(msg.market);
-        updateLiveStrategy(msg.live_strategy, msg.mode);
-        if (msg.portfolio?.equity && msg.ts) {
+        updateLiveStrategy(msg.live_strategy, msg.market_open, msg.data_source);
+        if (msg.market_open && msg.portfolio?.equity && msg.ts) {
           updateChart(msg.ts, msg.portfolio.equity);
         }
       } else if (msg.type === 'alert') {
@@ -384,7 +391,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const res = await fetch(`${API}/api/status`);
     const status = await res.json();
     renderPortfolio(status.portfolio);
-    updateLiveStrategy(status.live_strategy);
+    updateLiveStrategy(status.live_strategy, status.market_open, 'yahoo_finance');
   } catch (e) { /* offline */ }
 
   connectWS();
