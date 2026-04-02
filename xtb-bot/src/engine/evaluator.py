@@ -129,7 +129,7 @@ class StrategyEvaluator:
                     stats = StrategyStats(strategy=r.strategy)
                     session.add(stats)
                 # Only update if backtest has more data than current live stats
-                if r.n_trades > stats.total_trades:
+                if r.n_trades > (stats.total_trades or 0):
                     stats.total_trades = r.n_trades
                     stats.win_rate = round(r.win_rate, 4)
                     stats.sharpe = round(r.sharpe, 4)
