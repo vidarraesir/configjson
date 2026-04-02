@@ -99,14 +99,23 @@ class PaperTrader:
     On each market-data tick, call `update_positions()` to reprice.
     """
 
-    def __init__(self, initial_capital: float = 10000.0, max_position_pct: float = 0.05):
+    def __init__(
+        self,
+        initial_capital: float = 10000.0,
+        max_position_pct: float = 0.05,
+        max_open_positions: int = 10,
+    ):
         self.initial_capital = initial_capital
         self.cash = initial_capital
         self.max_position_pct = max_position_pct
+        self.max_open_positions = max_open_positions
         self.positions: Dict[int, PaperPosition] = {}   # db_id → position
         self._next_db_id = 1
         self._peak_equity = initial_capital
         self._equity_history: List[Tuple[datetime, float]] = []
+        # Cooldown: (strategy, symbol) → last entry datetime
+        self._last_entry: Dict[tuple, datetime] = {}
+        self._cooldown_hours = 24   # one trade per strategy/symbol per day
 
     # ── Core position management ─────────────────────────────────────────────
 
@@ -217,6 +226,22 @@ class PaperTrader:
         )
         await self._update_strategy_stats(pos.strategy)
         return pnl
+
+    # ── Entry guards ─────────────────────────────────────────────────────────
+
+    def can_enter(self, strategy: str, symbol: str) -> bool:
+        """Return True if allowed to open a new strategy group."""
+        open_groups = {p.trade_group_id for p in self.positions.values()}
+        if len(open_groups) >= self.max_open_positions:
+            return False
+        key = (strategy, symbol)
+        last = self._last_entry.get(key)
+        if last and (datetime.utcnow() - last).total_seconds() < self._cooldown_hours * 3600:
+            return False
+        return True
+
+    def record_entry(self, strategy: str, symbol: str) -> None:
+        self._last_entry[(strategy, symbol)] = datetime.utcnow()
 
     # ── Price update & SL/TP checks ──────────────────────────────────────────
 

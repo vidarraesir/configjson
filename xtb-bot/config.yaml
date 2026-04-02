@@ -17,7 +17,7 @@ paper_trading:
   enabled: true
   initial_capital: 10000.0   # EUR
   max_position_size: 0.05     # 5% per trade
-  max_open_positions: 10
+  max_open_positions: 4
   # Switch to live when these thresholds are met (over evaluation_period days)
   live_threshold:
     min_sharpe: 1.5

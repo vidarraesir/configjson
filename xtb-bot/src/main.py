@@ -209,7 +209,8 @@ async def paper_trading_loop(
                         if evaluator.live_strategy and strategy.name != evaluator.live_strategy:
                             continue
                         try:
-                            if await strategy.evaluate(snap):
+                            if trader.can_enter(strategy.name, symbol) and await strategy.evaluate(snap):
+                                trader.record_entry(strategy.name, symbol)
                                 group_id = await strategy.enter(snap)
                                 if group_id:
                                     logger.info("Signal: %s entered %s [group=%s]", strategy.name, symbol, group_id[:8])
@@ -267,7 +268,8 @@ async def startup():
     logger.info("XTB Options Bot starting...")
     await init_db()
 
-    trader = PaperTrader(initial_capital=INITIAL_CAPITAL, max_position_pct=MAX_POS_PCT)
+    max_open = cfg["paper_trading"].get("max_open_positions", 10)
+    trader = PaperTrader(initial_capital=INITIAL_CAPITAL, max_position_pct=MAX_POS_PCT, max_open_positions=max_open)
     evaluator = StrategyEvaluator(
         min_sharpe=LIVE_THRESH["min_sharpe"],
         min_win_rate=LIVE_THRESH["min_win_rate"],
@@ -393,7 +395,8 @@ async def offline_simulation_loop(trader: PaperTrader, strategies: list, evaluat
                         timestamp=time.time(),
                     )
                     try:
-                        if await strategy.evaluate(snap):
+                        if trader.can_enter(strategy.name, symbol) and await strategy.evaluate(snap):
+                            trader.record_entry(strategy.name, symbol)
                             await strategy.enter(snap)
                     except Exception as exc:
                         logger.debug("Strategy %s error: %s", strategy.name, exc)
