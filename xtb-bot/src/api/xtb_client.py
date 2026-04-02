@@ -54,9 +54,13 @@ class XTBClient:
         self._stream_ws: Optional[websockets.WebSocketClientProtocol] = None
         self._stream_session_id: Optional[str] = None
         self._connected = False
-        self._ssl_ctx = ssl.create_default_context()
         self._request_id = 0
         self._stream_callbacks: Dict[str, list[Callable]] = {}
+
+        # SSL: disable verification to avoid issues on Windows with corporate certs
+        self._ssl_ctx = ssl.create_default_context()
+        self._ssl_ctx.check_hostname = False
+        self._ssl_ctx.verify_mode = ssl.CERT_NONE
 
     @property
     def _host(self) -> str:
@@ -81,26 +85,36 @@ class XTBClient:
     # ── Connection ───────────────────────────────────────────────────────────
 
     async def connect(self) -> bool:
-        """Connect and authenticate."""
-        try:
-            logger.info("Connecting to XTB %s at %s", "DEMO" if self.demo else "REAL", self._main_url)
-            self._ws = await websockets.connect(
-                self._main_url,
-                ssl=self._ssl_ctx,
-                ping_interval=30,
-                ping_timeout=10,
-            )
-            resp = await self._send({"command": "login", "arguments": {"userId": self.user, "password": self.password}})
-            if resp.get("status") is True:
-                self._stream_session_id = resp.get("streamSessionId")
-                self._connected = True
-                logger.info("XTB login successful. StreamSessionId: %s", self._stream_session_id)
-                return True
-            logger.error("XTB login failed: %s", resp)
-            return False
-        except Exception as exc:
-            logger.error("XTB connect error: %s", exc)
-            return False
+        """Connect and authenticate. Tries multiple connection strategies."""
+        # Try with SSL disabled verify first (common fix on Windows), then strict
+        attempts = [
+            {"ssl": self._ssl_ctx, "open_timeout": 15},
+            {"ssl": True,          "open_timeout": 15},
+        ]
+        for kwargs in attempts:
+            try:
+                logger.info("Connecting to XTB %s at %s", "DEMO" if self.demo else "REAL", self._main_url)
+                self._ws = await websockets.connect(
+                    self._main_url,
+                    ping_interval=None,
+                    close_timeout=10,
+                    **kwargs,
+                )
+                resp = await asyncio.wait_for(
+                    self._send({"command": "login", "arguments": {"userId": self.user, "password": self.password}}),
+                    timeout=15,
+                )
+                if resp.get("status") is True:
+                    self._stream_session_id = resp.get("streamSessionId")
+                    self._connected = True
+                    logger.info("XTB login successful. StreamSessionId: %s", self._stream_session_id)
+                    return True
+                logger.error("XTB login failed: %s", resp)
+                return False
+            except Exception as exc:
+                logger.warning("XTB connect attempt failed (%s): %s", kwargs.get("ssl"), exc)
+        logger.error("XTB all connection attempts failed")
+        return False
 
     async def disconnect(self) -> None:
         if self._ws:

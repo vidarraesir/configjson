@@ -292,6 +292,7 @@ async def startup():
     candles_cache: Dict[str, List[Dict]] = {}
 
     if XTB_USER and XTB_PASSWORD:
+        logger.info("XTB credentials found: user=%s demo=%s", XTB_USER, XTB_DEMO)
         xtb = XTBClient(XTB_USER, XTB_PASSWORD, demo=XTB_DEMO)
         connected = await xtb.connect()
         if connected:
