@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XTB Options Bot — Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-left">
+      <span class="logo">⚡ XTB Options Bot</span>
+      <span class="badge" id="mode-badge">SIMULATION</span>
+    </div>
+    <div class="header-right">
+      <span class="live-dot" id="conn-dot"></span>
+      <span id="conn-label">Connecting...</span>
+      <span id="clock"></span>
+    </div>
+  </header>
+
+  <!-- ── Alert bar ── -->
+  <div id="alert-bar" class="alert-bar hidden"></div>
+
+  <!-- ── Main grid ── -->
+  <main>
+
+    <!-- ── Row 1: KPIs ── -->
+    <section class="kpi-row">
+      <div class="kpi-card" id="kpi-equity">
+        <div class="kpi-label">Equity</div>
+        <div class="kpi-value" id="val-equity">—</div>
+        <div class="kpi-sub" id="val-return">—</div>
+      </div>
+      <div class="kpi-card" id="kpi-cash">
+        <div class="kpi-label">Cash disponible</div>
+        <div class="kpi-value" id="val-cash">—</div>
+      </div>
+      <div class="kpi-card" id="kpi-opnl">
+        <div class="kpi-label">P&amp;L abierto</div>
+        <div class="kpi-value" id="val-opnl">—</div>
+      </div>
+      <div class="kpi-card" id="kpi-dd">
+        <div class="kpi-label">Drawdown</div>
+        <div class="kpi-value" id="val-dd">—</div>
+      </div>
+      <div class="kpi-card" id="kpi-positions">
+        <div class="kpi-label">Posiciones abiertas</div>
+        <div class="kpi-value" id="val-positions">—</div>
+      </div>
+      <div class="kpi-card highlight" id="kpi-live">
+        <div class="kpi-label">Estrategia LIVE</div>
+        <div class="kpi-value" id="val-live">Paper trading</div>
+      </div>
+    </section>
+
+    <!-- ── Row 2: Equity chart + Strategy leaderboard ── -->
+    <section class="two-col">
+      <div class="panel" id="equity-panel">
+        <div class="panel-title">Curva de Equity</div>
+        <canvas id="equity-chart"></canvas>
+      </div>
+
+      <div class="panel" id="leaderboard-panel">
+        <div class="panel-title">Ranking de Estrategias</div>
+        <table id="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Estrategia</th>
+              <th>Sharpe</th>
+              <th>Win%</th>
+              <th>Trades</th>
+              <th>Max DD</th>
+              <th>PnL</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body">
+            <tr><td colspan="8" class="empty">Cargando estrategias...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Row 3: Open positions + Market data ── -->
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel-title">Posiciones Abiertas</div>
+        <table id="positions-table">
+          <thead>
+            <tr>
+              <th>Estrategia</th>
+              <th>Símbolo</th>
+              <th>Tipo</th>
+              <th>Dir.</th>
+              <th>Strike</th>
+              <th>Expiry</th>
+              <th>DTE</th>
+              <th>Entry</th>
+              <th>Current</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="positions-body">
+            <tr><td colspan="10" class="empty">Sin posiciones abiertas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Mercado en Tiempo Real</div>
+        <div id="market-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── Row 4: Recent trades + Alerts ── -->
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel-title">Historial de Trades</div>
+        <table id="trades-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Estrategia</th>
+              <th>Símbolo</th>
+              <th>Dir.</th>
+              <th>Strike</th>
+              <th>Entry</th>
+              <th>Exit</th>
+              <th>P&amp;L</th>
+              <th>Razón</th>
+            </tr>
+          </thead>
+          <tbody id="trades-body">
+            <tr><td colspan="9" class="empty">Sin trades</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Alertas</div>
+        <div id="alerts-list"></div>
+      </div>
+    </section>
+
+    <!-- ── Row 5: Backtest Results ── -->
+    <section class="full-width">
+      <div class="panel">
+        <div class="panel-title">Resultados de Backtesting</div>
+        <table id="backtest-table">
+          <thead>
+            <tr>
+              <th>Estrategia</th>
+              <th>Símbolo</th>
+              <th>Trades</th>
+              <th>Win%</th>
+              <th>Sharpe</th>
+              <th>Sortino</th>
+              <th>Max DD</th>
+              <th>PF</th>
+              <th>Total PnL</th>
+            </tr>
+          </thead>
+          <tbody id="backtest-body">
+            <tr><td colspan="9" class="empty">Backtesting en progreso...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

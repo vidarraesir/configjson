@@ -1,0 +1,111 @@
+# XTB Bot Configuration
+xtb:
+  # Demo account (safe for testing) - set REAL to false until strategy is profitable
+  demo: true
+  host_demo: "xapi.xtb.com"
+  port_demo: 5124
+  host_real: "xapi.xtb.com"
+  port_real: 5112
+  # Credentials via environment variables: XTB_USER, XTB_PASSWORD
+  user: ""
+  password: ""
+  # Stream port (demo)
+  stream_port_demo: 5125
+  stream_port_real: 5113
+
+paper_trading:
+  enabled: true
+  initial_capital: 10000.0   # EUR
+  max_position_size: 0.05     # 5% per trade
+  max_open_positions: 10
+  # Switch to live when these thresholds are met (over evaluation_period days)
+  live_threshold:
+    min_sharpe: 1.5
+    min_win_rate: 0.55
+    min_trades: 30
+    max_drawdown: -0.15       # -15%
+    evaluation_period_days: 30
+
+strategies:
+  # Strategies to evaluate in paper trading
+  active:
+    - iron_condor
+    - bull_put_spread
+    - bear_call_spread
+    - cash_secured_put
+    - covered_call
+    - long_straddle
+    - short_strangle
+
+  iron_condor:
+    delta_short: 0.20          # Sell at ~20-delta wings
+    delta_long: 0.10           # Buy at ~10-delta wings
+    dte_entry: 30              # Days to expiry at entry
+    dte_exit: 7                # Close at 7 DTE
+    profit_target: 0.50        # Take 50% profit
+    stop_loss: 2.0             # 2x credit received
+
+  bull_put_spread:
+    delta_short: 0.30
+    delta_long: 0.15
+    dte_entry: 21
+    dte_exit: 5
+    profit_target: 0.60
+    stop_loss: 1.5
+
+  bear_call_spread:
+    delta_short: 0.30
+    delta_long: 0.15
+    dte_entry: 21
+    dte_exit: 5
+    profit_target: 0.60
+    stop_loss: 1.5
+
+  cash_secured_put:
+    delta: 0.25
+    dte_entry: 30
+    dte_exit: 7
+    profit_target: 0.50
+    stop_loss: 2.0
+
+  covered_call:
+    delta: 0.30
+    dte_entry: 30
+    dte_exit: 7
+    profit_target: 0.50
+
+  long_straddle:
+    dte_entry: 14
+    dte_exit: 3
+    profit_target: 0.30
+    stop_loss: -0.50
+
+  short_strangle:
+    delta_call: 0.16
+    delta_put: 0.16
+    dte_entry: 45
+    dte_exit: 14
+    profit_target: 0.50
+    stop_loss: 2.0
+
+# Universe of instruments to trade (XTB symbols)
+universe:
+  indices:
+    - "US500"     # S&P 500 CFD (proxy)
+    - "DE40"      # DAX
+    - "UK100"     # FTSE 100
+  stocks:
+    - "AAPL.US"
+    - "MSFT.US"
+    - "AMZN.US"
+    - "TSLA.US"
+    - "NVDA.US"
+
+dashboard:
+  host: "0.0.0.0"
+  port: 8080
+  refresh_interval: 5   # seconds
+
+logging:
+  level: "INFO"
+  file: "logs/xtb_bot.log"
