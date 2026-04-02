@@ -1,10 +1,12 @@
 """
-Real market data provider using Yahoo Finance (yfinance).
-Provides real options chains, spot prices, IV, and historical data
-for US stocks and major indices — completely free, no API key needed.
+Real market data provider.
 
-XTB only offers CFDs (not listed options), so we use Yahoo Finance
-as the source of truth for real options market data.
+Sources (tried in order):
+  1. Yahoo Finance v8 JSON API  — direct HTTP, no library, real-time prices + options chains
+  2. Stooq                      — historical EOD data via pandas_datareader, very reliable
+  3. Nothing                    — if market is closed or all sources fail, returns None
+
+No API keys needed. No yfinance library (broken in 0.2.x).
 """
 import asyncio
 import logging
@@ -12,41 +14,35 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
+import aiohttp
 import pandas as pd
-import yfinance as yf
 
-from src.engine.options_math import historical_volatility, implied_volatility
+from src.engine.options_math import historical_volatility
 
 logger = logging.getLogger(__name__)
 
-# ── Market hours check ────────────────────────────────────────────────────────
+# ── Market hours (NYSE/NASDAQ) ────────────────────────────────────────────────
 
 def is_market_open() -> bool:
-    """
-    Returns True if the US stock market (NYSE/NASDAQ) is currently open.
-    Hours: Monday–Friday 09:30–16:00 Eastern Time.
-    Does not account for holidays (Yahoo Finance returns no data on those days anyway).
-    """
+    """Mon–Fri 09:30–16:00 Eastern Time."""
     try:
         et = ZoneInfo("America/New_York")
     except Exception:
         et = ZoneInfo("US/Eastern")
     now = datetime.now(et)
-    if now.weekday() >= 5:          # Saturday=5, Sunday=6
+    if now.weekday() >= 5:
         return False
-    market_open  = now.replace(hour=9,  minute=30, second=0, microsecond=0)
-    market_close = now.replace(hour=16, minute=0,  second=0, microsecond=0)
-    return market_open <= now <= market_close
+    open_t  = now.replace(hour=9,  minute=30, second=0, microsecond=0)
+    close_t = now.replace(hour=16, minute=0,  second=0, microsecond=0)
+    return open_t <= now <= close_t
 
 
-# ── Ticker mapping ────────────────────────────────────────────────────────────
-# Maps display names used in the bot to Yahoo Finance tickers
+# ── Symbol mapping ────────────────────────────────────────────────────────────
+
 SYMBOL_MAP: Dict[str, str] = {
-    # Indices (via ETFs that have liquid options chains)
-    "US500":   "SPY",    # S&P 500 ETF
-    "DE40":    "EWG",    # Germany ETF (DAX proxy, has options)
-    "UK100":   "EWU",    # UK ETF (FTSE proxy, has options)
-    # US Stocks (direct tickers)
+    "US500":   "SPY",    # S&P 500 ETF — has listed options
+    "DE40":    "EWG",    # Germany ETF
+    "UK100":   "EWU",    # UK ETF
     "AAPL.US": "AAPL",
     "MSFT.US": "MSFT",
     "AMZN.US": "AMZN",
@@ -54,179 +50,267 @@ SYMBOL_MAP: Dict[str, str] = {
     "NVDA.US": "NVDA",
 }
 
-# Cache to avoid hammering Yahoo Finance
-_price_cache: Dict[str, Tuple[float, datetime]] = {}
-_chain_cache: Dict[str, Tuple[pd.DataFrame, datetime]] = {}
-_history_cache: Dict[str, Tuple[List[float], datetime]] = {}
-
-PRICE_TTL = 60          # seconds
-CHAIN_TTL = 300         # 5 minutes
-HISTORY_TTL = 3600      # 1 hour
-
-
-def _yf_ticker(symbol: str) -> str:
+def _yf(symbol: str) -> str:
     return SYMBOL_MAP.get(symbol, symbol)
+
+
+# ── Cache ─────────────────────────────────────────────────────────────────────
+
+_price_cache:   Dict[str, Tuple[float, datetime]]      = {}
+_history_cache: Dict[str, Tuple[List[float], datetime]] = {}
+_chain_cache:   Dict[str, Tuple[Dict, datetime]]        = {}
+
+PRICE_TTL   = 60
+HISTORY_TTL = 3600
+CHAIN_TTL   = 300
+
+_YF_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "application/json",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 
 # ── Spot price ────────────────────────────────────────────────────────────────
 
 async def get_spot_price(symbol: str) -> Optional[float]:
-    """Get current spot price. Returns None on failure."""
     cached = _price_cache.get(symbol)
     if cached and (datetime.utcnow() - cached[1]).total_seconds() < PRICE_TTL:
         return cached[0]
 
-    ticker = _yf_ticker(symbol)
+    ticker = _yf(symbol)
+
+    # Try sources in order until one works
+    for fetch_fn in [
+        lambda t: _fetch_price_yf(t, host="query1"),
+        lambda t: _fetch_price_yf(t, host="query2"),
+        lambda t: _fetch_price_fmp(t),
+    ]:
+        price = await fetch_fn(ticker)
+        if price:
+            _price_cache[symbol] = (price, datetime.utcnow())
+            logger.info("Price %s = %.4f", symbol, price)
+            return price
+
+    logger.warning("All price sources failed for %s", symbol)
+    return None
+
+
+async def _fetch_price_yf(ticker: str, host: str = "query1") -> Optional[float]:
+    """Direct Yahoo Finance v8 chart API — no yfinance library."""
+    url = f"https://{host}.finance.yahoo.com/v8/finance/chart/{ticker}"
+    params = {"interval": "1m", "range": "1d"}
     try:
-        data = await asyncio.to_thread(_fetch_price, ticker)
-        if data:
-            _price_cache[symbol] = (data, datetime.utcnow())
-            return data
+        async with aiohttp.ClientSession(headers=_YF_HEADERS) as session:
+            async with session.get(url, params=params, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                if resp.status != 200:
+                    return None
+                data = await resp.json(content_type=None)
+                result = data.get("chart", {}).get("result", [])
+                if not result:
+                    return None
+                meta = result[0].get("meta", {})
+                price = meta.get("regularMarketPrice") or meta.get("previousClose")
+                return float(price) if price else None
     except Exception as exc:
-        logger.warning("Price fetch error %s (%s): %s", symbol, ticker, exc)
-    return None
+        logger.debug("YF(%s) price error %s: %s", host, ticker, exc)
+        return None
 
 
-def _fetch_price(ticker: str) -> Optional[float]:
-    t = yf.Ticker(ticker)
-    info = t.fast_info
-    price = getattr(info, "last_price", None) or getattr(info, "regularMarketPrice", None)
-    if price:
-        return float(price)
-    # Fallback: last close from 2-day history
-    hist = t.history(period="2d")
-    if not hist.empty:
-        return float(hist["Close"].iloc[-1])
-    return None
+async def _fetch_price_fmp(ticker: str) -> Optional[float]:
+    """Financial Modeling Prep — free endpoint, no API key for basic quotes."""
+    url = f"https://financialmodelingprep.com/api/v3/quote-short/{ticker}"
+    params = {"apikey": "demo"}
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params=params, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                if resp.status != 200:
+                    return None
+                data = await resp.json(content_type=None)
+                if data and isinstance(data, list) and data[0].get("price"):
+                    return float(data[0]["price"])
+                return None
+    except Exception as exc:
+        logger.debug("FMP price error %s: %s", ticker, exc)
+        return None
 
 
 # ── Historical prices ─────────────────────────────────────────────────────────
 
 async def get_price_history(symbol: str, days: int = 365) -> List[float]:
-    """Return list of daily closing prices (oldest first)."""
     cached = _history_cache.get(symbol)
     if cached and (datetime.utcnow() - cached[1]).total_seconds() < HISTORY_TTL:
         return cached[0]
 
-    ticker = _yf_ticker(symbol)
-    try:
-        prices = await asyncio.to_thread(_fetch_history, ticker, days)
+    ticker = _yf(symbol)
+
+    for fetch_fn in [
+        lambda t: _fetch_history_yf(t, days, host="query1"),
+        lambda t: _fetch_history_yf(t, days, host="query2"),
+        lambda t: _fetch_history_stooq(t, days),
+    ]:
+        prices = await fetch_fn(ticker)
         if prices:
             _history_cache[symbol] = (prices, datetime.utcnow())
+            logger.info("History loaded for %s: %d days", symbol, len(prices))
             return prices
-    except Exception as exc:
-        logger.warning("History fetch error %s: %s", symbol, exc)
+
+    logger.warning("All history sources failed for %s", symbol)
     return []
 
 
-def _fetch_history(ticker: str, days: int) -> List[float]:
-    t = yf.Ticker(ticker)
-    period = f"{min(days, 730)}d"
-    hist = t.history(period=period)
-    if hist.empty:
+async def _fetch_history_yf(ticker: str, days: int, host: str = "query1") -> List[float]:
+    """Fetch daily close prices from Yahoo Finance v8 API."""
+    url = f"https://{host}.finance.yahoo.com/v8/finance/chart/{ticker}"
+    params = {"interval": "1d", "range": f"{min(days, 730)}d"}
+    try:
+        async with aiohttp.ClientSession(headers=_YF_HEADERS) as session:
+            async with session.get(url, params=params, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                if resp.status != 200:
+                    return []
+                data = await resp.json(content_type=None)
+                result = data.get("chart", {}).get("result", [])
+                if not result:
+                    return []
+                closes = result[0].get("indicators", {}).get("quote", [{}])[0].get("close", [])
+                return [float(c) for c in closes if c is not None]
+    except Exception as exc:
+        logger.debug("YF history error %s: %s", ticker, exc)
         return []
-    return [float(p) for p in hist["Close"].tolist()]
+
+
+async def _fetch_history_stooq(ticker: str, days: int) -> List[float]:
+    """Fallback: fetch daily closes from Stooq (no API key needed)."""
+    # Stooq uses lowercase tickers with .us suffix for US stocks
+    stooq_ticker = ticker.lower()
+    if not any(stooq_ticker.endswith(x) for x in [".us", ".uk", ".de", ".jp"]):
+        stooq_ticker = stooq_ticker + ".us"
+    url = f"https://stooq.com/q/d/l/?s={stooq_ticker}&i=d"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                if resp.status != 200:
+                    return []
+                text = await resp.text()
+                lines = [l for l in text.strip().split("\n") if l and not l.startswith("Date")]
+                prices = []
+                for line in lines[-days:]:
+                    parts = line.split(",")
+                    if len(parts) >= 5:
+                        try:
+                            prices.append(float(parts[4]))  # Close column
+                        except ValueError:
+                            pass
+                return prices
+    except Exception as exc:
+        logger.debug("Stooq history error %s: %s", ticker, exc)
+        return []
 
 
 # ── Options chain ─────────────────────────────────────────────────────────────
 
 async def get_options_chain(symbol: str) -> Optional[Dict]:
-    """
-    Return nearest-expiry options chain with real market data.
-    Returns dict with keys: expiry, calls (DataFrame), puts (DataFrame), spot, iv
-    """
     cached = _chain_cache.get(symbol)
     if cached and (datetime.utcnow() - cached[1]).total_seconds() < CHAIN_TTL:
         return cached[0]
 
-    ticker = _yf_ticker(symbol)
+    ticker = _yf(symbol)
+    chain = await _fetch_chain_yf(symbol, ticker)
+    if chain:
+        _chain_cache[symbol] = (chain, datetime.utcnow())
+    return chain
+
+
+async def _fetch_chain_yf(symbol: str, ticker: str) -> Optional[Dict]:
+    """Fetch options chain from Yahoo Finance v7 options API."""
+    # Step 1: get available expiry dates
+    url = f"https://query1.finance.yahoo.com/v7/finance/options/{ticker}"
     try:
-        chain = await asyncio.to_thread(_fetch_chain, symbol, ticker)
-        if chain:
-            _chain_cache[symbol] = (chain, datetime.utcnow())
-            return chain
+        async with aiohttp.ClientSession(headers=_YF_HEADERS) as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                if resp.status != 200:
+                    return None
+                data = await resp.json(content_type=None)
+
+        opt_data = data.get("optionChain", {}).get("result", [])
+        if not opt_data:
+            return None
+
+        expirations = opt_data[0].get("expirationDates", [])
+        spot = opt_data[0].get("quote", {}).get("regularMarketPrice")
+        if not spot or not expirations:
+            return None
+
+        # Pick expiry closest to 30 DTE
+        target_ts = (datetime.utcnow() + timedelta(days=30)).timestamp()
+        best_exp_ts = min(expirations, key=lambda t: abs(t - target_ts))
+        exp_date = datetime.utcfromtimestamp(best_exp_ts).strftime("%Y-%m-%d")
+        dte = max((datetime.utcfromtimestamp(best_exp_ts) - datetime.utcnow()).days, 1)
+
+        # Step 2: fetch the actual chain for that expiry
+        async with aiohttp.ClientSession(headers=_YF_HEADERS) as session:
+            async with session.get(
+                url,
+                params={"date": int(best_exp_ts)},
+                timeout=aiohttp.ClientTimeout(total=10),
+            ) as resp2:
+                if resp2.status != 200:
+                    return None
+                data2 = await resp2.json(content_type=None)
+
+        chain_result = data2.get("optionChain", {}).get("result", [])
+        if not chain_result:
+            return None
+
+        options = chain_result[0].get("options", [{}])[0]
+        raw_calls = options.get("calls", [])
+        raw_puts  = options.get("puts",  [])
+
+        if not raw_calls or not raw_puts:
+            return None
+
+        def to_df(rows):
+            df = pd.DataFrame(rows)[["strike", "bid", "ask", "lastPrice",
+                                      "impliedVolatility", "volume", "openInterest"]]
+            df = df.dropna(subset=["strike", "bid"])
+            df = df[(df["strike"] >= float(spot) * 0.70) & (df["strike"] <= float(spot) * 1.30)]
+            return df
+
+        calls_df = to_df(raw_calls)
+        puts_df  = to_df(raw_puts)
+
+        if calls_df.empty or puts_df.empty:
+            return None
+
+        # ATM IV
+        atm_c = calls_df.iloc[(calls_df["strike"] - float(spot)).abs().argsort()[:1]]
+        atm_p = puts_df.iloc[(puts_df["strike"]   - float(spot)).abs().argsort()[:1]]
+        iv_c  = float(atm_c["impliedVolatility"].values[0]) if "impliedVolatility" in atm_c else 0.20
+        iv_p  = float(atm_p["impliedVolatility"].values[0]) if "impliedVolatility" in atm_p else 0.20
+        iv = (iv_c + iv_p) / 2
+        if iv <= 0 or iv > 5:
+            iv = 0.20
+
+        logger.info("Options chain [%s] spot=%.2f iv=%.1f%% dte=%d calls=%d puts=%d",
+                    symbol, spot, iv * 100, dte, len(calls_df), len(puts_df))
+        return {
+            "symbol": symbol, "ticker": ticker,
+            "expiry": exp_date, "dte": dte,
+            "spot": float(spot), "iv": iv,
+            "calls": calls_df, "puts": puts_df,
+        }
+
     except Exception as exc:
-        logger.warning("Options chain error %s (%s): %s", symbol, ticker, exc)
-    return None
-
-
-def _fetch_chain(symbol: str, ticker: str) -> Optional[Dict]:
-    t = yf.Ticker(ticker)
-
-    # Get spot price
-    spot = _fetch_price(ticker)
-    if not spot:
+        logger.debug("Options chain error %s: %s", symbol, exc)
         return None
-
-    # Get available expiry dates
-    try:
-        expirations = t.options
-    except Exception:
-        return None
-    if not expirations:
-        return None
-
-    # Pick expiry ~30 DTE (closest to 30 days out)
-    target = datetime.utcnow() + timedelta(days=30)
-    best_exp = min(expirations, key=lambda e: abs(
-        (datetime.strptime(e, "%Y-%m-%d") - target).days
-    ))
-
-    try:
-        chain = t.option_chain(best_exp)
-    except Exception:
-        return None
-
-    calls = chain.calls.copy()
-    puts  = chain.puts.copy()
-
-    # Clean up: keep only useful columns, drop empty rows
-    cols = ["strike", "bid", "ask", "lastPrice", "impliedVolatility",
-            "volume", "openInterest", "inTheMoney"]
-    calls = calls[[c for c in cols if c in calls.columns]].dropna(subset=["strike", "bid"])
-    puts  = puts[[c  for c in cols if c in puts.columns]].dropna(subset=["strike", "bid"])
-
-    # Filter strikes within ±30% of spot (liquid range)
-    calls = calls[(calls["strike"] >= spot * 0.70) & (calls["strike"] <= spot * 1.30)]
-    puts  = puts[(puts["strike"]  >= spot * 0.70) & (puts["strike"]  <= spot * 1.30)]
-
-    if calls.empty or puts.empty:
-        return None
-
-    # Compute ATM IV (average of near-ATM call and put)
-    atm_call = calls.iloc[(calls["strike"] - spot).abs().argsort()[:1]]
-    atm_put  = puts.iloc[(puts["strike"]  - spot).abs().argsort()[:1]]
-    iv_call  = float(atm_call["impliedVolatility"].values[0]) if "impliedVolatility" in atm_call else 0.20
-    iv_put   = float(atm_put["impliedVolatility"].values[0])  if "impliedVolatility" in atm_put  else 0.20
-    iv = (iv_call + iv_put) / 2
-    if iv <= 0 or iv > 5:
-        iv = 0.20
-
-    exp_date = datetime.strptime(best_exp, "%Y-%m-%d")
-    dte = max((exp_date - datetime.utcnow()).days, 1)
-
-    logger.info("Chain [%s/%s] spot=%.2f iv=%.1f%% dte=%d calls=%d puts=%d",
-                symbol, ticker, spot, iv * 100, dte, len(calls), len(puts))
-
-    return {
-        "symbol":  symbol,
-        "ticker":  ticker,
-        "expiry":  best_exp,
-        "dte":     dte,
-        "spot":    spot,
-        "iv":      iv,
-        "calls":   calls,
-        "puts":    puts,
-    }
 
 
 # ── Full market snapshot ──────────────────────────────────────────────────────
 
 async def get_market_snapshot(symbol: str) -> Optional[Dict]:
-    """
-    Returns complete snapshot: spot, iv, price history.
-    Uses real options IV when available, falls back to HV.
-    """
+    """Returns spot, iv, history. Uses real options IV when available."""
     spot, history = await asyncio.gather(
         get_spot_price(symbol),
         get_price_history(symbol, days=60),
@@ -234,11 +318,10 @@ async def get_market_snapshot(symbol: str) -> Optional[Dict]:
     if not spot:
         return None
 
-    # Try to get IV from real options chain
     chain = await get_options_chain(symbol)
-    if chain:
+    if chain and chain.get("iv"):
         iv = chain["iv"]
-    elif history and len(history) > 20:
+    elif len(history) > 20:
         iv = historical_volatility(history, window=20)
     else:
         iv = 0.20
@@ -251,47 +334,31 @@ async def get_market_snapshot(symbol: str) -> Optional[Dict]:
         "ask":     round(spot * 1.0001, 4),
         "history": history,
         "chain":   chain,
-        "source":  "yahoo_finance",
+        "source":  "yahoo_finance_direct",
         "ts":      datetime.utcnow().isoformat(),
     }
 
 
-# ── Best option strike selection using real chain ─────────────────────────────
+# ── Strike selection helpers ──────────────────────────────────────────────────
 
-def find_strike_by_delta(
-    chain_df: pd.DataFrame,
-    target_delta: float,
-    option_type: str,
-    spot: float,
-    T: float,
-    iv: float,
-    r: float = 0.05,
-) -> Optional[float]:
-    """
-    Find the real listed strike closest to target_delta.
-    Uses BS delta calculation on real chain strikes.
-    """
+def find_strike_by_delta(chain_df, target_delta, option_type, spot, T, iv, r=0.05):
     from src.engine.options_math import bs_greeks
-    best_strike = None
-    best_diff = float("inf")
+    best_strike, best_diff = None, float("inf")
     for _, row in chain_df.iterrows():
         K = float(row["strike"])
         try:
             g = bs_greeks(spot, K, T, r, iv, option_type)
             diff = abs(abs(g.delta) - target_delta)
             if diff < best_diff:
-                best_diff = diff
-                best_strike = K
+                best_diff, best_strike = diff, K
         except Exception:
             continue
     return best_strike
 
 
-def get_real_premium(chain_df: pd.DataFrame, strike: float, option_type: str) -> float:
-    """Get real mid-price (bid+ask)/2 for a given strike from the chain."""
+def get_real_premium(chain_df, strike, option_type):
     row = chain_df[chain_df["strike"] == strike]
     if row.empty:
-        # Nearest available strike
         idx = (chain_df["strike"] - strike).abs().idxmin()
         row = chain_df.loc[[idx]]
     bid = float(row["bid"].values[0]) if "bid" in row else 0.0
