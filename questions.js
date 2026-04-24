@@ -305,5 +305,93 @@ En definitiva, conviene desterrar la idea de que aprender una lengua es asunto d
   }
 ];
 
+// =============================================================
+// AUDICIÓN - TAREA 1
+// Formato oficial: 6 mensajes cortos (anuncios, avisos, buzón de
+// voz, radio) y una pregunta por mensaje con 3 opciones.
+// Incluye transcripción para que la alumna la lea (o use TTS).
+// =============================================================
+
+window.DELE_DATA.listening.t1 = [
+  {
+    id: 'a1-m1-radio',
+    tipo: 'Cuña de radio',
+    transcripcion: 'Queridos oyentes, les recordamos que el programa "Voces del sur", que habitualmente se emite los sábados a las once de la mañana, esta semana se adelanta al viernes a la misma hora debido a la retransmisión del partido de fútbol. La próxima semana el programa volverá a su horario habitual. Gracias por su comprensión.',
+    pregunta: '¿Qué se dice en este mensaje?',
+    opciones: [
+      'a) Que el programa cambia definitivamente al viernes.',
+      'b) Que esta semana el programa se emitirá un día antes de lo habitual.',
+      'c) Que el programa se cancela por un partido de fútbol.'
+    ],
+    correcta: 1,
+    explicacion: '"Se adelanta al viernes" significa que se emite antes de lo habitual, solo "esta semana"; no es permanente (a) ni una cancelación (c).'
+  },
+  {
+    id: 'a1-m2-megafonia',
+    tipo: 'Megafonía en una estación',
+    transcripcion: 'Atención, señores viajeros. El tren con destino Barcelona-Sants que tenía prevista su salida a las catorce treinta por la vía cinco saldrá con un retraso estimado de veinte minutos debido a incidencias técnicas. Rogamos disculpen las molestias. Se informará de cualquier cambio a través de estos altavoces.',
+    pregunta: 'Según el aviso, el tren:',
+    opciones: [
+      'a) ha cambiado de vía por una avería.',
+      'b) se retrasa por motivos técnicos.',
+      'c) ha sido cancelado hasta nuevo aviso.'
+    ],
+    correcta: 1,
+    explicacion: 'El mensaje dice "saldrá con un retraso estimado de veinte minutos debido a incidencias técnicas". No se cambia de vía (sigue siendo la cinco) ni se cancela.'
+  },
+  {
+    id: 'a1-m3-contestador',
+    tipo: 'Mensaje de contestador',
+    transcripcion: 'Hola Marta, soy Pilar. Mira, te llamo para decirte que al final no voy a poder ir mañana a la cena en casa de Rosa. Me ha salido un imprevisto en el trabajo y tengo que quedarme hasta tarde. Dale recuerdos a todos y comentadle que intentaré pasarme el domingo a comer, si le va bien. Un beso.',
+    pregunta: 'Pilar llama a Marta para:',
+    opciones: [
+      'a) cancelar una cita de trabajo.',
+      'b) avisar de que no asistirá a una cena y proponer otra fecha.',
+      'c) pedirle que le recoja algo por casa de Rosa.'
+    ],
+    correcta: 1,
+    explicacion: '"No voy a poder ir mañana a la cena" + "intentaré pasarme el domingo a comer" resumen las dos intenciones: cancelar y proponer otra fecha. No cancela trabajo (es la causa) ni pide recados.'
+  },
+  {
+    id: 'a1-m4-anuncio',
+    tipo: 'Anuncio publicitario',
+    transcripcion: '¿Cansada de esperar cita para las revisiones médicas? En la clínica Salud Plus te ofrecemos análisis completos y atención especializada en menos de setenta y dos horas, sin listas de espera y con tarifas adaptadas a tu presupuesto. Llama ya al novecientos setecientos setenta y dos, o consulta en nuestra web saludplus.es.',
+    pregunta: '¿Qué destaca principalmente el anuncio?',
+    opciones: [
+      'a) Que ofrece tratamientos gratuitos.',
+      'b) Que atiende con rapidez y sin lista de espera.',
+      'c) Que solo trabaja con pacientes del seguro público.'
+    ],
+    correcta: 1,
+    explicacion: 'El anuncio subraya "en menos de setenta y dos horas, sin listas de espera". Las tarifas son adaptadas, no gratuitas (a), y no se menciona que dependan del seguro público (c).'
+  },
+  {
+    id: 'a1-m5-aerolinea',
+    tipo: 'Aviso de aerolínea',
+    transcripcion: 'Estimado pasajero, le informamos de que debido a las condiciones meteorológicas en el aeropuerto de destino, su vuelo con número FR5234 ha sido desviado al aeropuerto alternativo de Reus. Desde allí se organizará un servicio de autobuses gratuito hasta Barcelona. Agradecemos su paciencia.',
+    pregunta: 'El vuelo del pasajero:',
+    opciones: [
+      'a) aterrizará en un aeropuerto distinto al previsto.',
+      'b) ha sido cancelado por mal tiempo.',
+      'c) ha retrasado su despegue una hora.'
+    ],
+    correcta: 0,
+    explicacion: '"Ha sido desviado al aeropuerto alternativo de Reus": se desvía, no se cancela (b) ni se retrasa en origen (c).'
+  },
+  {
+    id: 'a1-m6-supermercado',
+    tipo: 'Aviso en supermercado',
+    transcripcion: 'Atención, estimada clientela. Les recordamos que hoy, jueves, pueden beneficiarse del veinticinco por ciento de descuento en todos los productos frescos de las secciones de pescadería y carnicería. La oferta es válida únicamente en nuestro establecimiento y hasta el cierre de la jornada. Muchas gracias por su visita.',
+    pregunta: 'Según el mensaje, la promoción:',
+    opciones: [
+      'a) se aplica también en el resto de tiendas de la cadena.',
+      'b) dura toda la semana.',
+      'c) es solo para hoy y en esta tienda.'
+    ],
+    correcta: 2,
+    explicacion: '"Hoy, jueves" + "únicamente en nuestro establecimiento" + "hasta el cierre de la jornada" confirman c). Descarta a) (solo este establecimiento) y b) (solo hoy).'
+  }
+];
+
 
 
