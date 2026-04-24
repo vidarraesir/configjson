@@ -222,3 +222,48 @@ window.DELE_DATA.reading.t2 = [
   }
 ];
 
+// =============================================================
+// LECTURA - TAREA 3
+// Formato oficial: texto con 6 huecos; hay 8 fragmentos (A-H) y
+// el candidato debe encajar cada hueco con una frase, dos sobran.
+// =============================================================
+
+window.DELE_DATA.reading.t3 = [
+  {
+    id: 'r3-bibliotecas',
+    titulo: 'Las bibliotecas públicas se reinventan',
+    instrucciones: 'Lea el texto. Faltan seis fragmentos, marcados con [1]–[6]. Elija de entre las ocho opciones (A–H) el fragmento que corresponde a cada hueco. Hay DOS fragmentos que no encajan en ninguna parte.',
+    texto: `Durante mucho tiempo se dio por hecho que las bibliotecas públicas estaban condenadas a desaparecer. La llegada de internet, el abaratamiento de los libros digitales y el uso generalizado de los móviles hacían pensar que pocas personas seguirían acudiendo a un edificio para consultar información que podían obtener desde su sofá. [1] Lo que está ocurriendo en muchas ciudades españolas desmiente por completo esa profecía.
+
+Lejos de quedarse vacías, numerosas bibliotecas municipales han experimentado en los últimos años un incremento notable de visitantes. [2] Así, han pasado de ser lugares silenciosos orientados casi en exclusiva al préstamo de libros, a convertirse en auténticos centros culturales que ofrecen desde talleres de escritura creativa hasta sesiones de cuentacuentos o clubes de lectura.
+
+Uno de los aspectos más llamativos de esta transformación es el papel social que cumplen. En barrios donde apenas existen otros espacios gratuitos, la biblioteca funciona como punto de encuentro intergeneracional. [3] De hecho, no es raro ver a un jubilado leyendo el periódico al lado de un estudiante que prepara un examen.
+
+El acceso a internet gratuito también ha resultado ser un factor decisivo. Muchas personas utilizan los ordenadores de la biblioteca para realizar trámites administrativos que, hoy en día, prácticamente solo pueden hacerse en línea. [4] Sin estos recursos públicos, un amplio sector de la población quedaría excluido de servicios básicos.
+
+Por supuesto, no todo son luces. Los presupuestos municipales destinados a cultura siguen siendo, en la mayoría de casos, insuficientes. [5] El resultado es que muchos bibliotecarios trabajan con plantillas reducidas y con instalaciones que necesitan una urgente modernización.
+
+Con todo, los profesionales del sector se muestran optimistas. [6] Si reciben el apoyo necesario, aseguran que estas instituciones pueden convertirse en pilares fundamentales para afrontar los retos culturales y sociales de las próximas décadas.`,
+    fragmentos: [
+      { letra: 'A', texto: 'Sin embargo, la realidad ha desmentido de forma clamorosa esas predicciones.' },
+      { letra: 'B', texto: 'La explicación se encuentra, en buena medida, en la diversificación de los servicios que ofrecen.' },
+      { letra: 'C', texto: 'Allí pueden coincidir, sin necesidad de consumir nada, personas de edades y procedencias muy distintas.' },
+      { letra: 'D', texto: 'Solicitar una ayuda, pedir cita con el médico o renovar el paro exige hoy una competencia digital que no toda la ciudadanía posee.' },
+      { letra: 'E', texto: 'Las bibliotecas privadas, en cambio, atraen cada vez a menos público.' },
+      { letra: 'F', texto: 'La reducción de recursos afecta tanto al personal como al mantenimiento de los edificios.' },
+      { letra: 'G', texto: 'Confían en que su labor siga siendo reconocida y ampliada.' },
+      { letra: 'H', texto: 'Esta es, sin duda, una de las razones que explica la escasez de lectores jóvenes.' }
+    ],
+    huecos: [
+      { n: 1, correcta: 'A', explicacion: 'Tras enumerar motivos para pensar que las bibliotecas morirían, el texto introduce un contraste fuerte: "Lo que está ocurriendo... desmiente por completo esa profecía". La opción A es la única que recoge ese contraste con la misma idea ("ha desmentido de forma clamorosa esas predicciones").' },
+      { n: 2, correcta: 'B', explicacion: 'El párrafo empieza hablando del aumento de visitantes y, justo después del hueco, explica el cambio de función de las bibliotecas. B introduce exactamente esa causa: "la diversificación de los servicios que ofrecen".' },
+      { n: 3, correcta: 'C', explicacion: 'Se está hablando de la biblioteca como punto de encuentro intergeneracional y el hueco debe introducir esa idea de convivencia. La frase sobre el jubilado y el estudiante confirma que C ("Allí pueden coincidir... personas de edades muy distintas") es la correcta.' },
+      { n: 4, correcta: 'D', explicacion: 'Antes se habla de trámites administrativos que solo pueden hacerse en línea. D concreta ejemplos de esos trámites ("solicitar una ayuda, pedir cita con el médico...") y enlaza con la frase siguiente sobre exclusión digital.' },
+      { n: 5, correcta: 'F', explicacion: 'Tras mencionar que los presupuestos son insuficientes, el texto continúa con "muchos bibliotecarios trabajan con plantillas reducidas y con instalaciones que necesitan modernización". F resume justamente esas dos consecuencias (personal y edificios).' },
+      { n: 6, correcta: 'G', explicacion: 'El párrafo cierra con el optimismo de los profesionales. G ("Confían en que su labor siga siendo reconocida y ampliada") introduce esa esperanza, y encaja con la frase siguiente sobre "si reciben el apoyo necesario".' }
+    ],
+    sobrantes: ['E', 'H']
+  }
+];
+
+
