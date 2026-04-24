@@ -504,6 +504,82 @@
     startQuiz({ title: 'Audición · Tarea 5 (conferencia)', mode: 'a5', items });
   }
 
+  // =============================================================
+  // FLASHCARDS (vocabulario)
+  // =============================================================
+
+  let flashState = null;
+  function startFlashcards(cards, title = 'Vocabulario') {
+    flashState = { cards: shuffle(cards), idx: 0, flipped: false, title };
+    $('#flashCategory').textContent = title;
+    show('flashScreen');
+    renderFlash();
+  }
+  function renderFlash() {
+    const s = flashState;
+    if (!s) return;
+    $('#flashProgress').textContent = (s.idx + 1) + ' / ' + s.cards.length;
+    $('#flashProgressBar').style.width = (((s.idx + 1) / s.cards.length) * 100) + '%';
+    const c = s.cards[s.idx];
+    const box = $('#flashCardContainer');
+    box.innerHTML = '';
+    const card = el('div', { class: 'flashcard' });
+    card.appendChild(el('div', { class: 'flashcard-type' }, c.categoria || c.funcion || c.tipo || 'B2'));
+    card.appendChild(el('div', { class: 'flashcard-word' }, c.palabra || c.expresion || c.conector));
+    if (s.flipped) {
+      if (c.traduccion) card.appendChild(el('div', { class: 'flashcard-translation' }, c.traduccion));
+      if (c.significado) card.appendChild(el('div', { class: 'flashcard-translation' }, c.significado));
+      if (c.funcion && c.conector) card.appendChild(el('div', { class: 'flashcard-translation' }, c.funcion));
+      if (c.ejemplo) card.appendChild(el('div', { class: 'flashcard-example' }, '"' + c.ejemplo + '"'));
+    } else {
+      card.appendChild(el('div', { class: 'flashcard-hint' }, 'Toca la tarjeta para ver la respuesta'));
+    }
+    card.addEventListener('click', () => {
+      s.flipped = !s.flipped;
+      renderFlash();
+    });
+    box.appendChild(card);
+  }
+  window.flashNext = () => {
+    if (!flashState) return;
+    flashState.idx = (flashState.idx + 1) % flashState.cards.length;
+    flashState.flipped = false;
+    renderFlash();
+  };
+  window.flashPrev = () => {
+    if (!flashState) return;
+    flashState.idx = (flashState.idx - 1 + flashState.cards.length) % flashState.cards.length;
+    flashState.flipped = false;
+    renderFlash();
+  };
+  window.flashShuffle = () => {
+    if (!flashState) return;
+    flashState.cards = shuffle(flashState.cards);
+    flashState.idx = 0;
+    flashState.flipped = false;
+    renderFlash();
+  };
+
+  window._deleHandlers.flashcards = () => startFlashcards(D.vocab, 'Vocabulario B2');
+  window._deleHandlers.idioms     = () => startFlashcards(D.idioms, 'Expresiones y modismos');
+  window._deleHandlers.connectors = () => startFlashcards(D.connectors, 'Conectores discursivos');
+
+  // =============================================================
+  // GRAMÁTICA (quiz de 10 preguntas aleatorias por ejecución)
+  // =============================================================
+
+  window._deleHandlers.grammar = () => {
+    const pool = shuffle(D.grammar).slice(0, Math.min(10, D.grammar.length));
+    const items = pool.map((q) => ({
+      type: 'mc',
+      q: '[' + q.tema + '] ' + q.q,
+      opciones: q.opciones,
+      correcta: q.correcta,
+      explicacion: q.explicacion
+    }));
+    startQuiz({ title: 'Gramática B2 (10 preguntas)', mode: 'gramatica', items });
+  };
+
   // ---------- Inicialización ----------
   refreshStats();
 
