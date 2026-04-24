@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#AA151B">
+<meta name="description" content="Aplicación completa para preparar el examen DELE B2 del Instituto Cervantes">
+<title>DELE B2 — Preparación Oficial</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DELE B2">
+<meta name="format-detection" content="telephone=no">
+<style>
+:root {
+  --red: #AA151B;
+  --yellow: #F1BF00;
+  --dark: #1a1a2e;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --text: #222;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --warn: #d97706;
+  --shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+  --bg: #0f1420;
+  --card: #1a2032;
+  --text: #e6e8ef;
+  --muted: #9aa3b2;
+  --border: #2a3348;
+  --shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  overscroll-behavior-y: none;
+}
+header {
+  background: linear-gradient(135deg, var(--red), #7a0f13);
+  color: #fff;
+  padding: 14px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+header h1 span { color: var(--yellow); }
+.header-buttons { display: flex; gap: 8px; }
+.icon-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.25); }
+
+main { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+.hero {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+.hero h2 { margin: 0 0 6px 0; font-size: 20px; }
+.hero p { margin: 0; color: var(--muted); font-size: 14px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.stat {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.stat-val { font-size: 20px; font-weight: 700; color: var(--red); }
+.stat-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow);
+  text-align: left;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+}
+.card:hover, .card:active { transform: translateY(-2px); }
+.card-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: var(--red);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+.card-icon.yellow { background: var(--yellow); color: #1a1a2e; }
+.card-icon.dark { background: var(--dark); }
+.card-icon.green { background: var(--ok); }
+.card-icon.purple { background: #7c3aed; }
+.card-icon.orange { background: var(--warn); }
+.card-title { font-weight: 600; margin: 0 0 4px 0; }
+.card-desc { font-size: 12px; color: var(--muted); margin: 0; }
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin: 20px 0 10px 4px;
+  font-weight: 600;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+.btn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn.secondary { background: var(--dark); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.quiz-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.progress {
+  height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+  margin-bottom: 16px;
+}
+.progress-bar {
+  height: 100%; background: linear-gradient(90deg, var(--red), var(--yellow));
+  width: 0%; transition: width 0.3s;
+}
+
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 14px;
+}
+.question-text {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+}
+.reading-text {
+  background: var(--bg);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  border-left: 4px solid var(--red);
+  white-space: pre-wrap;
+}
+.option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.option:hover { border-color: var(--red); }
+.option.selected { border-color: var(--red); background: rgba(170,21,27,0.06); }
+.option.correct {
+  border-color: var(--ok);
+  background: rgba(22,163,74,0.12);
+}
+.option.wrong {
+  border-color: var(--bad);
+  background: rgba(220,38,38,0.12);
+}
+.option-letter {
+  display: inline-block;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text);
+  text-align: center;
+  line-height: 26px;
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.option.selected .option-letter { background: var(--red); color: #fff; }
+.option.correct .option-letter { background: var(--ok); color: #fff; }
+.option.wrong .option-letter { background: var(--bad); color: #fff; }
+
+.feedback {
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.feedback.ok { background: rgba(22,163,74,0.12); color: var(--ok); }
+.feedback.bad { background: rgba(220,38,38,0.12); color: var(--bad); }
+.feedback-explain {
+  background: var(--bg);
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text);
+  border-left: 3px solid var(--yellow);
+}
+
+.result-screen {
+  text-align: center;
+  padding: 30px 20px;
+}
+.result-score {
+  font-size: 64px;
+  font-weight: 800;
+  margin: 20px 0 10px 0;
+  background: linear-gradient(135deg, var(--red), var(--yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.result-label { font-size: 16px; color: var(--muted); margin-bottom: 20px; }
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+.result-summary .stat { padding: 14px; }
+
+.match-item {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.match-item strong { color: var(--red); }
+.match-selector {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  margin-top: 6px;
+}
+
+.flashcard {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 40px 20px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.flashcard-word { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+.flashcard-type { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.flashcard-translation { font-size: 22px; color: var(--red); font-weight: 600; margin-bottom: 14px; }
+.flashcard-example { font-size: 14px; color: var(--muted); font-style: italic; padding: 0 10px; }
+.flashcard-hint { font-size: 12px; color: var(--muted); margin-top: 20px; }
+
+.writing-prompt {
+  background: var(--bg);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--yellow);
+  font-size: 14px;
+  line-height: 1.6;
+}
+textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+}
+.word-count {
+  text-align: right;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.word-count.warn { color: var(--warn); }
+.word-count.ok { color: var(--ok); }
+.word-count.bad { color: var(--bad); }
+
+.timer {
+  background: var(--dark);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 14px;
+}
+.timer.warn { background: var(--warn); }
+.timer.bad { background: var(--bad); }
+
+.back-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 8px 0;
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.checklist {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+}
+.checklist-item {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item::before {
+  content: "•";
+  color: var(--red);
+  font-weight: bold;
+}
+
+.tip-box {
+  background: linear-gradient(135deg, rgba(241,191,0,0.15), rgba(170,21,27,0.08));
+  border: 1px solid var(--yellow);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.tip-box strong { color: var(--red); }
+
+.nav-buttons {
+  display: flex; gap: 10px; margin-top: 10px;
+}
+.nav-buttons button { flex: 1; }
+
+.audio-placeholder {
+  background: var(--bg);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  border: 1px dashed var(--border);
+}
+.audio-placeholder summary {
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--red);
+}
+.transcript {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--border);
+  color: var(--text);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  margin-right: 4px;
+  font-weight: 500;
+}
+.tag.red { background: rgba(170,21,27,0.15); color: var(--red); }
+
+.list-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.list-item h4 { margin: 0 0 4px 0; font-size: 15px; }
+.list-item p { margin: 0; font-size: 13px; color: var(--muted); }
+
+.bottom-tabs {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 40;
+  box-shadow: 0 -4px 14px rgba(0,0,0,0.06);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 4px;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+.tab .tab-icon {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.tab.active { color: var(--red); }
+
+@media (min-width: 600px) {
+  main { padding: 24px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>DELE <span>B2</span></h1>
+  <div class="header-buttons">
+    <button class="icon-btn" id="themeBtn" title="Cambiar tema">◐</button>
+    <button class="icon-btn" id="resetBtn" title="Reiniciar progreso">↺</button>
+  </div>
+</header>
+
+<main>
+  <div id="homeScreen" class="screen active">
+    <div class="hero">
+      <h2>¡Hola! Prepara tu DELE B2</h2>
+      <p>Más de 200 preguntas tipo examen, vocabulario, gramática y simulacros completos basados en el modelo oficial del Instituto Cervantes.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-val" id="statQuestions">0</div><div class="stat-lbl">Respondidas</div></div>
+        <div class="stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl">Aciertos</div></div>
+        <div class="stat"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">Racha (días)</div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Simulacro completo</div>
+    <div class="grid">
+      <button class="card" data-action="mockexam">
+        <div class="card-icon">!</div>
+        <div class="card-title">Examen completo</div>
+        <div class="card-desc">Simulacro cronometrado de las 4 pruebas</div>
+      </button>
+      <button class="card" data-action="random">
+        <div class="card-icon yellow">≡</div>
+        <div class="card-title">Quiz rápido</div>
+        <div class="card-desc">20 preguntas mixtas aleatorias</div>
+      </button>
+    </div>
+
+    <div class="section-title">Prueba 1 — Comprensión de lectura</div>
+    <div class="grid">
+      <button class="card" data-action="reading" data-task="t1">
+        <div class="card-icon">L1</div>
+        <div class="card-title">Tarea 1</div>
+        <div class="card-desc">Texto largo + opción múltiple</div>
+      </button>
+      <button class="card" data-action="reading" data-task="t2">
+        <div class="card-icon">L2</div>
+        <div class="card-title">Tarea 2</div>
+        <div class="card-desc">Relacionar textos con personas</div>
+      </button>
+      <button class="card" data-action="reading" data-task="t3">
+        <div class="card-icon">L3</div>
+        <div class="card-title">Tarea 3</div>
+        <div class="card-desc">Texto con huecos (frases)</div>
+      </button>
+      <button class="card" data-action="reading" data-task="t4">
+        <div class="card-icon">L4</div>
+        <div class="card-title">Tarea 4</div>
+        <div class="card-desc">Gramática y léxico en contexto</div>
+      </button>
+    </div>
+
+    <div class="section-title">Prueba 2 — Comprensión auditiva</div>
+    <div class="grid">
+      <button class="card" data-action="listening" data-task="t1">
+        <div class="card-icon dark">A1</div>
+        <div class="card-title">Mensajes cortos</div>
+        <div class="card-desc">Avisos y anuncios</div>
+      </button>
+      <button class="card" data-action="listening" data-task="t3">
+        <div class="card-icon dark">A3</div>
+        <div class="card-title">Entrevistas</div>
+        <div class="card-desc">Preguntas sobre entrevistas</div>
+      </button>
+      <button class="card" data-action="listening" data-task="t5">
+        <div class="card-icon dark">A5</div>
+        <div class="card-title">Conferencia</div>
+        <div class="card-desc">Monólogo expositivo</div>
+      </button>
+    </div>
+
+    <div class="section-title">Vocabulario y gramática</div>
+    <div class="grid">
+      <button class="card" data-action="flashcards">
+        <div class="card-icon purple">V</div>
+        <div class="card-title">Flashcards</div>
+        <div class="card-desc">Vocabulario temático B2</div>
+      </button>
+      <button class="card" data-action="grammar">
+        <div class="card-icon green">G</div>
+        <div class="card-title">Gramática</div>
+        <div class="card-desc">Subjuntivo, condicional, ser/estar…</div>
+      </button>
+      <button class="card" data-action="idioms">
+        <div class="card-icon orange">M</div>
+        <div class="card-title">Expresiones</div>
+        <div class="card-desc">Modismos y frases hechas</div>
+      </button>
+      <button class="card" data-action="connectors">
+        <div class="card-icon purple">C</div>
+        <div class="card-title">Conectores</div>
+        <div class="card-desc">Marcadores discursivos</div>
+      </button>
+    </div>
+
+    <div class="section-title">Expresión</div>
+    <div class="grid">
+      <button class="card" data-action="writing">
+        <div class="card-icon">E</div>
+        <div class="card-title">Escritura</div>
+        <div class="card-desc">Prácticas de Tarea 1 y 2</div>
+      </button>
+      <button class="card" data-action="speaking">
+        <div class="card-icon yellow">O</div>
+        <div class="card-title">Oral</div>
+        <div class="card-desc">Temas y fotos para hablar</div>
+      </button>
+      <button class="card" data-action="tips">
+        <div class="card-icon dark">?</div>
+        <div class="card-title">Consejos</div>
+        <div class="card-desc">Estrategias de examen</div>
+      </button>
+    </div>
+  </div>
+
+  <div id="quizScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <div class="quiz-header">
+      <span id="quizTitle">Quiz</span>
+      <span id="quizTimer" class="timer" style="display:none;">00:00</span>
+      <span id="quizProgress">1 / 10</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <div id="quizContent"></div>
+  </div>
+
+  <div id="resultScreen" class="screen">
+    <div class="result-screen">
+      <div class="result-score" id="resultScore">0%</div>
+      <div class="result-label" id="resultLabel">¡Buen trabajo!</div>
+      <div class="result-summary">
+        <div class="stat"><div class="stat-val" id="resCorrect" style="color:var(--ok)">0</div><div class="stat-lbl">Aciertos</div></div>
+        <div class="stat"><div class="stat-val" id="resWrong" style="color:var(--bad)">0</div><div class="stat-lbl">Fallos</div></div>
+        <div class="stat"><div class="stat-val" id="resTotal">0</div><div class="stat-lbl">Total</div></div>
+      </div>
+      <div id="resultFeedback"></div>
+      <button class="btn" onclick="goHome()">Volver al inicio</button>
+      <button class="btn ghost" onclick="repeatQuiz()">Repetir</button>
+    </div>
+  </div>
+
+  <div id="flashScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <div class="quiz-header">
+      <span id="flashCategory">Vocabulario</span>
+      <span id="flashProgress">1 / 50</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="flashProgressBar"></div></div>
+    <div id="flashCardContainer"></div>
+    <div class="nav-buttons">
+      <button class="btn ghost" onclick="flashPrev()">‹ Anterior</button>
+      <button class="btn" onclick="flashNext()">Siguiente ›</button>
+    </div>
+    <button class="btn secondary" onclick="flashShuffle()">Mezclar</button>
+  </div>
+
+  <div id="writingScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <h2 id="writingTitle">Expresión escrita</h2>
+    <div id="writingContent"></div>
+  </div>
+
+  <div id="speakingScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <h2>Expresión oral</h2>
+    <div id="speakingContent"></div>
+  </div>
+
+  <div id="infoScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <div id="infoContent"></div>
+  </div>
+
+  <div id="listingScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <h2 id="listingTitle"></h2>
+    <div id="listingContent"></div>
+  </div>
+</main>
+
+<div class="bottom-tabs">
+  <button class="tab active" data-screen="homeScreen"><span class="tab-icon">⌂</span>Inicio</button>
+  <button class="tab" data-action="flashcards"><span class="tab-icon">V</span>Vocab</button>
+  <button class="tab" data-action="grammar"><span class="tab-icon">G</span>Gramática</button>
+  <button class="tab" data-action="random"><span class="tab-icon">Q</span>Quiz</button>
+  <button class="tab" data-action="tips"><span class="tab-icon">?</span>Tips</button>
+</div>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
