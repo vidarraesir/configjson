@@ -494,5 +494,94 @@ PERIODISTA: Palabras muy sabias. Muchísimas gracias, Cristina, por estos minuto
   }
 ];
 
+// =============================================================
+// AUDICIÓN - TAREA 5
+// Formato oficial: un monólogo expositivo (conferencia/charla)
+// con 6 preguntas a/b/c. Se escucha DOS veces.
+// =============================================================
+
+window.DELE_DATA.listening.t5 = [
+  {
+    id: 'a5-conferencia-sueno',
+    titulo: 'Conferencia: La importancia del sueño en la salud',
+    instrucciones: 'Va a escuchar una conferencia. Después, conteste a las preguntas. Seleccione la opción correcta (a, b o c). La audición se escuchará dos veces.',
+    transcripcion: `Buenas tardes a todos. Es un placer estar hoy aquí, en este ciclo dedicado a la salud preventiva, para hablarles de algo que, a pesar de ocupar aproximadamente un tercio de nuestra vida, todavía se subestima con demasiada frecuencia: el sueño.
+
+Durante siglos se pensó que dormir era una actividad pasiva, casi una forma de apagón biológico. Hoy sabemos que no es así, ni mucho menos. Mientras dormimos, nuestro cerebro está trabajando a pleno rendimiento: consolida la memoria, elimina residuos metabólicos acumulados durante el día y regula la producción de hormonas esenciales. Dormir no es un lujo, es una necesidad fisiológica tan básica como comer o respirar.
+
+El problema es que vivimos en sociedades que han hecho del insomnio una casi normalidad. Según los últimos estudios europeos, uno de cada tres adultos duerme menos de las siete horas recomendadas, y las consecuencias a medio y largo plazo son profundas. Hablamos de un mayor riesgo de enfermedades cardiovasculares, de diabetes tipo dos, de trastornos de ansiedad y, lo que resulta especialmente preocupante, de un envejecimiento cognitivo acelerado. Los déficits de sueño mantenidos en el tiempo, me atrevería a afirmar, son uno de los factores de riesgo más subestimados de nuestra época.
+
+Muchos pensarán: "Bueno, yo duermo poco entre semana, pero los fines de semana recupero". Se trata de un mito especialmente extendido y, siento tener que decirlo, bastante inexacto. La llamada "deuda de sueño" no funciona como una deuda bancaria: no se puede saldar simplemente durmiendo diez horas el sábado. Lo que sí está demostrado es que alternar horarios muy dispares entre días laborables y festivos desregula el ritmo circadiano, provocando el fenómeno conocido como "jet lag social", con efectos comparables a los de cruzar varios husos horarios.
+
+¿Qué podemos hacer, entonces, para mejorar nuestro descanso? En primer lugar, respetar horarios regulares: acostarse y levantarse aproximadamente a la misma hora cada día, fines de semana incluidos. En segundo lugar, prestar atención a la exposición a la luz. La luz natural por la mañana ayuda a sincronizar nuestros ritmos internos, mientras que la luz azul de los dispositivos electrónicos a última hora del día tiene el efecto contrario. Y un detalle que muchos pacientes ignoran: el dormitorio debería estar varios grados más frío que el salón. Una temperatura entre dieciséis y diecinueve grados facilita la entrada y el mantenimiento del sueño profundo.
+
+Por último, conviene desmitificar el uso de pastillas para dormir. Pueden ser útiles en situaciones puntuales y bajo supervisión médica, pero, como sustituto de una higiene del sueño adecuada, suelen generar más problemas que los que resuelven.
+
+Para terminar, me gustaría dejar una reflexión: si dedicásemos a nuestro sueño la mitad de la atención que dedicamos a nuestra alimentación o a nuestra actividad física, la mejora en salud pública sería enorme. Muchas gracias.`,
+    preguntas: [
+      {
+        q: '1. Según la conferenciante, durante el sueño el cerebro:',
+        opciones: [
+          'a) permanece prácticamente inactivo.',
+          'b) realiza funciones importantes como consolidar la memoria.',
+          'c) trabaja menos que durante el día.'
+        ],
+        correcta: 1,
+        explicacion: 'La ponente dice: "nuestro cerebro está trabajando a pleno rendimiento: consolida la memoria, elimina residuos..." Explícitamente niega que sea pasivo o esté apagado.'
+      },
+      {
+        q: '2. La conferenciante considera que los problemas de sueño son:',
+        opciones: [
+          'a) exclusivos de personas mayores.',
+          'b) un factor de riesgo poco reconocido para la salud.',
+          'c) un problema únicamente estético.'
+        ],
+        correcta: 1,
+        explicacion: '"Uno de los factores de riesgo más subestimados de nuestra época". No son exclusivos de mayores ni un asunto estético.'
+      },
+      {
+        q: '3. Respecto a recuperar el sueño los fines de semana, la ponente afirma que:',
+        opciones: [
+          'a) es un método eficaz para compensar la falta de descanso.',
+          'b) funciona igual que saldar una deuda bancaria.',
+          'c) no compensa completamente la pérdida y puede desregular el organismo.'
+        ],
+        correcta: 2,
+        explicacion: 'Señala que "la deuda de sueño no funciona como una deuda bancaria" y que alternar horarios dispares provoca "jet lag social". Descarta frontalmente a) y b).'
+      },
+      {
+        q: '4. Una de las recomendaciones para mejorar el descanso es:',
+        opciones: [
+          'a) mantener horarios regulares también en fin de semana.',
+          'b) usar pantallas antes de dormir para relajarse.',
+          'c) aumentar la temperatura del dormitorio.'
+        ],
+        correcta: 0,
+        explicacion: 'Recomienda "acostarse y levantarse aproximadamente a la misma hora cada día, fines de semana incluidos". Las pantallas y el calor excesivo son precisamente lo contrario de lo que aconseja.'
+      },
+      {
+        q: '5. Sobre la temperatura ideal del dormitorio, la ponente sostiene que:',
+        opciones: [
+          'a) debe ser la misma que la del resto de la casa.',
+          'b) debería estar varios grados por debajo de la del salón.',
+          'c) cuanto más alta, mejor se concilia el sueño.'
+        ],
+        correcta: 1,
+        explicacion: '"El dormitorio debería estar varios grados más frío que el salón. Una temperatura entre dieciséis y diecinueve grados facilita el sueño profundo".'
+      },
+      {
+        q: '6. La opinión de la conferenciante sobre los somníferos es que:',
+        opciones: [
+          'a) son imprescindibles para cualquier problema de insomnio.',
+          'b) pueden ayudar puntualmente, pero no sustituyen una buena higiene del sueño.',
+          'c) deberían prohibirse totalmente.'
+        ],
+        correcta: 1,
+        explicacion: 'Dice que "pueden ser útiles en situaciones puntuales y bajo supervisión médica, pero como sustituto de una higiene del sueño adecuada, suelen generar más problemas". Ni imprescindibles (a) ni prohibidos (c).'
+      }
+    ]
+  }
+];
+
 
 
