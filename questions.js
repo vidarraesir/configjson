@@ -1202,3 +1202,101 @@ En definitiva, el teletrabajo ofrece oportunidades innegables, pero también rie
   }
 ];
 
+// =============================================================
+// EXPRESIÓN ORAL - TAREA 1 (valorar propuestas)
+// Formato oficial: se presenta una situación y 6-8 propuestas;
+// el candidato elige 2 o 3 y las valora argumentadamente (2-3 min).
+// =============================================================
+
+window.DELE_DATA.speaking.tarea1 = [
+  {
+    id: 'o1-ciudad-saludable',
+    titulo: 'Hacer la ciudad más saludable',
+    situacion: 'El Ayuntamiento quiere poner en marcha medidas para mejorar la salud de los habitantes. Debe valorar las siguientes propuestas y elegir las que considere más adecuadas. Exponga su opinión durante 2 o 3 minutos.',
+    propuestas: [
+      'Prohibir la circulación de coches en el centro los fines de semana.',
+      'Aumentar el número de carriles bici.',
+      'Ofrecer clases gratuitas de deporte en parques públicos.',
+      'Subir el precio de la comida rápida mediante impuestos.',
+      'Abrir supermercados municipales con productos frescos a precios bajos.',
+      'Convertir edificios abandonados en centros deportivos.',
+      'Repartir cestas de fruta gratuita en barrios con bajos ingresos.',
+      'Organizar campañas escolares sobre hábitos saludables.'
+    ],
+    ayuda: [
+      'Estructura: "En primer lugar me gustaría comentar...", "Otra propuesta que me parece interesante es...", "Por el contrario, no apoyaría..."',
+      'Valore con argumentos: viabilidad económica, impacto real, efectos secundarios',
+      'Use vocabulario: "a mi juicio", "no acabo de ver clara la propuesta de...", "sin duda resulta fundamental"',
+      'Evite simplemente decir "bien" o "mal": razone'
+    ]
+  },
+  {
+    id: 'o1-mejorar-convivencia',
+    titulo: 'Mejorar la convivencia en un edificio de vecinos',
+    situacion: 'La comunidad de vecinos del edificio donde vive debe tomar decisiones para mejorar la convivencia. Valore las siguientes propuestas y exponga su opinión durante 2 o 3 minutos.',
+    propuestas: [
+      'Instalar cámaras de seguridad en los pasillos.',
+      'Crear un grupo de mensajería para consultas urgentes.',
+      'Prohibir el uso del ascensor para mudanzas sin aviso previo.',
+      'Organizar una comida anual para que se conozcan los vecinos.',
+      'Poner límites estrictos de ruido a partir de las 22:00.',
+      'Contratar una empresa externa de limpieza.',
+      'Sancionar a quien no separe correctamente la basura.',
+      'Pintar las escaleras y el rellano entre todos un fin de semana.'
+    ],
+    ayuda: [
+      'Piense en pros y contras desde distintos ángulos: coste, privacidad, eficacia, sentimiento de comunidad',
+      'Introduzca concesiones: "aunque entiendo que hay quien prefiere...", "es cierto que... pero..."',
+      'Conecte ideas: "por consiguiente", "en última instancia", "sin ir más lejos"'
+    ]
+  }
+];
+
+// =============================================================
+// EXPRESIÓN ORAL - TAREA 2 (descripción de fotografía)
+// Formato oficial: el candidato describe una foto e imagina
+// qué ocurre, por qué, qué pasará después (2-3 min).
+// =============================================================
+
+window.DELE_DATA.speaking.tarea2 = [
+  {
+    id: 'o2-reunion-familiar',
+    titulo: 'Una reunión familiar en el salón',
+    escenaDescrita: 'Una foto en la que se ve a varios miembros de una familia reunidos en el salón de una casa: la abuela sonríe en el centro mientras los nietos le enseñan algo en una tableta, la madre sirve café y el padre mira la escena desde la puerta. Es de noche (se ve una lámpara encendida) y parece una celebración.',
+    preguntasGuia: [
+      '¿Qué personas cree que aparecen en la foto? ¿Qué relación tienen entre sí?',
+      '¿Dónde se encuentran? Describa el lugar con detalle.',
+      '¿Qué cree que están haciendo? ¿Qué emociones observa?',
+      'Imagine qué ha ocurrido justo antes de esta escena.',
+      '¿Qué piensa que sucederá después?',
+      '¿Le recuerda a alguna experiencia personal?'
+    ],
+    vocabularioUtil: [
+      'Expresiones: "en primer plano", "al fondo", "a la derecha", "en el centro de la imagen"',
+      'Describir personas: edad aproximada, vestimenta, gestos, expresión facial',
+      'Especular: "parece que...", "diría que...", "probablemente...", "me da la impresión de que..."',
+      'Describir emociones: alegría, cariño, complicidad, nostalgia',
+      'Imaginar: "justo antes habrían...", "supongo que después..."'
+    ]
+  },
+  {
+    id: 'o2-mercado-tradicional',
+    titulo: 'Mañana de compras en un mercado',
+    escenaDescrita: 'Una fotografía tomada en un mercado tradicional: un puesto de frutas y verduras con colores muy vivos; una mujer mayor regatea con el vendedor mientras otra señora joven toma una fotografía del puesto con el móvil. En el fondo se ven otros clientes con cestas de la compra. La luz sugiere que es por la mañana.',
+    preguntasGuia: [
+      '¿Qué ve en la fotografía? Empiece por el primer plano y siga describiendo.',
+      '¿Qué puede decir de las personas que aparecen? ¿Cómo cree que son?',
+      '¿Por qué piensa que la joven está haciendo una foto?',
+      '¿Qué opina sobre los mercados tradicionales frente a los supermercados?',
+      '¿Suele comprar usted en mercados? ¿Por qué?',
+      '¿Qué futuro imagina para este tipo de establecimientos?'
+    ],
+    vocabularioUtil: [
+      'Regatear, el puesto, el tendero, la caseta, la clientela',
+      'Adjetivos: reluciente, apetecible, fresco, de temporada',
+      'Pasar de la descripción a la opinión personal',
+      'Conectores: "por cierto", "hablando de esto", "personalmente"'
+    ]
+  }
+];
+
