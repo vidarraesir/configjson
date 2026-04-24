@@ -771,6 +771,116 @@ window.DELE_DATA.grammar = [
     opciones: ['a) descansa', 'b) descansara', 'c) descansaría'],
     correcta: 1,
     explicacion: 'Imperativo en estilo indirecto pasado pasa a imperfecto de subjuntivo: "que descansara".'
+  },
+  // --- Condicional simple / compuesto
+  {
+    tema: 'Condicional',
+    q: 'Si tuviera tiempo libre, ______ a clases de pintura.',
+    opciones: ['a) iré', 'b) iría', 'c) iba'],
+    correcta: 1,
+    explicacion: 'Condicional irreal del presente: "si + imperfecto subjuntivo (tuviera) → condicional simple (iría)".'
+  },
+  {
+    tema: 'Condicional',
+    q: 'Yo que tú, no ______ con ese coche tan viejo.',
+    opciones: ['a) viajaría', 'b) viajaba', 'c) viajara'],
+    correcta: 0,
+    explicacion: 'Para dar consejos hipotéticos en presente: "yo que tú, no viajaría" (condicional simple).'
+  },
+  {
+    tema: 'Condicional',
+    q: 'De haberlo sabido, te ______ avisado enseguida.',
+    opciones: ['a) hubiera', 'b) habría', 'c) habré'],
+    correcta: 1,
+    explicacion: '"De + infinitivo compuesto" equivale a una condicional irreal del pasado: "habría avisado" (condicional compuesto). También sería posible "hubiera avisado" en lengua oral, pero "habría" es la forma estándar.'
+  },
+  // --- Pronombres (OD/OI, leísmo, se)
+  {
+    tema: 'Pronombres',
+    q: 'Dile a Marta que ______ llamaré mañana.',
+    opciones: ['a) le', 'b) la', 'c) lo'],
+    correcta: 1,
+    explicacion: '"Llamar a alguien" (hablar por teléfono) es transitivo: CD femenino → "la". "Le" sería leísmo, aceptable pero no preferido en examen.'
+  },
+  {
+    tema: 'Pronombres',
+    q: 'Los libros que me pediste, ya ______ he traído.',
+    opciones: ['a) los', 'b) les', 'c) te los'],
+    correcta: 2,
+    explicacion: 'Aparecen dos pronombres (te = CI a ti; los = CD los libros). Orden: CI + CD → "te los".'
+  },
+  {
+    tema: 'Pronombres',
+    q: 'Como no estaba Juan, el paquete ______ entregué a su hermano.',
+    opciones: ['a) le', 'b) se', 'c) lo'],
+    correcta: 1,
+    explicacion: 'Delante de "lo/la/los/las", el pronombre "le" se transforma en "se": "se lo entregué". Aquí está el CD implícito ("el paquete") y el CI ("a su hermano").'
+  },
+  // --- Oraciones concesivas/causales/consecutivas
+  {
+    tema: 'Conectores',
+    q: '______ la lluvia, seguimos adelante con la excursión.',
+    opciones: ['a) Por', 'b) A pesar de', 'c) Aunque'],
+    correcta: 1,
+    explicacion: '"A pesar de + sustantivo/infinitivo" = concesión. "Aunque" requiere verbo conjugado ("aunque llovía").'
+  },
+  {
+    tema: 'Conectores',
+    q: 'Estudia mucho ______ aprobar el examen a la primera.',
+    opciones: ['a) para que', 'b) para', 'c) por'],
+    correcta: 1,
+    explicacion: 'Si el sujeto es el mismo en las dos oraciones: "para + infinitivo" (ella estudia, ella quiere aprobar). "Para que" se usa con sujetos distintos: "para que apruebes".'
+  },
+  {
+    tema: 'Conectores',
+    q: 'Habló tan bajo ______ apenas lo entendimos.',
+    opciones: ['a) como', 'b) que', 'c) para'],
+    correcta: 1,
+    explicacion: '"Tan + adj/adv + que" = oración consecutiva: "tan bajo que..."'
+  },
+  {
+    tema: 'Conectores',
+    q: 'Lo hicimos así ______ no había otra opción.',
+    opciones: ['a) puesto que', 'b) para que', 'c) aunque'],
+    correcta: 0,
+    explicacion: '"Puesto que" = conector causal (porque). "Para que" es final y "aunque" es concesivo, que no encajan con "no había otra opción".'
+  },
+  // --- Verbos problemáticos
+  {
+    tema: 'Léxico-verbal',
+    q: 'El motor del coche no ______ bien; habrá que llevarlo al taller.',
+    opciones: ['a) trabaja', 'b) funciona', 'c) actúa'],
+    correcta: 1,
+    explicacion: 'En español los aparatos "funcionan" (no "trabajan", calco del inglés). "Actuar" implica una acción deliberada.'
+  },
+  {
+    tema: 'Léxico-verbal',
+    q: 'Me ______ cuenta de que había olvidado las llaves.',
+    opciones: ['a) pensé', 'b) di', 'c) tomé'],
+    correcta: 1,
+    explicacion: 'La locución fija es "darse cuenta de". "Pensar cuenta" y "tomar cuenta" no existen en español con ese significado.'
+  },
+  {
+    tema: 'Léxico-verbal',
+    q: 'Llevábamos una hora ______ al autobús en la parada.',
+    opciones: ['a) esperando', 'b) mirando', 'c) buscando'],
+    correcta: 0,
+    explicacion: '"Esperar el autobús" es la expresión habitual. "Mirar" sería observar (algo distinto) y "buscar" implicaría no saber dónde está.'
+  },
+  // --- Preposiciones / régimen
+  {
+    tema: 'Preposiciones',
+    q: 'Se acordó ______ mí al ver la fotografía antigua.',
+    opciones: ['a) a', 'b) de', 'c) con'],
+    correcta: 1,
+    explicacion: '"Acordarse de" (régimen preposicional fijo). No debe confundirse con "recordar", que es transitivo y no lleva preposición.'
+  },
+  {
+    tema: 'Preposiciones',
+    q: 'No me voy a conformar ______ una respuesta tan vaga.',
+    opciones: ['a) a', 'b) con', 'c) de'],
+    correcta: 1,
+    explicacion: '"Conformarse con algo" es la colocación correcta.'
   }
 ];
 
