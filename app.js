@@ -580,6 +580,250 @@
     startQuiz({ title: 'Gramática B2 (10 preguntas)', mode: 'gramatica', items });
   };
 
+  // =============================================================
+  // ESCRITURA (selector de prompt + editor con contador de palabras)
+  // =============================================================
+
+  window._deleHandlers.writing = () => {
+    const list = $('#writingContent');
+    list.innerHTML = '';
+    $('#writingTitle').textContent = 'Expresión escrita — elige una tarea';
+    const both = [
+      { prompts: D.writing.tarea1, label: 'Tarea 1 · Carta formal' },
+      { prompts: D.writing.tarea2, label: 'Tarea 2 · Redacción' }
+    ];
+    both.forEach((group) => {
+      list.appendChild(el('div', { class: 'section-title' }, group.label));
+      group.prompts.forEach((p) => {
+        const item = el('div', { class: 'list-item' });
+        item.appendChild(el('h4', {}, p.titulo));
+        item.appendChild(el('p', {}, p.instrucciones));
+        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, 'Empezar');
+        open.addEventListener('click', () => renderWritingPrompt(p));
+        item.appendChild(open);
+        list.appendChild(item);
+      });
+    });
+    show('writingScreen');
+  };
+
+  function renderWritingPrompt(p) {
+    const list = $('#writingContent');
+    list.innerHTML = '';
+    $('#writingTitle').textContent = p.titulo;
+
+    list.appendChild(el('div', { class: 'writing-prompt' }, p.instrucciones));
+    if (p.estimulo) list.appendChild(el('div', { class: 'reading-text' }, p.estimulo));
+
+    if (p.ideasClave && p.ideasClave.length) {
+      const tip = el('div', { class: 'tip-box' }, el('strong', {}, 'Ideas clave: '));
+      p.ideasClave.forEach((i) => tip.appendChild(el('div', {}, '• ' + i)));
+      list.appendChild(tip);
+    }
+
+    list.appendChild(el('p', { class: 'section-title' }, 'Tu redacción'));
+    const textarea = el('textarea', { placeholder: 'Escribe aquí tu texto...' });
+    const wc = el('div', { class: 'word-count' }, '0 palabras');
+    const saveKey = 'writing-' + p.id;
+    textarea.value = localStorage.getItem(saveKey) || '';
+    function updateCount() {
+      const n = (textarea.value.trim().match(/\S+/g) || []).length;
+      wc.textContent = n + ' palabras (objetivo: 150–180)';
+      wc.className = 'word-count';
+      if (n === 0) wc.classList.add('bad');
+      else if (n < 120 || n > 200) wc.classList.add('bad');
+      else if (n < 150 || n > 180) wc.classList.add('warn');
+      else wc.classList.add('ok');
+      localStorage.setItem(saveKey, textarea.value);
+    }
+    textarea.addEventListener('input', updateCount);
+    list.appendChild(textarea);
+    list.appendChild(wc);
+    updateCount();
+
+    if (p.checklist && p.checklist.length) {
+      list.appendChild(el('p', { class: 'section-title' }, 'Criterios a revisar'));
+      const cl = el('div', { class: 'checklist' });
+      p.checklist.forEach((c) => cl.appendChild(el('div', { class: 'checklist-item' }, c)));
+      list.appendChild(cl);
+    }
+
+    if (p.modelo) {
+      list.appendChild(el('p', { class: 'section-title' }, 'Texto modelo (tras escribir el tuyo)'));
+      const details = el('details', { class: 'audio-placeholder' });
+      details.appendChild(el('summary', {}, '▸ Ver texto modelo'));
+      details.appendChild(el('div', { class: 'transcript' }, p.modelo));
+      list.appendChild(details);
+    }
+
+    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, '‹ Volver a la lista');
+    back.addEventListener('click', () => window._deleHandlers.writing());
+    list.appendChild(back);
+  }
+
+  // =============================================================
+  // EXPRESIÓN ORAL (prompts y guías)
+  // =============================================================
+
+  window._deleHandlers.speaking = () => {
+    const c = $('#speakingContent');
+    c.innerHTML = '';
+    const groups = [
+      { key: 'tarea1', label: 'Tarea 1 · Valorar propuestas (2-3 min)' },
+      { key: 'tarea2', label: 'Tarea 2 · Describir una fotografía (2-3 min)' },
+      { key: 'tarea3', label: 'Tarea 3 · Diálogo con el examinador (3-4 min)' },
+      { key: 'tarea4', label: 'Tarea 4 · Opinar sobre un titular (2-3 min)' }
+    ];
+    groups.forEach((g) => {
+      c.appendChild(el('div', { class: 'section-title' }, g.label));
+      (D.speaking[g.key] || []).forEach((p) => {
+        const item = el('div', { class: 'list-item' });
+        item.appendChild(el('h4', {}, p.titulo));
+        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, 'Abrir');
+        open.addEventListener('click', () => renderSpeakingPrompt(p, g.key));
+        item.appendChild(open);
+        c.appendChild(item);
+      });
+    });
+    show('speakingScreen');
+  };
+  function renderSpeakingPrompt(p, key) {
+    const c = $('#speakingContent');
+    c.innerHTML = '';
+    c.appendChild(el('h2', {}, p.titulo));
+    const sit = p.situacion || p.escenaDescrita || p.titular || '';
+    c.appendChild(el('div', { class: 'writing-prompt' }, sit));
+    const lists = [
+      { key: 'propuestas', label: 'Propuestas a valorar' },
+      { key: 'preguntasGuia', label: 'Preguntas guía' },
+      { key: 'ayuda', label: 'Ayudas y vocabulario' },
+      { key: 'vocabularioUtil', label: 'Vocabulario útil' },
+      { key: 'supuestoExaminador', label: 'Papel del examinador', single: true },
+      { key: 'suPapel', label: 'Tu papel', single: true },
+      { key: 'estrategias', label: 'Estrategias' },
+      { key: 'estructura', label: 'Estructura sugerida' },
+      { key: 'ideasClave', label: 'Ideas clave' }
+    ];
+    lists.forEach((l) => {
+      const v = p[l.key];
+      if (!v) return;
+      c.appendChild(el('p', { class: 'section-title' }, l.label));
+      if (l.single) {
+        c.appendChild(el('div', { class: 'writing-prompt' }, v));
+      } else {
+        const box = el('div', { class: 'checklist' });
+        v.forEach((i) => box.appendChild(el('div', { class: 'checklist-item' }, i)));
+        c.appendChild(box);
+      }
+    });
+    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, '‹ Volver');
+    back.addEventListener('click', () => window._deleHandlers.speaking());
+    c.appendChild(back);
+  }
+
+  // =============================================================
+  // TIPS / CONSEJOS
+  // =============================================================
+
+  window._deleHandlers.tips = () => {
+    $('#listingTitle').textContent = 'Consejos y estrategias';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    Object.values(D.tips).forEach((section) => {
+      c.appendChild(el('p', { class: 'section-title' }, section.titulo));
+      const box = el('div', { class: 'checklist' });
+      section.items.forEach((i) => box.appendChild(el('div', { class: 'checklist-item' }, i)));
+      c.appendChild(box);
+    });
+    show('listingScreen');
+  };
+
+  // =============================================================
+  // QUIZ RÁPIDO (20 preguntas aleatorias de todo el pool)
+  // =============================================================
+
+  function buildRandomPool() {
+    const items = [];
+    D.grammar.forEach((q) => items.push({
+      type: 'mc', q: '[Gramática · ' + q.tema + '] ' + q.q,
+      opciones: q.opciones, correcta: q.correcta, explicacion: q.explicacion
+    }));
+    D.reading.t1.forEach((t) => t.preguntas.forEach((p) => items.push({
+      type: 'mc', q: '[Lectura] ' + p.q.replace(/^\d+\.\s*/, ''),
+      reading: t.texto.length > 600 ? null : t.texto,
+      opciones: p.opciones, correcta: p.correcta, explicacion: p.explicacion
+    })));
+    D.reading.t4.forEach((t) => t.huecos.forEach((h) => items.push({
+      type: 'mc', q: '[Léxico/Gramática] Complete: ' + h.opciones.join(' / '),
+      opciones: h.opciones, correcta: h.correcta, explicacion: h.explicacion
+    })));
+    D.listening.t1.forEach((m) => items.push({
+      type: 'mc', transcript: m.transcripcion,
+      q: '[Audición] ' + m.pregunta, opciones: m.opciones,
+      correcta: m.correcta, explicacion: m.explicacion
+    }));
+    return items;
+  }
+
+  window._deleHandlers.random = () => {
+    const pool = buildRandomPool();
+    const items = shuffle(pool).slice(0, Math.min(20, pool.length));
+    startQuiz({ title: 'Quiz rápido (20 mixtas)', mode: 'random', items });
+  };
+
+  // =============================================================
+  // SIMULACRO DE EXAMEN (lectura + audición con temporizador)
+  // =============================================================
+
+  window._deleHandlers.mockexam = () => {
+    const confirmStart = confirm(
+      'Simulacro DELE B2:\n\n' +
+      '• Lectura (≈20 preguntas) + Audición (≈18 preguntas)\n' +
+      '• Tiempo total: 60 minutos con cronómetro\n' +
+      '• Las escritas y orales se practican aparte.\n\n' +
+      '¿Empezar?'
+    );
+    if (!confirmStart) return;
+
+    const items = [];
+
+    // Lectura T1 (una de cada texto)
+    D.reading.t1.slice(0, 1).forEach((t) => {
+      t.preguntas.forEach((p, i) => items.push({
+        type: 'mc',
+        reading: i === 0 ? t.texto : null,
+        q: '[Lectura T1] ' + p.q, opciones: p.opciones,
+        correcta: p.correcta, explicacion: p.explicacion
+      }));
+    });
+    // Lectura T4 (huecos)
+    D.reading.t4.forEach((t) => {
+      t.huecos.slice(0, 8).forEach((h, i) => items.push({
+        type: 'mc',
+        reading: i === 0 ? t.textoHtml : null,
+        q: '[Lectura T4] Hueco ' + h.n, opciones: h.opciones,
+        correcta: h.correcta, explicacion: h.explicacion
+      }));
+    });
+    // Audición T1 (6 mensajes)
+    D.listening.t1.forEach((m) => items.push({
+      type: 'mc', transcript: '[' + m.tipo + ']\n' + m.transcripcion,
+      q: '[Audición T1] ' + m.pregunta, opciones: m.opciones,
+      correcta: m.correcta, explicacion: m.explicacion
+    }));
+    // Audición T3
+    D.listening.t3.forEach((e) => {
+      e.preguntas.forEach((p, i) => items.push({
+        type: 'mc',
+        transcript: i === 0 ? e.transcripcion : null,
+        q: '[Audición T3] ' + p.q, opciones: p.opciones,
+        correcta: p.correcta, explicacion: p.explicacion
+      }));
+    });
+
+    startQuiz({ title: 'Simulacro DELE B2', mode: 'simulacro', items, timerSec: 60 * 60 });
+  };
+
   // ---------- Inicialización ----------
   refreshStats();
 
