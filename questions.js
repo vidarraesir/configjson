@@ -1135,3 +1135,70 @@ Ana García Pérez`
   }
 ];
 
+// =============================================================
+// EXPRESIÓN ESCRITA - TAREA 2 (redacción)
+// Formato oficial: componer un texto (artículo, reseña, opinión)
+// de 150-180 palabras a partir de un tema y de algunas instrucciones.
+// =============================================================
+
+window.DELE_DATA.writing.tarea2 = [
+  {
+    id: 'w2-redes-sociales',
+    titulo: 'Opinión: las redes sociales y los jóvenes',
+    instrucciones: 'Una revista digital ha abierto una sección de opinión sobre el impacto de las redes sociales en los adolescentes. Escriba un texto de opinión (150-180 palabras) en el que debe: exponer su punto de vista, dar dos argumentos a favor o en contra, y proponer una medida.',
+    checklist: [
+      'Título breve y llamativo',
+      'Introducción que presente el tema y la postura (tesis)',
+      'Dos argumentos desarrollados (uno por párrafo o separados con conectores)',
+      'Una propuesta concreta (no vale "habría que hacer algo": sea específica)',
+      'Conclusión que retome la idea central',
+      'Conectores argumentativos: "por un lado... por otro...", "no solo... sino también", "en definitiva"',
+      'Registro culto-estándar (no coloquial, no demasiado técnico)',
+      'Extensión: 150-180 palabras'
+    ],
+    ideasClave: [
+      'Aspectos negativos: comparación constante, ansiedad, ciberacoso, sueño, adicción, bulos',
+      'Aspectos positivos: contacto, información, creatividad, autoexpresión, oportunidades laborales',
+      'Medidas: educación digital en escuelas, limitar pantallas, apps que midan uso, control parental'
+    ],
+    modelo: `¿Nos están educando las redes sociales?
+
+Las redes sociales ocupan hoy buena parte del tiempo libre de los adolescentes y, desde mi punto de vista, su influencia es más negativa que positiva cuando se usan sin acompañamiento.
+
+Por un lado, estas plataformas fomentan la comparación constante con vidas aparentemente perfectas, lo que puede afectar gravemente a la autoestima de quien está formándose. Por otro lado, el uso nocturno de los móviles está alterando el sueño de muchos jóvenes, con repercusiones evidentes sobre su rendimiento académico y su salud emocional.
+
+Soy consciente de que las redes también ofrecen oportunidades: permiten mantener contactos, expresarse e incluso descubrir vocaciones. Sin embargo, son los riesgos los que necesitan una respuesta urgente.
+
+En mi opinión, los centros educativos deberían incorporar, de forma obligatoria, asignaturas de educación digital centradas en el uso crítico de estas herramientas. Solo así podremos formar usuarios conscientes y no víctimas pasivas del algoritmo.`
+  },
+  {
+    id: 'w2-teletrabajo',
+    titulo: 'Opinión: ventajas e inconvenientes del teletrabajo',
+    instrucciones: 'Escriba un artículo para una revista sobre el teletrabajo (150-180 palabras). Debe: presentar el tema, aportar al menos dos ventajas y dos inconvenientes, y terminar con su valoración personal.',
+    checklist: [
+      'Título',
+      'Introducción: contexto del fenómeno',
+      'Párrafo de ventajas (al menos dos, con ejemplos)',
+      'Párrafo de inconvenientes (al menos dos, con ejemplos)',
+      'Conclusión con valoración personal clara',
+      'Uso de expresiones impersonales: "suele decirse que", "no cabe duda de que"',
+      'Conectores de contraste y enumeración',
+      'Extensión: 150-180 palabras'
+    ],
+    ideasClave: [
+      'Ventajas: ahorro de tiempo, conciliación, menos contaminación, comodidad',
+      'Inconvenientes: aislamiento, dificultad para desconectar, menos contactos informales',
+      'Valoración: fórmula híbrida como equilibrio'
+    ],
+    modelo: `El teletrabajo: ¿revolución o espejismo?
+
+Desde la pandemia, el teletrabajo ha dejado de ser una excepción para convertirse en una opción habitual en muchas empresas. Ahora bien, ¿es tan ventajoso como parece?
+
+Entre los aspectos positivos, destaca el ahorro de tiempo en desplazamientos, que permite dedicar más horas a la familia o al deporte. Además, reduce la contaminación en las ciudades, pues circulan menos coches en hora punta.
+
+Sin embargo, no todo son ventajas. En primer lugar, trabajar desde casa puede generar una sensación de aislamiento, especialmente en quienes viven solos. En segundo lugar, la frontera entre vida laboral y personal se difumina con facilidad: cuando el despacho es el salón, cuesta desconectar al terminar la jornada.
+
+En definitiva, el teletrabajo ofrece oportunidades innegables, pero también riesgos que conviene no minimizar. Personalmente, creo que la mejor solución pasa por un modelo híbrido, con algunos días presenciales que permitan mantener el contacto humano con los compañeros.`
+  }
+];
+
