@@ -884,3 +884,84 @@ window.DELE_DATA.grammar = [
   }
 ];
 
+// =============================================================
+// VOCABULARIO B2 - Flashcards temáticas
+// Estructura: { categoria, palabra, tipo, traduccion, ejemplo }
+// La traducción incluye inglés para referencia rápida.
+// =============================================================
+
+window.DELE_DATA.vocab = [
+  // --- Trabajo y economía
+  { categoria: 'Trabajo', palabra: 'el despido', tipo: 'sustantivo', traduccion: 'dismissal / layoff', ejemplo: 'Tras el ERE, se anunciaron más de cien despidos en la empresa.' },
+  { categoria: 'Trabajo', palabra: 'la plantilla', tipo: 'sustantivo', traduccion: 'workforce / staff', ejemplo: 'La plantilla de la fábrica se ha reducido un 30 %.' },
+  { categoria: 'Trabajo', palabra: 'autónomo/a', tipo: 'adj./sust.', traduccion: 'self-employed', ejemplo: 'Trabaja como autónomo desde que dejó la empresa.' },
+  { categoria: 'Trabajo', palabra: 'ascender', tipo: 'verbo', traduccion: 'to be promoted', ejemplo: 'La han ascendido a jefa de departamento.' },
+  { categoria: 'Trabajo', palabra: 'el sueldo bruto', tipo: 'sustantivo', traduccion: 'gross salary', ejemplo: 'El sueldo bruto es lo que cobras antes de impuestos.' },
+  { categoria: 'Trabajo', palabra: 'la jornada laboral', tipo: 'sustantivo', traduccion: 'working day', ejemplo: 'Muchas empresas han reducido la jornada laboral a 35 horas.' },
+  { categoria: 'Trabajo', palabra: 'la baja por maternidad', tipo: 'sustantivo', traduccion: 'maternity leave', ejemplo: 'Volverá al trabajo cuando termine la baja por maternidad.' },
+  { categoria: 'Trabajo', palabra: 'emprender', tipo: 'verbo', traduccion: 'to start a business', ejemplo: 'Muchos jóvenes quieren emprender su propio negocio.' },
+
+  // --- Medio ambiente
+  { categoria: 'Medio ambiente', palabra: 'el calentamiento global', tipo: 'sustantivo', traduccion: 'global warming', ejemplo: 'El calentamiento global provoca sequías más intensas.' },
+  { categoria: 'Medio ambiente', palabra: 'reciclar', tipo: 'verbo', traduccion: 'to recycle', ejemplo: 'Es importante reciclar el vidrio y el plástico por separado.' },
+  { categoria: 'Medio ambiente', palabra: 'la huella de carbono', tipo: 'sustantivo', traduccion: 'carbon footprint', ejemplo: 'Reducir la huella de carbono implica consumir productos locales.' },
+  { categoria: 'Medio ambiente', palabra: 'sostenible', tipo: 'adjetivo', traduccion: 'sustainable', ejemplo: 'Buscamos un modelo de turismo más sostenible.' },
+  { categoria: 'Medio ambiente', palabra: 'la deforestación', tipo: 'sustantivo', traduccion: 'deforestation', ejemplo: 'La deforestación del Amazonas preocupa a los científicos.' },
+  { categoria: 'Medio ambiente', palabra: 'los residuos', tipo: 'sustantivo', traduccion: 'waste / rubbish', ejemplo: 'La ciudad tiene que gestionar millones de toneladas de residuos cada año.' },
+  { categoria: 'Medio ambiente', palabra: 'el vertedero', tipo: 'sustantivo', traduccion: 'landfill', ejemplo: 'Muchas basuras acaban en vertederos ilegales.' },
+  { categoria: 'Medio ambiente', palabra: 'concienciar', tipo: 'verbo', traduccion: 'to raise awareness', ejemplo: 'La campaña busca concienciar sobre el consumo responsable.' },
+
+  // --- Tecnología y medios
+  { categoria: 'Tecnología', palabra: 'la nube', tipo: 'sustantivo', traduccion: 'the cloud', ejemplo: 'Guarda los archivos en la nube para acceder desde cualquier sitio.' },
+  { categoria: 'Tecnología', palabra: 'descargar', tipo: 'verbo', traduccion: 'to download', ejemplo: 'He descargado la aplicación, pero todavía no la he probado.' },
+  { categoria: 'Tecnología', palabra: 'el buscador', tipo: 'sustantivo', traduccion: 'search engine', ejemplo: 'Google es el buscador más utilizado en el mundo.' },
+  { categoria: 'Tecnología', palabra: 'la red social', tipo: 'sustantivo', traduccion: 'social network', ejemplo: 'Muchos adolescentes pasan horas en las redes sociales.' },
+  { categoria: 'Tecnología', palabra: 'el ciberacoso', tipo: 'sustantivo', traduccion: 'cyberbullying', ejemplo: 'El ciberacoso afecta cada vez a más menores.' },
+  { categoria: 'Tecnología', palabra: 'la brecha digital', tipo: 'sustantivo', traduccion: 'digital divide', ejemplo: 'Los mayores sufren especialmente la brecha digital.' },
+  { categoria: 'Tecnología', palabra: 'el fake news', tipo: 'sustantivo', traduccion: 'fake news', ejemplo: 'Las fake news se propagan muy rápido por internet.' },
+
+  // --- Salud y bienestar
+  { categoria: 'Salud', palabra: 'el insomnio', tipo: 'sustantivo', traduccion: 'insomnia', ejemplo: 'El insomnio crónico puede provocar problemas cardiovasculares.' },
+  { categoria: 'Salud', palabra: 'el estrés', tipo: 'sustantivo', traduccion: 'stress', ejemplo: 'El exceso de trabajo le provoca mucho estrés.' },
+  { categoria: 'Salud', palabra: 'hacer dieta', tipo: 'locución', traduccion: 'to be on a diet', ejemplo: 'Hace dieta desde hace dos meses y ya ha perdido cinco kilos.' },
+  { categoria: 'Salud', palabra: 'recuperarse', tipo: 'verbo', traduccion: 'to recover', ejemplo: 'Tardó varias semanas en recuperarse de la operación.' },
+  { categoria: 'Salud', palabra: 'la receta médica', tipo: 'sustantivo', traduccion: 'prescription', ejemplo: 'Este medicamento solo se vende con receta médica.' },
+  { categoria: 'Salud', palabra: 'la seguridad social', tipo: 'sustantivo', traduccion: 'social security/healthcare', ejemplo: 'La operación está cubierta por la seguridad social.' },
+  { categoria: 'Salud', palabra: 'sedentario/a', tipo: 'adjetivo', traduccion: 'sedentary', ejemplo: 'Un estilo de vida sedentario aumenta el riesgo de obesidad.' },
+
+  // --- Educación
+  { categoria: 'Educación', palabra: 'la beca', tipo: 'sustantivo', traduccion: 'scholarship', ejemplo: 'Sin esa beca no habría podido estudiar fuera.' },
+  { categoria: 'Educación', palabra: 'aprobar / suspender', tipo: 'verbo', traduccion: 'to pass / fail', ejemplo: 'Aprobó todas las asignaturas salvo Matemáticas, que suspendió.' },
+  { categoria: 'Educación', palabra: 'la matrícula', tipo: 'sustantivo', traduccion: 'enrolment / tuition fee', ejemplo: 'La matrícula universitaria subió un 10 % este curso.' },
+  { categoria: 'Educación', palabra: 'la formación continua', tipo: 'sustantivo', traduccion: 'lifelong learning', ejemplo: 'La formación continua es clave en el mundo profesional actual.' },
+  { categoria: 'Educación', palabra: 'el profesorado', tipo: 'sustantivo', traduccion: 'teaching staff', ejemplo: 'El profesorado del centro ha convocado una huelga.' },
+  { categoria: 'Educación', palabra: 'el fracaso escolar', tipo: 'sustantivo', traduccion: 'school dropout', ejemplo: 'España tiene una de las tasas de fracaso escolar más altas de Europa.' },
+
+  // --- Cultura y ocio
+  { categoria: 'Cultura', palabra: 'el estreno', tipo: 'sustantivo', traduccion: 'premiere / opening', ejemplo: 'Hay mucha expectación por el estreno de la película.' },
+  { categoria: 'Cultura', palabra: 'la taquilla', tipo: 'sustantivo', traduccion: 'box office', ejemplo: 'La taquilla del teatro abre a las seis de la tarde.' },
+  { categoria: 'Cultura', palabra: 'el guion', tipo: 'sustantivo', traduccion: 'script / screenplay', ejemplo: 'El guion es lo mejor de toda la serie.' },
+  { categoria: 'Cultura', palabra: 'una obra de teatro', tipo: 'sustantivo', traduccion: 'a play', ejemplo: 'Vimos una obra de teatro muy divertida en el Lara.' },
+  { categoria: 'Cultura', palabra: 'una exposición', tipo: 'sustantivo', traduccion: 'an exhibition', ejemplo: 'Hay una exposición de Picasso en el Reina Sofía.' },
+  { categoria: 'Cultura', palabra: 'el patrimonio', tipo: 'sustantivo', traduccion: 'heritage', ejemplo: 'La Alhambra forma parte del patrimonio mundial.' },
+
+  // --- Relaciones y sociedad
+  { categoria: 'Sociedad', palabra: 'llevarse bien/mal', tipo: 'locución', traduccion: 'to get along well/badly', ejemplo: 'Los dos hermanos se llevan muy bien.' },
+  { categoria: 'Sociedad', palabra: 'comprometerse', tipo: 'verbo', traduccion: 'to commit / get engaged', ejemplo: 'Se comprometieron el año pasado y se casan en junio.' },
+  { categoria: 'Sociedad', palabra: 'la brecha salarial', tipo: 'sustantivo', traduccion: 'wage gap', ejemplo: 'La brecha salarial entre hombres y mujeres aún persiste.' },
+  { categoria: 'Sociedad', palabra: 'la convivencia', tipo: 'sustantivo', traduccion: 'coexistence / living together', ejemplo: 'La convivencia con los vecinos es muy buena.' },
+  { categoria: 'Sociedad', palabra: 'el envejecimiento', tipo: 'sustantivo', traduccion: 'ageing', ejemplo: 'El envejecimiento de la población es un reto para la sanidad.' },
+  { categoria: 'Sociedad', palabra: 'la solidaridad', tipo: 'sustantivo', traduccion: 'solidarity', ejemplo: 'Los vecinos dieron muestras de solidaridad tras las inundaciones.' },
+  { categoria: 'Sociedad', palabra: 'discriminar', tipo: 'verbo', traduccion: 'to discriminate', ejemplo: 'Ninguna ley permite discriminar por razón de sexo.' },
+
+  // --- Adjetivos útiles B2
+  { categoria: 'Adjetivos útiles', palabra: 'asequible', tipo: 'adjetivo', traduccion: 'affordable', ejemplo: 'Buscamos un alquiler asequible cerca del centro.' },
+  { categoria: 'Adjetivos útiles', palabra: 'fiable', tipo: 'adjetivo', traduccion: 'reliable', ejemplo: 'Es una fuente de información muy fiable.' },
+  { categoria: 'Adjetivos útiles', palabra: 'polémico/a', tipo: 'adjetivo', traduccion: 'controversial', ejemplo: 'La nueva ley es bastante polémica.' },
+  { categoria: 'Adjetivos útiles', palabra: 'imprescindible', tipo: 'adjetivo', traduccion: 'essential', ejemplo: 'Es imprescindible tener DNI para hacer ese trámite.' },
+  { categoria: 'Adjetivos útiles', palabra: 'exigente', tipo: 'adjetivo', traduccion: 'demanding', ejemplo: 'Es una profesora muy exigente con sus alumnos.' },
+  { categoria: 'Adjetivos útiles', palabra: 'acogedor/a', tipo: 'adjetivo', traduccion: 'cosy / welcoming', ejemplo: 'El salón es pequeño pero muy acogedor.' },
+  { categoria: 'Adjetivos útiles', palabra: 'rentable', tipo: 'adjetivo', traduccion: 'profitable', ejemplo: 'El negocio empieza a ser rentable tras dos años.' },
+  { categoria: 'Adjetivos útiles', palabra: 'escaso/a', tipo: 'adjetivo', traduccion: 'scarce', ejemplo: 'Las plazas son escasas, así que hay que reservar pronto.' }
+];
+
