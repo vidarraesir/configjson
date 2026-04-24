@@ -1300,3 +1300,87 @@ window.DELE_DATA.speaking.tarea2 = [
   }
 ];
 
+// =============================================================
+// EXPRESIÓN ORAL - TAREA 3 (diálogo a partir de una situación)
+// Formato oficial: simulación con el examinador; negociación,
+// resolución de un problema práctico, 3-4 min.
+// =============================================================
+
+window.DELE_DATA.speaking.tarea3 = [
+  {
+    id: 'o3-organizar-viaje',
+    titulo: 'Organizar un viaje con amigos',
+    situacion: 'Usted y un amigo (el examinador) quieren hacer un viaje juntos este verano. Tienen que ponerse de acuerdo sobre el destino, el tipo de alojamiento, el transporte y el presupuesto. Ambos defenderán opciones distintas y deberán llegar a un acuerdo en 3-4 minutos.',
+    supuestoExaminador: 'El examinador defenderá unas vacaciones activas (senderismo en zonas rurales, camping, autocaravana) con presupuesto ajustado.',
+    suPapel: 'Usted prefiere unas vacaciones culturales en una ciudad grande, con hotel de tres estrellas y tren. No le importa gastar algo más a cambio de comodidad.',
+    estrategias: [
+      'Proponer y escuchar: "yo prefería...", "¿a ti qué te parecería si...?", "¿cómo lo ves?"',
+      'Argumentar brevemente cada opción con 1-2 motivos',
+      'Negociar: "podríamos", "estaría dispuesta a...", "¿te importaría mucho si...?"',
+      'Ceder en algo para ganar en otra cosa: "vale, aceptaría X, pero entonces Y"',
+      'Cerrar el acuerdo de forma clara: "entonces quedamos en que..."'
+    ]
+  },
+  {
+    id: 'o3-problema-vecino',
+    titulo: 'Un problema con un vecino',
+    situacion: 'El vecino de arriba (el examinador) hace mucho ruido por las noches. Usted ha decidido hablar con él para solucionarlo. Mantenga con él una conversación educada pero firme de 3-4 minutos para resolver el problema.',
+    supuestoExaminador: 'El vecino no es consciente del problema, niega que haga tanto ruido y tiende a quitarle importancia.',
+    suPapel: 'Usted debe: explicar el problema con ejemplos concretos, expresar cómo le afecta, proponer soluciones y acordar un compromiso, todo sin faltar al respeto.',
+    estrategias: [
+      'Empezar con cortesía: "disculpe que le moleste, pero..."',
+      'Describir los hechos, no juzgar a la persona: "los últimos jueves, hacia la medianoche..."',
+      'Hablar de cómo le afecta ("no consigo dormir", "al día siguiente rindo peor")',
+      'Proponer alternativas: "¿podríamos acordar que a partir de las once bajemos el volumen?"',
+      'Expresar agradecimiento al cerrar: "muchas gracias por escucharme"'
+    ]
+  }
+];
+
+// =============================================================
+// EXPRESIÓN ORAL - TAREA 4 (opinar sobre una noticia/titular)
+// Formato oficial: el candidato lee un titular y comenta durante
+// 2-3 minutos su opinión y experiencias relacionadas.
+// =============================================================
+
+window.DELE_DATA.speaking.tarea4 = [
+  {
+    id: 'o4-movil-aulas',
+    titulo: 'Prohibición del móvil en las aulas',
+    titular: '"El Gobierno prohibirá el uso del móvil en todas las aulas de Primaria y Secundaria a partir del próximo curso."',
+    preguntasGuia: [
+      '¿Qué opina sobre esta medida?',
+      '¿Cree que funcionará? ¿Por qué?',
+      '¿Qué consecuencias positivas y negativas podría tener?',
+      '¿Conoce casos de niños o adolescentes con problemas por el móvil?',
+      '¿Qué alternativas se le ocurren?'
+    ],
+    estructura: [
+      'Presentar la noticia en pocas palabras (no leerla entera)',
+      'Dar su opinión general al principio ("a mi juicio, es una medida acertada...")',
+      'Argumentar con uno o dos motivos',
+      'Presentar el otro punto de vista y rebatirlo',
+      'Cerrar con una conclusión o una reflexión final'
+    ]
+  },
+  {
+    id: 'o4-turismo-masivo',
+    titulo: 'Turismo masivo en las ciudades',
+    titular: '"Vecinos de varias ciudades españolas se manifiestan contra el turismo masivo: exigen limitar los pisos turísticos y subir impuestos a los cruceros."',
+    preguntasGuia: [
+      '¿Por qué cree que se producen estas protestas?',
+      '¿Qué impacto tiene el turismo masivo en la vida diaria de los residentes?',
+      '¿Le parecen razonables las medidas propuestas?',
+      '¿Qué equilibrio cree que debería buscarse?',
+      '¿Ha vivido o visto usted alguna vez una ciudad muy masificada?'
+    ],
+    estructura: [
+      'Contextualizar brevemente: por qué es un problema actual',
+      'Mostrar que conoce los argumentos de ambas partes (vecinos / sector turístico)',
+      'Posicionarse con una opinión clara y matizada',
+      'Ilustrar con un ejemplo conocido (Barcelona, Venecia, Ámsterdam...)',
+      'Cerrar proponiendo un equilibrio'
+    ]
+  }
+];
+
