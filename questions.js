@@ -393,5 +393,106 @@ window.DELE_DATA.listening.t1 = [
   }
 ];
 
+// =============================================================
+// AUDICIÓN - TAREA 3
+// Formato oficial: una entrevista (periodista + experto/figura
+// pública) con 6 preguntas a/b/c. Se escucha DOS veces.
+// =============================================================
+
+window.DELE_DATA.listening.t3 = [
+  {
+    id: 'a3-entrevista-arquitecta',
+    titulo: 'Entrevista a una arquitecta especializada en rehabilitación',
+    instrucciones: 'Va a escuchar una entrevista. Después, conteste a las preguntas. Seleccione la opción correcta (a, b o c). La audición se escuchará dos veces.',
+    transcripcion: `PERIODISTA: Nuestra invitada de hoy, Cristina Roldán, es arquitecta y lleva quince años dedicándose a un campo que antes se consideraba menor: la rehabilitación de edificios antiguos. Cristina, bienvenida al programa.
+
+CRISTINA: Muchas gracias por la invitación, Javier.
+
+PERIODISTA: Empecemos por el principio. ¿Cómo acaba una recién titulada dedicándose a rehabilitar edificios en lugar de construir obra nueva, que es lo que, supongo, hacen la mayoría de arquitectos al salir de la universidad?
+
+CRISTINA: Fue bastante casual, la verdad. Yo, cuando terminé la carrera, tenía la idea clásica de abrir mi propio estudio y proyectar viviendas desde cero. Pero la crisis de dos mil ocho lo complicó todo. Entré a trabajar en un estudio pequeño que, por casualidad, había recibido un encargo de rehabilitación de un edificio modernista en el centro. Yo iba a ayudar "de paso", pero acabé implicándome tanto que no quise volver atrás.
+
+PERIODISTA: Se dice a menudo que rehabilitar es más difícil que construir nuevo. ¿Es así?
+
+CRISTINA: Totalmente. Cuando proyectas obra nueva, tú pones las reglas; en una rehabilitación, el edificio ya tiene sus propias reglas y tú tienes que aprenderlas antes de poder cambiar nada. Te encuentras con estructuras que no figuran en los planos, con materiales que hoy ya no se fabrican, con vecinos que llevan décadas viviendo allí y tienen opiniones muy claras. Hay que escuchar mucho antes de proyectar.
+
+PERIODISTA: Imagino que también es más caro.
+
+CRISTINA: Sí y no. Es cierto que, metro cuadrado a metro cuadrado, puede parecer más costoso. Pero si sumamos la huella ambiental, el coste de la materia prima y, sobre todo, el valor patrimonial que se conserva, la ecuación cambia bastante. A mi juicio, derribar un edificio sano para levantar uno nuevo es, hoy en día, casi siempre una mala idea.
+
+PERIODISTA: Muchos jóvenes se quejan de que rehabilitar edificios encarece los barrios y expulsa a los vecinos de siempre. ¿Cómo lo ve usted?
+
+CRISTINA: Es un tema muy delicado. Existe, desde luego, un riesgo real de gentrificación cuando las rehabilitaciones se hacen pensando solo en un comprador de alto poder adquisitivo. Por eso yo defiendo que estos proyectos se hagan en colaboración con el Ayuntamiento, con porcentajes reservados a vivienda asequible o alquiler social. Si no, es cierto, puede ocurrir lo que denuncian esos jóvenes.
+
+PERIODISTA: Para terminar, ¿qué consejo le daría a alguien que está pensando en reformar la casa de sus abuelos?
+
+CRISTINA: Lo primero, que no se deje llevar por la prisa. Antes de pedir presupuestos, dedique tiempo a entender el edificio: cómo está hecho, qué patologías tiene, qué le hace único. Y busque a un profesional que, además de diseñar bonito, conozca la técnica antigua. Porque en este tipo de obras, lo que no se ve es casi más importante que lo que se ve.
+
+PERIODISTA: Palabras muy sabias. Muchísimas gracias, Cristina, por estos minutos tan interesantes.`,
+    preguntas: [
+      {
+        q: '1. Cristina comenzó a dedicarse a la rehabilitación porque:',
+        opciones: [
+          'a) era su vocación desde que estudiaba la carrera.',
+          'b) las circunstancias económicas la llevaron a aceptar ese tipo de encargo.',
+          'c) lo prefería antes que abrir su propio estudio.'
+        ],
+        correcta: 1,
+        explicacion: 'Cristina explica que "la crisis de dos mil ocho lo complicó todo" y acabó en un estudio que hacía rehabilitación de casualidad. No era su vocación (a): su idea era abrir un estudio propio. No lo prefería: "iba a ayudar de paso".'
+      },
+      {
+        q: '2. Según Cristina, rehabilitar es más difícil que construir nuevo porque:',
+        opciones: [
+          'a) los materiales antiguos son imposibles de reparar.',
+          'b) hay que entender el edificio existente antes de intervenirlo.',
+          'c) los vecinos siempre se oponen a los cambios.'
+        ],
+        correcta: 1,
+        explicacion: 'Cristina dice: "el edificio ya tiene sus propias reglas y tú tienes que aprenderlas antes de poder cambiar nada". Los materiales no son imposibles de reparar (solo difíciles de encontrar), y de los vecinos dice que "tienen opiniones muy claras", no que siempre se opongan.'
+      },
+      {
+        q: '3. Respecto al coste de rehabilitar, la entrevistada opina que:',
+        opciones: [
+          'a) siempre es claramente más barato que construir nuevo.',
+          'b) si se tienen en cuenta otros factores, la comparación favorece a la rehabilitación.',
+          'c) es imposible de calcular de forma realista.'
+        ],
+        correcta: 1,
+        explicacion: 'Dice "sí y no": es más caro por m² pero, sumando huella ambiental, materia prima y valor patrimonial, "la ecuación cambia bastante". Por eso b) refleja su postura matizada.'
+      },
+      {
+        q: '4. Sobre el problema de la gentrificación, Cristina:',
+        opciones: [
+          'a) niega que las rehabilitaciones la provoquen.',
+          'b) reconoce el riesgo y propone colaboración con la administración pública.',
+          'c) sostiene que es responsabilidad exclusiva del Ayuntamiento.'
+        ],
+        correcta: 1,
+        explicacion: 'Admite "un riesgo real" y defiende "que estos proyectos se hagan en colaboración con el Ayuntamiento, con porcentajes reservados a vivienda asequible". No lo niega (a) ni lo delega totalmente (c).'
+      },
+      {
+        q: '5. En cuanto a reformar la casa de los abuelos, recomienda:',
+        opciones: [
+          'a) contratar al primer profesional que ofrezca buen precio.',
+          'b) entender bien el edificio antes de pedir presupuestos.',
+          'c) derribar la casa y construir una nueva si se puede.'
+        ],
+        correcta: 1,
+        explicacion: '"Antes de pedir presupuestos, dedique tiempo a entender el edificio". Pide no dejarse llevar por la prisa (contrario a a) y antes había dicho que derribar es "casi siempre una mala idea" (contrario a c).'
+      },
+      {
+        q: '6. La actitud general de Cristina a lo largo de la entrevista es:',
+        opciones: [
+          'a) defensiva ante las críticas a su profesión.',
+          'b) reflexiva y dispuesta a reconocer los problemas del sector.',
+          'c) pesimista respecto al futuro de la rehabilitación.'
+        ],
+        correcta: 1,
+        explicacion: 'Admite dificultades, riesgos (gentrificación) y limitaciones, pero también las ventajas. No está a la defensiva (a) ni es pesimista (c): su tono es reflexivo y constructivo.'
+      }
+    ]
+  }
+];
+
 
 
