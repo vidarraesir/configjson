@@ -1,4 +1,8 @@
-const CACHE = 'dele-b2-v1';
+// Estrategia: network-first para HTML/JS/CSS (para que los cambios lleguen
+// enseguida cuando hay conexión) + cache-first como red de seguridad
+// offline. Al cambiar la versión del cache se invalida la anterior.
+
+const CACHE = 'dele-b2-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -26,15 +30,16 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((resp) => {
-        if (!resp || resp.status !== 200 || resp.type === 'opaque') return resp;
+    fetch(req).then((resp) => {
+      if (resp && resp.status === 200 && resp.type !== 'opaque') {
         const copy = resp.clone();
         caches.open(CACHE).then((cache) => cache.put(req, copy));
-        return resp;
-      }).catch(() => caches.match('./index.html'));
-    })
+      }
+      return resp;
+    }).catch(() =>
+      caches.match(req).then((cached) => cached || caches.match('./index.html'))
+    )
   );
 });
