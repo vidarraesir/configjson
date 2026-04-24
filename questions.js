@@ -661,6 +661,116 @@ window.DELE_DATA.grammar = [
     opciones: ['a) insistes', 'b) insistas', 'c) insistieras'],
     correcta: 1,
     explicacion: '"Por mucho que" + subjuntivo (presente) en contexto general/futuro: "insistas".'
+  },
+  // --- Por / Para
+  {
+    tema: 'Por / Para',
+    q: 'Este regalo es ______ mi madre, pero lo compré ______ mi hermana.',
+    opciones: ['a) por / para', 'b) para / por', 'c) para / para'],
+    correcta: 1,
+    explicacion: '"Para mi madre" = destinatario. "Por mi hermana" = en lugar de ella (fue ella quien me pidió comprarlo).'
+  },
+  {
+    tema: 'Por / Para',
+    q: 'Hemos paseado ______ el parque durante dos horas.',
+    opciones: ['a) por', 'b) para', 'c) en'],
+    correcta: 0,
+    explicacion: '"Por el parque" indica movimiento a través de un lugar. "Para el parque" significaría dirección o destino final.'
+  },
+  {
+    tema: 'Por / Para',
+    q: 'El informe debe estar terminado ______ el viernes.',
+    opciones: ['a) por', 'b) para', 'c) hasta'],
+    correcta: 1,
+    explicacion: '"Para el viernes" = fecha límite. "Por el viernes" expresaría aproximación ("alrededor del viernes"). "Hasta" no se usa con plazo cerrado así.'
+  },
+  {
+    tema: 'Por / Para',
+    q: '______ mí, la mejor solución es dejarlo así.',
+    opciones: ['a) Por', 'b) Para', 'c) Según'],
+    correcta: 1,
+    explicacion: '"Para mí" = opinión personal. "Por mí" significaría "a mí no me importa". "Según mí" no existe en español (sería "según yo").'
+  },
+  // --- Ser / Estar
+  {
+    tema: 'Ser / Estar',
+    q: 'La reunión ______ en la sala grande, pero el jefe todavía no ______ allí.',
+    opciones: ['a) está / es', 'b) es / está', 'c) es / es'],
+    correcta: 1,
+    explicacion: 'Con eventos (la reunión) se usa "ser" (tiene lugar). Con ubicación de personas u objetos, "estar": "el jefe está allí".'
+  },
+  {
+    tema: 'Ser / Estar',
+    q: 'Hace mucho que no te veo, ¡______ muy cambiada!',
+    opciones: ['a) eres', 'b) estás', 'c) fuiste'],
+    correcta: 1,
+    explicacion: 'Con un cambio respecto a un estado anterior, se usa "estar": "estás cambiada". "Eres cambiada" no es natural en español.'
+  },
+  {
+    tema: 'Ser / Estar',
+    q: 'Esta sopa ______ muy rica, felicita a quien la haya hecho.',
+    opciones: ['a) es', 'b) está', 'c) resulta'],
+    correcta: 1,
+    explicacion: 'Valoración concreta de un plato ahora probado: "está rica" (opinión puntual). "Es rica" sería descripción objetiva general.'
+  },
+  // --- Perífrasis verbales
+  {
+    tema: 'Perífrasis',
+    q: 'Llevo ______ español desde hace cinco años.',
+    opciones: ['a) a estudiar', 'b) estudiar', 'c) estudiando'],
+    correcta: 2,
+    explicacion: '"Llevar + gerundio" expresa continuidad: "llevo estudiando".'
+  },
+  {
+    tema: 'Perífrasis',
+    q: 'Acabo ______ recibir tu mensaje, ahora te contesto.',
+    opciones: ['a) a', 'b) de', 'c) por'],
+    correcta: 1,
+    explicacion: '"Acabar de + infinitivo" = acción recién concluida. "Acabar por" significaría "terminar haciendo algo".'
+  },
+  {
+    tema: 'Perífrasis',
+    q: 'Tengo ______ terminar este informe antes de las seis.',
+    opciones: ['a) a', 'b) que', 'c) de'],
+    correcta: 1,
+    explicacion: '"Tener que + infinitivo" expresa obligación concreta: "tengo que terminar".'
+  },
+  // --- Voz pasiva y pasiva refleja
+  {
+    tema: 'Voz pasiva',
+    q: 'La nueva ley ______ aprobada ayer en el Congreso.',
+    opciones: ['a) fue', 'b) estaba', 'c) estuvo'],
+    correcta: 0,
+    explicacion: 'Pasiva con "ser" para expresar la acción: "fue aprobada". "Estaba/estuvo aprobada" sería pasiva de estado (resultado), pero el contexto "ayer" indica acción puntual.'
+  },
+  {
+    tema: 'Voz pasiva',
+    q: '______ café en todos los bares de la ciudad.',
+    opciones: ['a) Es vendido', 'b) Se vende', 'c) Están vendiendo'],
+    correcta: 1,
+    explicacion: 'En español, la pasiva refleja "se vende" es mucho más natural que "es vendido" para un hecho general.'
+  },
+  // --- Estilo indirecto
+  {
+    tema: 'Estilo indirecto',
+    q: 'Me dijo: "Mañana iré a verte". → Me dijo que ______ al día siguiente.',
+    opciones: ['a) iba a ir', 'b) irá', 'c) habría ido'],
+    correcta: 0,
+    explicacion: 'Al pasar a estilo indirecto en pasado, el futuro simple pasa a condicional o a "iba a + infinitivo". "Iba a ir" es la opción correcta (expresa plan cercano).'
+  },
+  {
+    tema: 'Estilo indirecto',
+    q: 'Ella me preguntó: "¿Has comido ya?". → Ella me preguntó si ______ ya.',
+    opciones: ['a) he comido', 'b) había comido', 'c) comería'],
+    correcta: 1,
+    explicacion: 'Pretérito perfecto → pluscuamperfecto al trasladar al estilo indirecto en pasado: "había comido".'
+  },
+  {
+    tema: 'Estilo indirecto',
+    q: 'El médico le recomendó: "Descanse más". → El médico le recomendó que ______ más.',
+    opciones: ['a) descansa', 'b) descansara', 'c) descansaría'],
+    correcta: 1,
+    explicacion: 'Imperativo en estilo indirecto pasado pasa a imperfecto de subjuntivo: "que descansara".'
   }
 ];
 
