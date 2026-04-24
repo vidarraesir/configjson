@@ -1384,3 +1384,77 @@ window.DELE_DATA.speaking.tarea4 = [
   }
 ];
 
+// =============================================================
+// CONSEJOS Y ESTRATEGIAS POR PRUEBA
+// =============================================================
+
+window.DELE_DATA.tips = {
+  general: {
+    titulo: 'Consejos generales',
+    items: [
+      'La puntuación mínima para aprobar es 60/100, calculada por agrupaciones: Grupo 1 (Lectura + Escritura) y Grupo 2 (Audición + Oral). Hay que superar ambos grupos con al menos 30/50 cada uno.',
+      'Practique todos los días aunque sea 20 minutos: la constancia supera al empollón de última hora.',
+      'Lea en voz alta cada día: mejora pronunciación, entonación y fluidez para la prueba oral.',
+      'Antes del examen, familiarícese con el formato exacto en la web del Instituto Cervantes (examples.cervantes.es).',
+      'Lleve DNI/pasaporte original, bolígrafo azul o negro y una botella de agua el día del examen.'
+    ]
+  },
+  lectura: {
+    titulo: 'Comprensión de Lectura (70 min)',
+    items: [
+      'Tiene 70 minutos para 36 preguntas: no se detenga más de 15-18 minutos en cada tarea.',
+      'Tarea 1: lea primero las preguntas y después el texto; subraye en el texto las palabras clave.',
+      'Tarea 2: el orden de los textos y de las afirmaciones no coincide; identifique palabras clave de cada afirmación.',
+      'Tarea 3: las frases sobrantes suelen repetir una idea del texto pero con un matiz incorrecto; desconfíe del calco literal.',
+      'Tarea 4: si duda entre dos opciones, elija por eliminación usando el contexto antes y después.',
+      'Deje siempre una respuesta marcada, aunque no esté segura: no se resta por error.'
+    ]
+  },
+  audicion: {
+    titulo: 'Comprensión Auditiva (40 min)',
+    items: [
+      'Cada audio se escucha DOS veces. Entre la primera y la segunda, aproveche para leer las preguntas del siguiente bloque.',
+      'Antes de cada audio hay 30 segundos de preparación: léase las preguntas y subraye palabras clave.',
+      'No intente traducir palabra por palabra: capture la idea general y detalles concretos (fechas, nombres, cifras).',
+      'Si en la primera escucha no lo entiende, marque su intuición y confirme en la segunda.',
+      'Los distractores suelen ser palabras que SÍ aparecen en el audio pero asociadas a otra idea.',
+      'Para practicar: escuche podcasts de Radio 3, Ser, Cadena COPE y el programa "Un idioma sin fronteras" de RNE.'
+    ]
+  },
+  escritura: {
+    titulo: 'Expresión Escrita (80 min)',
+    items: [
+      'Respete siempre el número de palabras: entre 150 y 180. Si se pasa, los examinadores no lo valoran mejor; al contrario.',
+      'Planifique 5 minutos antes de empezar: apunte ideas, conectores y estructura.',
+      'Tarea 1 (carta formal): saludo + motivo + desarrollo + petición + despedida. Nunca "hola".',
+      'Tarea 2 (redacción): tesis clara, dos argumentos bien desarrollados, conclusión. Conectores variados.',
+      'Revise los últimos 5 minutos: concordancias (género/número), tildes y signos de puntuación.',
+      'Use sinónimos variados: no repita "bueno" ni "cosa" más de una vez.',
+      'Evite frases kilométricas. Mejor dos frases claras que una enmarañada.'
+    ]
+  },
+  oral: {
+    titulo: 'Expresión Oral (20 min)',
+    items: [
+      'Tiene 20 minutos de preparación previa y 15 de prueba. Aproveche al máximo la preparación: haga esquema, no texto literal.',
+      'Tarea 1: elija 2-3 propuestas. Argumente cada una con un motivo a favor y uno en contra.',
+      'Tarea 2: describa la foto de arriba abajo o de izquierda a derecha; no se pierda en detalles menores.',
+      'Tarea 3: sea cortés pero firme; ceda en algo pero llegue a un acuerdo.',
+      'Tarea 4: dé su opinión con claridad, pero muestre también que conoce el otro punto de vista.',
+      'Si no sabe una palabra, PARAFRASEE. Nunca se quede callada esperando que le salga.',
+      'Errores leves no bajan la nota si la comunicación fluye. Hable aunque dude.',
+      'Practique grabándose con el móvil: oirse es el mejor entrenamiento.'
+    ]
+  },
+  dia: {
+    titulo: 'El día del examen',
+    items: [
+      'Llegue 30 minutos antes con DNI/pasaporte original.',
+      'Desayune bien pero ligero. Lleve una botella de agua y algo de fruta o fruto seco.',
+      'Duerma 8 horas la noche anterior: el insomnio pasa factura en la comprensión auditiva.',
+      'No revise material en el momento: a estas alturas, lo sabe o no lo sabe. Mejor estar tranquila.',
+      'Entre prueba y prueba, respire hondo y desconecte: cada prueba empieza de cero.'
+    ]
+  }
+};
+
