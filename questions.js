@@ -266,4 +266,44 @@ Con todo, los profesionales del sector se muestran optimistas. [6] Si reciben el
   }
 ];
 
+// =============================================================
+// LECTURA - TAREA 4
+// Formato oficial: texto con 14 huecos de gramática/léxico.
+// Cada hueco tiene tres opciones a/b/c.
+// =============================================================
+
+window.DELE_DATA.reading.t4 = [
+  {
+    id: 'r4-aprender-idiomas',
+    titulo: 'Mitos sobre aprender idiomas de adulto',
+    instrucciones: 'Lea el texto y, para cada hueco, elija la opción correcta entre las tres propuestas (a, b o c). Los huecos evalúan gramática y léxico.',
+    textoHtml: `Durante mucho tiempo se ha __[1]__ de que los adultos son incapaces de aprender un idioma con la misma naturalidad que un niño. __[2]__, los estudios más recientes en neurociencia apuntan en una dirección bastante distinta. El cerebro adulto conserva una plasticidad notable y, __[3]__ no adquiera las lenguas del mismo modo que en la infancia, sí cuenta con recursos cognitivos que los más pequeños todavía no han desarrollado.
+
+Uno de los mitos más extendidos es que, __[4]__ de los veinte años, resulta prácticamente imposible hablar sin acento. Lo cierto es que el acento perfecto depende de muchos factores, pero __[5]__ al nivel comunicativo, la edad no es un obstáculo insalvable. Basta con que el aprendiz __[6]__ a una exposición constante a la lengua para que vaya incorporando estructuras y vocabulario con solvencia.
+
+Otro error habitual consiste en pensar que, para dominar un idioma, __[7]__ vivir en un país donde se hable. Esto era cierto hace unas décadas, pero hoy internet y los recursos audiovisuales __[8]__ acceder a contenidos auténticos desde cualquier lugar. Con constancia, una persona puede __[9]__ avances significativos sin salir de su ciudad.
+
+La motivación, __[10]__, juega un papel determinante. Aprender un idioma porque __[11]__ obligados suele dar peores resultados que hacerlo por un interés genuino. De hecho, a los profesores les sorprende comprobar cómo adultos que __[12]__ abandonado los estudios formales hace años son capaces de alcanzar niveles avanzados cuando la materia les apasiona.
+
+En definitiva, conviene desterrar la idea de que aprender una lengua es asunto de niños. __[13]__ la voluntad y las herramientas adecuadas, cualquier persona __[14]__ lograr avances sorprendentes a lo largo de su vida.`,
+    huecos: [
+      { n: 1, opciones: ['a) afirmado', 'b) afirmando', 'c) afirmar'], correcta: 0, explicacion: 'Tras "se ha" hace falta el participio para formar el pretérito perfecto pasivo: "se ha afirmado". "Afirmando" sería gerundio (incorrecto con "haber") e "afirmar" sería infinitivo.' },
+      { n: 2, opciones: ['a) Además', 'b) Sin embargo', 'c) Por tanto'], correcta: 1, explicacion: 'El texto contrasta la creencia popular con los estudios recientes. Se necesita un conector de contraste: "Sin embargo". "Además" suma y "por tanto" indica consecuencia.' },
+      { n: 3, opciones: ['a) aunque', 'b) a pesar de', 'c) como'], correcta: 0, explicacion: 'Con verbo conjugado en subjuntivo ("no adquiera") se utiliza "aunque". "A pesar de" requiere infinitivo o sustantivo ("a pesar de no adquirir"). "Como" no expresa concesión aquí.' },
+      { n: 4, opciones: ['a) desde', 'b) a partir', 'c) a los'], correcta: 1, explicacion: '"A partir de los veinte años" es la locución fija para marcar el inicio de un periodo. "Desde" también funcionaría pero exige "desde los veinte años". "A los" no encaja con "de" posterior.' },
+      { n: 5, opciones: ['a) en cuanto', 'b) respecto', 'c) referente'], correcta: 1, explicacion: '"Respecto al nivel comunicativo" es la locución correcta. "En cuanto al" también valdría, pero la forma aquí es "respecto". "Referente" requiere también "a" pero es menos habitual y la colocación es distinta.' },
+      { n: 6, opciones: ['a) se somete', 'b) se someta', 'c) se sometiera'], correcta: 1, explicacion: 'La estructura "Basta con que..." exige subjuntivo. Presente de subjuntivo "se someta" porque la acción es general/futura. El imperfecto "se sometiera" aludiría a hipótesis pasada.' },
+      { n: 7, opciones: ['a) se debe', 'b) hay que', 'c) haya que'], correcta: 1, explicacion: 'Se necesita una perífrasis de obligación impersonal: "hay que vivir". "Se debe" exige sujeto explícito ("se debe vivir allí" suena forzado en este contexto). "Haya que" sería subjuntivo y aquí hace falta indicativo.' },
+      { n: 8, opciones: ['a) permiten', 'b) permite', 'c) han permitido a'], correcta: 0, explicacion: 'El sujeto "internet y los recursos audiovisuales" es plural: "permiten acceder". "Permite" concordaría solo con un sujeto singular y "han permitido a" introduciría innecesariamente un CI.' },
+      { n: 9, opciones: ['a) hacer', 'b) tener', 'c) realizar'], correcta: 1, explicacion: 'La colocación habitual en español es "tener avances significativos". "Hacer avances" y "realizar avances" son calcos del inglés/francés poco naturales.' },
+      { n: 10, opciones: ['a) por cierto', 'b) por ejemplo', 'c) por su parte'], correcta: 2, explicacion: '"Por su parte" introduce un nuevo elemento dentro de una enumeración (la motivación, después de otros factores). "Por cierto" cambia de tema y "por ejemplo" introduciría un caso concreto, no un nuevo factor.' },
+      { n: 11, opciones: ['a) estén', 'b) estarán', 'c) están'], correcta: 2, explicacion: 'Oración subordinada causal con valor real: "porque están obligados" (indicativo). El subjuntivo solo aparecería si la causa se negara ("no porque estén obligados...").' },
+      { n: 12, opciones: ['a) han', 'b) habían', 'c) habrán'], correcta: 1, explicacion: 'Se narra un hecho del pasado anterior a otro pasado ("abandonar los estudios" es previo al momento presente de la narración): pretérito pluscuamperfecto "habían abandonado". "Han" daría pretérito perfecto; "habrán", futuro compuesto.' },
+      { n: 13, opciones: ['a) A', 'b) Con', 'c) Por'], correcta: 1, explicacion: '"Con la voluntad y las herramientas adecuadas" expresa el instrumento/condición. "A" y "por" no introducen este tipo de complemento.' },
+      { n: 14, opciones: ['a) puede', 'b) pudiera', 'c) podrá'], correcta: 0, explicacion: 'La oración expresa una posibilidad general, no una hipótesis lejana ni un tiempo futuro concreto: "puede lograr" en presente de indicativo. "Pudiera" suena a deseo/hipótesis; "podrá" marca un futuro que no exige el contexto.' }
+    ]
+  }
+];
+
+
 
