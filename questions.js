@@ -583,5 +583,84 @@ Para terminar, me gustaría dejar una reflexión: si dedicásemos a nuestro sue�
   }
 ];
 
+// =============================================================
+// GRAMÁTICA B2
+// Colección de preguntas por temas clave del nivel. Cada entrada:
+// { tema, q, opciones:[a,b,c], correcta:idx, explicacion }
+// =============================================================
 
+window.DELE_DATA.grammar = [
+  // --- Subjuntivo (presente / imperfecto / perfecto / pluscuamperfecto)
+  {
+    tema: 'Subjuntivo',
+    q: 'Me alegra mucho que ______ antes de la tormenta.',
+    opciones: ['a) llegaste', 'b) has llegado', 'c) hayas llegado'],
+    correcta: 2,
+    explicacion: '"Alegrarse" expresa sentimiento y exige subjuntivo. Como la llegada es reciente y sigue viva en el presente, se usa pretérito perfecto de subjuntivo: "hayas llegado".'
+  },
+  {
+    tema: 'Subjuntivo',
+    q: 'No creo que Ana ______ la verdad el otro día.',
+    opciones: ['a) dijera', 'b) dijo', 'c) diga'],
+    correcta: 0,
+    explicacion: 'Con "no creo que" (opinión negada) se usa subjuntivo. La referencia temporal "el otro día" exige imperfecto de subjuntivo: "dijera".'
+  },
+  {
+    tema: 'Subjuntivo',
+    q: 'Cuando ______ a Madrid, avísame y nos vemos.',
+    opciones: ['a) vienes', 'b) vengas', 'c) vinieras'],
+    correcta: 1,
+    explicacion: '"Cuando" con valor de futuro exige presente de subjuntivo: "cuando vengas".'
+  },
+  {
+    tema: 'Subjuntivo',
+    q: 'Si ______ más temprano, habríamos cogido el tren.',
+    opciones: ['a) hubiéramos salido', 'b) saliéramos', 'c) salimos'],
+    correcta: 0,
+    explicacion: 'Condicional irreal del pasado: "si hubiéramos salido, habríamos cogido". El par es pluscuamperfecto de subjuntivo + condicional compuesto.'
+  },
+  {
+    tema: 'Subjuntivo',
+    q: 'Busco un piso que ______ terraza y ascensor.',
+    opciones: ['a) tiene', 'b) tenga', 'c) tendría'],
+    correcta: 1,
+    explicacion: 'Antecedente no específico (un piso cualquiera, todavía no encontrado): subjuntivo "tenga". Si ya lo hubiera visto, sería indicativo "tiene".'
+  },
+  {
+    tema: 'Subjuntivo',
+    q: 'Aunque ______ mucho, iremos a la excursión.',
+    opciones: ['a) llueva', 'b) llueve', 'c) llovería'],
+    correcta: 0,
+    explicacion: 'Con "aunque" hipotético/futuro se emplea subjuntivo: "aunque llueva" (aunque exista la posibilidad de que llueva).'
+  },
+  // --- Indicativo vs subjuntivo (contrastes)
+  {
+    tema: 'Indicativo vs subjuntivo',
+    q: 'Estoy segura de que mañana ______ a tiempo.',
+    opciones: ['a) llegará', 'b) llegue', 'c) llegaría'],
+    correcta: 0,
+    explicacion: '"Estar seguro de que" expresa certeza afirmativa → indicativo futuro: "llegará".'
+  },
+  {
+    tema: 'Indicativo vs subjuntivo',
+    q: 'Es probable que no ______ la película que buscas.',
+    opciones: ['a) encuentras', 'b) encuentres', 'c) encontrarás'],
+    correcta: 1,
+    explicacion: '"Es probable que" expresa probabilidad/duda y requiere subjuntivo: "encuentres".'
+  },
+  {
+    tema: 'Indicativo vs subjuntivo',
+    q: 'Me dijo que ______ al médico cuanto antes.',
+    opciones: ['a) fui', 'b) fuera', 'c) vaya'],
+    correcta: 1,
+    explicacion: 'Estilo indirecto con verbo de mandato en pasado: "me dijo que fuera". Si el verbo introductorio fuera presente ("me dice que"), sería "vaya".'
+  },
+  {
+    tema: 'Indicativo vs subjuntivo',
+    q: 'Por mucho que ______, no te creeré.',
+    opciones: ['a) insistes', 'b) insistas', 'c) insistieras'],
+    correcta: 1,
+    explicacion: '"Por mucho que" + subjuntivo (presente) en contexto general/futuro: "insistas".'
+  }
+];
 
