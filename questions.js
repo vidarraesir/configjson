@@ -173,3 +173,52 @@ Para los comensales, adaptarse a esta nueva filosofía exige cierto cambio de me
     ]
   }
 ];
+
+// =============================================================
+// LECTURA - TAREA 2
+// Formato oficial: 4 textos cortos (A, B, C, D) con experiencias
+// de personas, y 10 afirmaciones para relacionar con los textos.
+// =============================================================
+
+window.DELE_DATA.reading.t2 = [
+  {
+    id: 'r2-voluntariado',
+    titulo: 'Cuatro voluntarios cuentan su experiencia',
+    instrucciones: 'Lea los testimonios de cuatro personas que han participado en programas de voluntariado. Relacione cada afirmación (1–10) con la persona correspondiente (A, B, C o D). Cada persona puede ser elegida más de una vez.',
+    textos: [
+      {
+        letra: 'A',
+        nombre: 'Lorena (32 años, Madrid)',
+        contenido: 'Llevaba años dándole vueltas a la idea de ayudar en un comedor social, pero siempre encontraba alguna excusa para no dar el paso. Cuando por fin me lancé, descubrí que lo que yo aportaba era mucho menos de lo que recibía. No me refiero tanto a las horas, sino a las conversaciones con personas que habían tenido vidas completamente distintas a la mía. Lo único que echo de menos es más formación antes de empezar: el primer día no sabía ni cómo dirigirme a algunos usuarios sin meter la pata.'
+      },
+      {
+        letra: 'B',
+        nombre: 'Andrés (58 años, Sevilla)',
+        contenido: 'Me jubilé antes de tiempo y no sabía qué hacer con tanto tiempo libre. Mi mujer me sugirió apuntarme a una asociación que acompaña a mayores que viven solos, y aquí estoy, dos años después. Al principio pensé que iba a ser yo quien les diera conversación, pero rápidamente me di cuenta de que son ellos los que me enseñan a mí, con sus historias de otras épocas. Lo que más me sorprendió es la cantidad de gente mayor que pasa días enteros sin hablar con nadie. Es un problema del que se habla poco, y creo que debería estar mucho más presente en los medios.'
+      },
+      {
+        letra: 'C',
+        nombre: 'Nuria (24 años, Valencia)',
+        contenido: 'Como estudiante de biología, decidí pasar un verano en un centro de recuperación de fauna marina. No voy a mentir: las primeras semanas fueron duras, porque los horarios eran muy exigentes y no siempre podíamos salvar a los animales que llegaban. Ahora bien, la recompensa de ver a una tortuga volver al mar después de semanas de cuidados compensa con creces cualquier cansancio. Una cosa que mejoraría es la coordinación entre los centros y los pescadores: muchos animales llegan demasiado tarde porque nadie sabe a quién avisar.'
+      },
+      {
+        letra: 'D',
+        nombre: 'Carlos (45 años, Bilbao)',
+        contenido: 'Llevo casi diez años colaborando con una ONG que da clases de refuerzo a niños de barrios con pocos recursos. Siempre me ha gustado enseñar y, como informático, tenía las tardes relativamente libres. Lo que nunca imaginé es que acabaría aprendiendo tanto de los propios chavales: su capacidad para salir adelante, a pesar de las dificultades, me parece admirable. No todo es bonito, claro: a veces te topas con familias que no valoran lo que haces, y eso duele. Pero son casos puntuales. Si tuviera que dar un consejo a quien esté pensando en empezar, sería simplemente este: no esperes más, porque el momento ideal no existe.'
+      }
+    ],
+    afirmaciones: [
+      { n: 1, texto: 'Esta persona se quedó impresionada por la soledad que sufre un determinado colectivo.', correcta: 'B', explicacion: 'Andrés se sorprende de "la cantidad de gente mayor que pasa días enteros sin hablar con nadie".' },
+      { n: 2, texto: 'Esta persona considera que la organización con la que colabora necesita más formación inicial.', correcta: 'A', explicacion: 'Lorena dice que "echo de menos es más formación antes de empezar".' },
+      { n: 3, texto: 'Esta persona dedica al voluntariado una parte considerable de su tiempo desde hace más de cinco años.', correcta: 'D', explicacion: 'Carlos "lleva casi diez años colaborando".' },
+      { n: 4, texto: 'Esta persona destaca que, cuando comenzó, el ritmo de trabajo le resultó exigente.', correcta: 'C', explicacion: 'Nuria reconoce que "las primeras semanas fueron duras, porque los horarios eran muy exigentes".' },
+      { n: 5, texto: 'Esta persona invita abiertamente a otras personas a no posponer más su decisión.', correcta: 'D', explicacion: 'Carlos da el consejo: "no esperes más, porque el momento ideal no existe".' },
+      { n: 6, texto: 'Esta persona empezó a hacer voluntariado tras un cambio importante en su vida laboral.', correcta: 'B', explicacion: 'Andrés se inició tras jubilarse anticipadamente.' },
+      { n: 7, texto: 'Esta persona reconoce que su voluntariado está relacionado con su formación profesional.', correcta: 'C', explicacion: 'Nuria es estudiante de biología y colabora con un centro de fauna.' },
+      { n: 8, texto: 'Esta persona menciona que tardó bastante en decidirse a ser voluntaria.', correcta: 'A', explicacion: 'Lorena llevaba "años dándole vueltas a la idea" y ponía excusas.' },
+      { n: 9, texto: 'Esta persona propone una mejora concreta en la comunicación entre distintos agentes.', correcta: 'C', explicacion: 'Nuria sugiere mejorar "la coordinación entre los centros y los pescadores".' },
+      { n: 10, texto: 'Esta persona reconoce que, a veces, se encuentra con actitudes poco agradecidas.', correcta: 'D', explicacion: 'Carlos menciona "familias que no valoran lo que haces, y eso duele".' }
+    ]
+  }
+];
+
