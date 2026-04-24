@@ -97,6 +97,18 @@ main { max-width: 900px; margin: 0 auto; padding: 16px; }
 }
 .hero h2 { margin: 0 0 6px 0; font-size: 20px; }
 .hero p { margin: 0; color: var(--muted); font-size: 14px; }
+.hero-love {
+  margin: 10px 0 0 0;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(170,21,27,0.08), rgba(241,191,0,0.12));
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--red);
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
 .stat {
   background: var(--bg);
@@ -520,6 +532,7 @@ textarea {
     <div class="hero">
       <h2>¡Hola! Prepara tu DELE B2</h2>
       <p>Más de 200 preguntas tipo examen, vocabulario, gramática y simulacros completos basados en el modelo oficial del Instituto Cervantes.</p>
+      <p class="hero-love">Te quiero Yana, tú puedes.</p>
       <div class="stats">
         <div class="stat"><div class="stat-val" id="statQuestions">0</div><div class="stat-lbl">Respondidas</div></div>
         <div class="stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl">Aciertos</div></div>
