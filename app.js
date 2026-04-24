@@ -131,6 +131,379 @@
   window._deleHandlers = {};
   window._dele = { D, el, esc, shuffle, show, recordAnswer, loadProgress, refreshStats };
 
+  // =============================================================
+  // MOTOR DE QUIZ (opción múltiple, relacionar, huecos)
+  // =============================================================
+
+  let quizState = null;
+  function startQuiz({ title, mode, items, timerSec = 0 }) {
+    quizState = {
+      title, mode, items,
+      idx: 0,
+      correct: 0,
+      answered: [],
+      startedAt: Date.now(),
+      timerSec,
+      timerId: null
+    };
+    $('#quizTitle').textContent = title;
+    const timerEl = $('#quizTimer');
+    if (timerSec > 0) {
+      timerEl.style.display = '';
+      startTimer(timerSec);
+    } else {
+      timerEl.style.display = 'none';
+    }
+    show('quizScreen');
+    renderCurrentItem();
+  }
+
+  function startTimer(totalSec) {
+    const end = Date.now() + totalSec * 1000;
+    const el = $('#quizTimer');
+    clearInterval(quizState.timerId);
+    const tick = () => {
+      const remain = Math.max(0, Math.round((end - Date.now()) / 1000));
+      const m = String(Math.floor(remain / 60)).padStart(2, '0');
+      const s = String(remain % 60).padStart(2, '0');
+      el.textContent = m + ':' + s;
+      el.classList.toggle('warn', remain < 120 && remain >= 30);
+      el.classList.toggle('bad', remain < 30);
+      if (remain <= 0) {
+        clearInterval(quizState.timerId);
+        finishQuiz('¡Tiempo agotado!');
+      }
+    };
+    tick();
+    quizState.timerId = setInterval(tick, 500);
+  }
+
+  function updateProgress() {
+    const total = quizState.items.length;
+    const cur = Math.min(quizState.idx + 1, total);
+    $('#quizProgress').textContent = cur + ' / ' + total;
+    const pct = (cur / total) * 100;
+    $('#progressBar').style.width = pct + '%';
+  }
+
+  function renderCurrentItem() {
+    updateProgress();
+    const item = quizState.items[quizState.idx];
+    const container = $('#quizContent');
+    container.innerHTML = '';
+    if (!item) return finishQuiz();
+
+    if (item.type === 'mc') renderMC(container, item);
+    else if (item.type === 'match') renderMatch(container, item);
+    else if (item.type === 'cloze') renderCloze(container, item);
+    else container.appendChild(el('p', {}, 'Tipo de pregunta no reconocido.'));
+  }
+
+  // ------- Opción múltiple (a/b/c) -------
+  function renderMC(container, item) {
+    const card = el('div', { class: 'question-card' });
+    if (item.reading) {
+      card.appendChild(el('div', { class: 'reading-text' }, item.reading));
+    }
+    if (item.transcript) {
+      const det = el('details', { class: 'audio-placeholder' });
+      det.appendChild(el('summary', {}, '▸ Audio (transcripción — léala en voz alta o use la lectura del sistema)'));
+      det.appendChild(el('div', { class: 'transcript' }, item.transcript));
+      card.appendChild(det);
+    }
+    card.appendChild(el('p', { class: 'question-text' }, item.q));
+    const optsBox = el('div');
+    card.appendChild(optsBox);
+    const feedback = el('div');
+    card.appendChild(feedback);
+    container.appendChild(card);
+
+    let selected = null;
+    let answered = false;
+    item.opciones.forEach((op, i) => {
+      const btn = el('button', { class: 'option' },
+        el('span', { class: 'option-letter' }, 'abc'[i] || String(i + 1)),
+        el('span', {}, stripPrefix(op))
+      );
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        selected = i;
+        $$('.option', optsBox).forEach((b) => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      optsBox.appendChild(btn);
+    });
+
+    const confirm = el('button', { class: 'btn' }, 'Comprobar');
+    const next = el('button', { class: 'btn ghost' }, 'Siguiente ›');
+    next.style.display = 'none';
+    card.appendChild(confirm);
+    card.appendChild(next);
+
+    confirm.addEventListener('click', () => {
+      if (selected === null) return alert('Elige una opción primero.');
+      answered = true;
+      confirm.style.display = 'none';
+      next.style.display = '';
+      const buttons = $$('.option', optsBox);
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (i === item.correcta) b.classList.add('correct');
+        else if (i === selected) b.classList.add('wrong');
+      });
+      const ok = selected === item.correcta;
+      if (ok) quizState.correct += 1;
+      recordAnswer(ok, quizState.mode);
+      feedback.innerHTML = '';
+      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? '¡Correcto!' : 'Incorrecto.'));
+      if (item.explicacion) {
+        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, 'Explicación: '), document.createTextNode(item.explicacion)));
+      }
+    });
+    next.addEventListener('click', nextItem);
+  }
+
+  function stripPrefix(opt) {
+    // Quita "a) " / "b) " al principio para que no se duplique con la letra de color.
+    return String(opt).replace(/^\s*[a-cA-C]\)\s*/, '');
+  }
+
+  // ------- Relacionar (matching: afirmación -> texto A/B/C/D) -------
+  function renderMatch(container, item) {
+    const card = el('div', { class: 'question-card' });
+    card.appendChild(el('p', { class: 'question-text' },
+      el('strong', {}, 'Afirmación: '),
+      document.createTextNode(item.afirmacion)
+    ));
+    const opts = item.choices;
+    const optsBox = el('div');
+    card.appendChild(optsBox);
+    const feedback = el('div');
+    card.appendChild(feedback);
+
+    let selected = null;
+    let answered = false;
+    opts.forEach((label, i) => {
+      const btn = el('button', { class: 'option' },
+        el('span', { class: 'option-letter' }, label.letter),
+        el('span', {}, label.text)
+      );
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        selected = label.letter;
+        $$('.option', optsBox).forEach((b) => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      optsBox.appendChild(btn);
+    });
+
+    const confirm = el('button', { class: 'btn' }, 'Comprobar');
+    const next = el('button', { class: 'btn ghost' }, 'Siguiente ›');
+    next.style.display = 'none';
+    card.appendChild(confirm);
+    card.appendChild(next);
+    container.appendChild(card);
+
+    confirm.addEventListener('click', () => {
+      if (selected === null) return alert('Elige una opción.');
+      answered = true;
+      confirm.style.display = 'none';
+      next.style.display = '';
+      const buttons = $$('.option', optsBox);
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (opts[i].letter === item.correcta) b.classList.add('correct');
+        else if (opts[i].letter === selected) b.classList.add('wrong');
+      });
+      const ok = selected === item.correcta;
+      if (ok) quizState.correct += 1;
+      recordAnswer(ok, quizState.mode);
+      feedback.innerHTML = '';
+      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? '¡Correcto!' : 'Incorrecto.'));
+      if (item.explicacion) {
+        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, 'Explicación: '), document.createTextNode(item.explicacion)));
+      }
+    });
+    next.addEventListener('click', nextItem);
+  }
+
+  // ------- Huecos (cloze con opciones por hueco) -------
+  // Usamos el mismo renderMC porque estructuralmente cada hueco es mc,
+  // pero con el contexto del texto mostrado arriba.
+  function renderCloze(container, item) {
+    // item = { textContext, q, opciones, correcta, explicacion }
+    renderMC(container, { ...item, reading: item.textContext, type: 'mc' });
+  }
+
+  function nextItem() {
+    if (quizState.idx >= quizState.items.length - 1) {
+      finishQuiz();
+    } else {
+      quizState.idx += 1;
+      renderCurrentItem();
+    }
+  }
+
+  function finishQuiz(msg) {
+    clearInterval(quizState.timerId);
+    const total = quizState.items.length;
+    const correct = quizState.correct;
+    const wrong = total - correct;
+    const pct = Math.round((correct / total) * 100);
+    $('#resultScore').textContent = pct + '%';
+    const labels = [
+      [90, '¡Excelente! Nivel sobresaliente.'],
+      [75, '¡Muy bien! Estás lista para el examen.'],
+      [60, 'Aprobado. Sigue practicando puntos débiles.'],
+      [40, 'Por debajo del aprobado. Revisa las explicaciones.'],
+      [0,  'Mucho por repasar. No te rindas, ¡es el principio!']
+    ];
+    const label = labels.find(([m]) => pct >= m)[1];
+    $('#resultLabel').textContent = msg ? msg + ' ' + label : label;
+    $('#resCorrect').textContent = correct;
+    $('#resWrong').textContent = wrong;
+    $('#resTotal').textContent = total;
+    $('#resultFeedback').innerHTML = '';
+    show('resultScreen');
+  }
+  window.repeatQuiz = () => {
+    if (quizState) startQuiz({ title: quizState.title, mode: quizState.mode, items: quizState.items, timerSec: quizState.timerSec });
+  };
+
+  // ---------- Handlers de lectura (usan el motor de quiz) ----------
+  window._deleHandlers.reading = (task) => {
+    if (task === 't1') startReadingT1();
+    else if (task === 't2') startReadingT2();
+    else if (task === 't3') startReadingT3();
+    else if (task === 't4') startReadingT4();
+  };
+
+  function startReadingT1() {
+    // Cada texto genera 6 items mc con su reading adjunto.
+    const items = [];
+    D.reading.t1.forEach((text) => {
+      text.preguntas.forEach((p, i) => {
+        items.push({
+          type: 'mc',
+          reading: i === 0 ? text.texto : null,
+          q: p.q,
+          opciones: p.opciones,
+          correcta: p.correcta,
+          explicacion: p.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Lectura · Tarea 1', mode: 'r1', items });
+  }
+
+  function startReadingT2() {
+    // Cada afirmación se convierte en item match con los 4 textos.
+    const items = [];
+    D.reading.t2.forEach((set) => {
+      set.afirmaciones.forEach((af, idx) => {
+        items.push({
+          type: 'match',
+          reading: idx === 0 ? renderT2Texts(set.textos) : null,
+          afirmacion: af.texto,
+          choices: set.textos.map((t) => ({ letter: t.letra, text: t.nombre })),
+          correcta: af.correcta,
+          explicacion: af.explicacion
+        });
+      });
+    });
+    // Los textos se muestran con detalles plegables en cada item.
+    startQuiz({ title: 'Lectura · Tarea 2', mode: 'r2', items });
+  }
+  function renderT2Texts(textos) {
+    return textos.map((t) => `[${t.letra}] ${t.nombre}\n${t.contenido}`).join('\n\n');
+  }
+
+  function startReadingT3() {
+    const items = [];
+    D.reading.t3.forEach((set) => {
+      const frags = set.fragmentos;
+      set.huecos.forEach((h, idx) => {
+        items.push({
+          type: 'mc',
+          reading: idx === 0 ? set.texto : null,
+          q: 'Elija el fragmento que encaja en el hueco [' + h.n + ']:',
+          opciones: frags.map((f) => f.letra + ') ' + f.texto),
+          correcta: frags.findIndex((f) => f.letra === h.correcta),
+          explicacion: h.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Lectura · Tarea 3', mode: 'r3', items });
+  }
+
+  function startReadingT4() {
+    const items = [];
+    D.reading.t4.forEach((set) => {
+      set.huecos.forEach((h, idx) => {
+        items.push({
+          type: 'mc',
+          reading: idx === 0 ? set.textoHtml : null,
+          q: 'Hueco [' + h.n + ']: elija la opción correcta.',
+          opciones: h.opciones,
+          correcta: h.correcta,
+          explicacion: h.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Lectura · Tarea 4', mode: 'r4', items });
+  }
+
+  // ---------- Handlers de audición ----------
+  window._deleHandlers.listening = (task) => {
+    if (task === 't1') startListeningT1();
+    else if (task === 't3') startListeningT3();
+    else if (task === 't5') startListeningT5();
+  };
+
+  function startListeningT1() {
+    const items = D.listening.t1.map((m) => ({
+      type: 'mc',
+      transcript: '[' + m.tipo + ']\n' + m.transcripcion,
+      q: m.pregunta,
+      opciones: m.opciones,
+      correcta: m.correcta,
+      explicacion: m.explicacion
+    }));
+    startQuiz({ title: 'Audición · Tarea 1 (mensajes cortos)', mode: 'a1', items });
+  }
+  function startListeningT3() {
+    const items = [];
+    D.listening.t3.forEach((e) => {
+      e.preguntas.forEach((p, i) => {
+        items.push({
+          type: 'mc',
+          transcript: i === 0 ? e.transcripcion : null,
+          q: p.q,
+          opciones: p.opciones,
+          correcta: p.correcta,
+          explicacion: p.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Audición · Tarea 3 (entrevista)', mode: 'a3', items });
+  }
+  function startListeningT5() {
+    const items = [];
+    D.listening.t5.forEach((e) => {
+      e.preguntas.forEach((p, i) => {
+        items.push({
+          type: 'mc',
+          transcript: i === 0 ? e.transcripcion : null,
+          q: p.q,
+          opciones: p.opciones,
+          correcta: p.correcta,
+          explicacion: p.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Audición · Tarea 5 (conferencia)', mode: 'a5', items });
+  }
+
   // ---------- Inicialización ----------
   refreshStats();
 
