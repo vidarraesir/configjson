@@ -965,3 +965,88 @@ window.DELE_DATA.vocab = [
   { categoria: 'Adjetivos útiles', palabra: 'escaso/a', tipo: 'adjetivo', traduccion: 'scarce', ejemplo: 'Las plazas son escasas, así que hay que reservar pronto.' }
 ];
 
+// =============================================================
+// EXPRESIONES Y MODISMOS B2
+// Estructura: { expresion, significado, ejemplo }
+// =============================================================
+
+window.DELE_DATA.idioms = [
+  { expresion: 'Estar al loro', significado: 'Estar atento, enterado de lo que pasa.', ejemplo: 'Está al loro de todas las noticias deportivas.' },
+  { expresion: 'Tomar el pelo (a alguien)', significado: 'Burlarse o bromear sin mala intención.', ejemplo: '¿Me estás tomando el pelo o lo dices en serio?' },
+  { expresion: 'Dar en el clavo', significado: 'Acertar exactamente.', ejemplo: 'Con ese comentario diste en el clavo.' },
+  { expresion: 'Echar una mano', significado: 'Ayudar puntualmente.', ejemplo: '¿Me echas una mano con esta maleta?' },
+  { expresion: 'Estar como un flan', significado: 'Estar muy nervioso.', ejemplo: 'Antes del examen oral estaba como un flan.' },
+  { expresion: 'No pegar ojo', significado: 'No conseguir dormir nada.', ejemplo: 'Con los ruidos de la calle no pegué ojo en toda la noche.' },
+  { expresion: 'Ser pan comido', significado: 'Ser muy fácil.', ejemplo: 'El ejercicio fue pan comido: lo acabé en cinco minutos.' },
+  { expresion: 'Meter la pata', significado: 'Decir o hacer algo inoportuno.', ejemplo: 'Metí la pata preguntándole por su ex.' },
+  { expresion: 'Estar hasta las narices', significado: 'Estar harto de algo/alguien.', ejemplo: 'Estoy hasta las narices del ruido de la obra.' },
+  { expresion: 'Hablar por los codos', significado: 'Hablar mucho y sin parar.', ejemplo: 'Mi tía habla por los codos en las cenas familiares.' },
+  { expresion: 'Quedarse de piedra', significado: 'Quedarse atónito/sorprendido.', ejemplo: 'Me quedé de piedra al conocer la noticia.' },
+  { expresion: 'Ir al grano', significado: 'Hablar directamente, sin rodeos.', ejemplo: 'Déjate de preámbulos y ve al grano.' },
+  { expresion: 'Costar un ojo de la cara', significado: 'Ser muy caro.', ejemplo: 'Ese coche cuesta un ojo de la cara.' },
+  { expresion: 'Tirar la toalla', significado: 'Rendirse, abandonar.', ejemplo: 'Después de tres intentos, no pienso tirar la toalla ahora.' },
+  { expresion: 'No tener pelos en la lengua', significado: 'Decir lo que se piensa sin filtros.', ejemplo: 'Mi abuela no tiene pelos en la lengua: dice lo que opina sin más.' },
+  { expresion: 'Ser uña y carne', significado: 'Ser muy amigos, inseparables.', ejemplo: 'Lucía y Marta son uña y carne desde el instituto.' },
+  { expresion: 'Dar la lata', significado: 'Molestar, insistir.', ejemplo: 'Deja de dar la lata y espera tu turno.' },
+  { expresion: 'Importar un pimiento', significado: 'No importar en absoluto.', ejemplo: 'Lo que diga la vecina me importa un pimiento.' },
+  { expresion: 'Poner los puntos sobre las íes', significado: 'Dejar las cosas claras.', ejemplo: 'Voy a poner los puntos sobre las íes antes de seguir trabajando con ellos.' },
+  { expresion: 'Coger el toro por los cuernos', significado: 'Afrontar un problema con decisión.', ejemplo: 'Es hora de coger el toro por los cuernos y hablar con el jefe.' },
+  { expresion: 'Hacer la vista gorda', significado: 'Fingir no ver algo indebido.', ejemplo: 'El profesor hizo la vista gorda cuando llegó tarde.' },
+  { expresion: 'En un abrir y cerrar de ojos', significado: 'En muy poco tiempo.', ejemplo: 'Preparó la comida en un abrir y cerrar de ojos.' },
+  { expresion: 'Llover a cántaros', significado: 'Llover muchísimo.', ejemplo: 'No salgas ahora, está lloviendo a cántaros.' },
+  { expresion: 'Estar en las nubes', significado: 'Estar distraído.', ejemplo: 'Perdona, estaba en las nubes. ¿Qué decías?' },
+  { expresion: 'Buscar una aguja en un pajar', significado: 'Buscar algo casi imposible.', ejemplo: 'Encontrar esas llaves en esta playa es como buscar una aguja en un pajar.' },
+  { expresion: 'Ponerse las pilas', significado: 'Empezar a esforzarse.', ejemplo: 'Si quieres aprobar, tendrás que ponerte las pilas.' },
+  { expresion: 'No dar pie con bola', significado: 'No hacer nada bien.', ejemplo: 'Hoy no doy pie con bola: todo me sale mal.' },
+  { expresion: 'Estar en la luna', significado: 'Estar despistado.', ejemplo: 'Mi hijo estaba en la luna durante toda la clase.' },
+  { expresion: 'Valer la pena', significado: 'Merecer el esfuerzo.', ejemplo: 'Visitar Granada merece la pena aunque haga calor.' },
+  { expresion: 'Pagar los platos rotos', significado: 'Sufrir las consecuencias de algo que hizo otro.', ejemplo: 'Siempre acabo pagando yo los platos rotos.' }
+];
+
+// =============================================================
+// CONECTORES DISCURSIVOS B2
+// Estructura: { conector, funcion, ejemplo }
+// Organizados por función, como suelen pedir en la tarea escrita.
+// =============================================================
+
+window.DELE_DATA.connectors = [
+  // Adición / continuación
+  { conector: 'además', funcion: 'Adición', ejemplo: 'El piso es grande y, además, tiene terraza.' },
+  { conector: 'asimismo', funcion: 'Adición (formal)', ejemplo: 'La empresa innova y, asimismo, cuida a sus empleados.' },
+  { conector: 'por otra parte', funcion: 'Adición (otro aspecto)', ejemplo: 'Por otra parte, conviene recordar los riesgos.' },
+  { conector: 'no solo... sino también', funcion: 'Adición enfática', ejemplo: 'No solo habla español, sino también francés.' },
+  // Contraste
+  { conector: 'sin embargo', funcion: 'Contraste', ejemplo: 'Hace frío; sin embargo, iremos de excursión.' },
+  { conector: 'no obstante', funcion: 'Contraste (formal)', ejemplo: 'Es caro; no obstante, vale la pena.' },
+  { conector: 'en cambio', funcion: 'Contraste entre dos elementos', ejemplo: 'Ana es tímida; en cambio, Lucas es extrovertido.' },
+  { conector: 'por el contrario', funcion: 'Contraste fuerte', ejemplo: 'Lejos de ayudar, por el contrario, empeoró la situación.' },
+  { conector: 'a pesar de (que)', funcion: 'Concesión', ejemplo: 'A pesar de la lluvia, salimos a correr.' },
+  // Causa
+  { conector: 'porque', funcion: 'Causa (neutra)', ejemplo: 'Llegué tarde porque había mucho tráfico.' },
+  { conector: 'ya que / puesto que', funcion: 'Causa (formal)', ejemplo: 'No insistiré, puesto que ya has dicho que no.' },
+  { conector: 'debido a', funcion: 'Causa + sustantivo', ejemplo: 'Debido a la huelga, se cerró el metro.' },
+  { conector: 'gracias a', funcion: 'Causa positiva', ejemplo: 'Aprobé gracias a tu ayuda.' },
+  // Consecuencia
+  { conector: 'por lo tanto', funcion: 'Consecuencia', ejemplo: 'No estudiaste; por lo tanto, suspendiste.' },
+  { conector: 'por consiguiente', funcion: 'Consecuencia (formal)', ejemplo: 'El informe está incompleto; por consiguiente, se devuelve.' },
+  { conector: 'así que', funcion: 'Consecuencia (coloquial)', ejemplo: 'Tenía prisa, así que cogí un taxi.' },
+  { conector: 'de ahí que + subj.', funcion: 'Consecuencia', ejemplo: 'No lo avisaron; de ahí que se enfadara.' },
+  // Finalidad
+  { conector: 'para (que)', funcion: 'Finalidad', ejemplo: 'Te llamo para que me ayudes con la mudanza.' },
+  { conector: 'con el fin de', funcion: 'Finalidad (formal)', ejemplo: 'Recogemos firmas con el fin de presentar una queja.' },
+  { conector: 'a fin de que', funcion: 'Finalidad (formal)', ejemplo: 'Se reforzará el personal a fin de que mejore la atención.' },
+  // Ejemplificación
+  { conector: 'por ejemplo', funcion: 'Ejemplificar', ejemplo: 'Hay muchas frutas locales; por ejemplo, las naranjas valencianas.' },
+  { conector: 'en concreto / concretamente', funcion: 'Especificar', ejemplo: 'Visitamos varias ciudades, en concreto Lisboa y Oporto.' },
+  // Orden
+  { conector: 'en primer lugar... en segundo lugar', funcion: 'Ordenar', ejemplo: 'En primer lugar, lea el enunciado; en segundo lugar, conteste.' },
+  { conector: 'por un lado... por otro', funcion: 'Estructurar contraste', ejemplo: 'Por un lado, me apetece; por otro, estoy cansada.' },
+  // Conclusión
+  { conector: 'en conclusión', funcion: 'Cerrar argumentación', ejemplo: 'En conclusión, conviene reflexionar antes de decidir.' },
+  { conector: 'en definitiva', funcion: 'Resumir', ejemplo: 'En definitiva, la solución no es fácil pero es necesaria.' },
+  { conector: 'para terminar / finalmente', funcion: 'Cerrar', ejemplo: 'Para terminar, quisiera dar las gracias a todos.' },
+  // Reformulación
+  { conector: 'es decir', funcion: 'Reformular', ejemplo: 'Se trata de un bien inmueble, es decir, una propiedad.' },
+  { conector: 'o sea', funcion: 'Reformular (coloquial)', ejemplo: 'Iremos en tren, o sea, sin coche.' }
+];
+
