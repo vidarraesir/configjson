@@ -1050,3 +1050,88 @@ window.DELE_DATA.connectors = [
   { conector: 'o sea', funcion: 'Reformular (coloquial)', ejemplo: 'Iremos en tren, o sea, sin coche.' }
 ];
 
+// =============================================================
+// EXPRESIÓN ESCRITA - TAREA 1 (carta formal)
+// Formato oficial: redactar una carta formal (queja, reclamación,
+// solicitud) de 150-180 palabras a partir de un estímulo.
+// =============================================================
+
+window.DELE_DATA.writing.tarea1 = [
+  {
+    id: 'w1-queja-hotel',
+    titulo: 'Carta de queja a un hotel',
+    instrucciones: 'Durante sus vacaciones en un hotel, ha tenido varios problemas. Escriba una carta al director del establecimiento quejándose y pidiendo una compensación. Extensión: 150-180 palabras.',
+    estimulo: `Querido cliente: Agradecemos su estancia en el Hotel Playa Azul. Para cualquier incidencia, por favor contacte con dirección.
+
+Usted ha tomado notas durante su estancia:
+- Habitación no era la contratada (prometieron vistas al mar, dieron patio interior)
+- Aire acondicionado averiado durante tres noches
+- Personal poco amable en recepción
+- Piscina cerrada por mantenimiento sin aviso previo
+- Desayuno limitado pese a lo anunciado en la web`,
+    checklist: [
+      'Saludo formal: "Estimado/a señor/a director/a:"',
+      'Párrafo 1: presentación y motivo (fechas, tipo de habitación, reserva)',
+      'Párrafo 2: exposición clara de los problemas (use conectores: "en primer lugar... además... por otro lado")',
+      'Párrafo 3: petición concreta de compensación (devolución, bono, estancia gratuita)',
+      'Despedida formal: "Atentamente" + nombre',
+      'Extensión: 150-180 palabras',
+      'Registro formal (nada de "hola", nada de tuteo)',
+      'Conectores de causa-consecuencia al explicar daños'
+    ],
+    modelo: `Estimado señor director:
+
+Le escribo en relación con mi estancia en su hotel del 12 al 19 de julio, con número de reserva 4578. Lamento decirle que la experiencia ha distado mucho de lo ofrecido en su página web.
+
+En primer lugar, la habitación asignada no era la contratada: pagué por una con vistas al mar y me entregaron una que daba a un patio interior. Además, el aire acondicionado estuvo averiado durante tres noches consecutivas, a pesar de que avisé en recepción. Por otra parte, el personal se mostró poco amable cuando intenté reclamar.
+
+A todo lo anterior se sumó que la piscina permaneció cerrada por mantenimiento sin aviso previo y que el desayuno, anunciado como "bufé libre", se limitaba a pan y café.
+
+Por los motivos expuestos, solicito una compensación económica proporcional a los inconvenientes sufridos, así como una disculpa por escrito. En caso contrario, me veré obligada a acudir a la oficina de consumo.
+
+A la espera de su respuesta, reciba un atento saludo,
+
+Lourdes Martínez`
+  },
+  {
+    id: 'w1-solicitud-beca',
+    titulo: 'Solicitud de beca a una institución',
+    instrucciones: 'Ha visto un anuncio de becas para cursos de posgrado. Escriba una carta al coordinador pidiendo información y mostrando su interés. Extensión: 150-180 palabras.',
+    estimulo: `Fundación Horizonte Cultural
+Convocatoria de becas 2025 para posgrados en el extranjero.
+Plazo de presentación: 15 de abril.
+Requisitos: graduado universitario, nivel B2 en el idioma del país, proyecto académico.
+Dotación: hasta 18.000 € por curso.
+
+Puntos a cubrir en la carta:
+- Presentarse y explicar formación académica
+- Indicar qué posgrado le interesa y dónde
+- Solicitar información concreta (fecha entrega, requisitos adicionales)
+- Expresar motivación e interés`,
+    checklist: [
+      'Saludo: "Estimados señores:" (si no se sabe el destinatario)',
+      'Párrafo 1: presentación personal + título universitario + cómo se ha enterado',
+      'Párrafo 2: proyecto académico o posgrado al que se quiere optar',
+      'Párrafo 3: petición concreta de información',
+      'Cierre con agradecimiento y "Atentamente" / "Reciban un cordial saludo"',
+      'Registro formal, verbos de cortesía (quisiera, me gustaría, agradecería)',
+      'Extensión 150-180 palabras'
+    ],
+    modelo: `Estimados señores:
+
+Me dirijo a ustedes tras haber visto anunciada en su página web la convocatoria de becas de posgrado para el curso 2025. Soy licenciada en Filología Hispánica por la Universidad de Valencia, con una nota media de 8,4, y poseo un nivel certificado de inglés C1.
+
+Estoy especialmente interesada en cursar el Máster en Literatura Comparada de la Universidad de Edimburgo, cuyo programa se ajusta perfectamente a la línea de investigación que deseo desarrollar sobre la recepción de la literatura hispanoamericana en Europa.
+
+Por este motivo, quisiera solicitarles información adicional sobre el proceso de candidatura: en concreto, agradecería que me indicaran si la carta de motivación debe redactarse en inglés o también se admite en español, y si el proyecto académico debe entregarse en un formato específico.
+
+Asimismo, les rogaría que me confirmaran la fecha exacta en que se publicará la resolución provisional.
+
+Quedo a su disposición para cualquier documentación adicional.
+
+Atentamente,
+
+Ana García Pérez`
+  }
+];
+
