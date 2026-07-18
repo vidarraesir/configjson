@@ -43,9 +43,16 @@ En el iPhone puedes hacer que se lean en voz alta con
 - Flashcards con repaso inteligente (marca "difícil" y repásalas aparte)
 
 **Vocabulario por temas · Ucraniano** (mazos de flashcards de artículos de estudio)
-- Psicología y relaciones (40), Inteligencias múltiples (41), Salud y sueño (15)
-- Frases hechas con SER y ESTAR (37) con definición en español y ucraniano
+- Navegador de **18 listas temáticas** (591 palabras): psicología, inteligencias
+  múltiples, insectos comestibles, contaminación acústica, IA y energía,
+  cronotipos, misión espacial, espionaje, bienestar, peste porcina, burnout,
+  burbuja inmobiliaria, longevidad, Diógenes, Generación Z, sesgos, nutrición…
+- Frases hechas con SER y ESTAR (37) con definición en español y ucraniano,
+  más un **quiz** para adivinar el significado
 - Sinónimos de TENER (poseer, contar con, disponer de…) para subir el nivel léxico
+- Frases hechas de Semana Santa dentro del mazo de Expresiones
+- Nota de uso "TENDENCIA": calco frecuente + colocaciones útiles
+- Muletillas para ganar tiempo en la prueba oral (en la sección Oral)
 
 **Expresiones idiomáticas** (30) — "dar en el clavo", "costar un ojo de la cara"...
 

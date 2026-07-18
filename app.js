@@ -689,10 +689,71 @@
   window._deleHandlers.verbflash  = () => startFlashcards(D.verbs, 'Verbos clave');
 
   // ---------- Mazos temáticos (listas de Yana, con ucraniano) ----------
-  window._deleHandlers.vocabPsico = () => startFlashcards(D.themedVocab.psicologia, 'Psicología y relaciones');
-  window._deleHandlers.vocabIntel = () => startFlashcards(D.themedVocab.inteligencias, 'Inteligencias múltiples');
-  window._deleHandlers.vocabSalud = () => startFlashcards(D.themedVocab.saludSueno, 'Salud y sueño');
-  window._deleHandlers.serEstar   = () => startFlashcards(D.serEstarExpr, 'Frases con SER y ESTAR');
+  window._deleHandlers.serEstar = () => startFlashcards(D.serEstarExpr, 'Frases con SER y ESTAR');
+
+  // Navegador de vocabulario de artículos (escalable: crece con cada lista nueva)
+  window._deleHandlers.articleBrowser = () => {
+    $('#listingTitle').textContent = 'Vocabulario de artículos · Ucraniano';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    const total = D.articleDecks.reduce((s, d) => s + d.cards.length, 0);
+    c.appendChild(el('div', { class: 'tip-box' },
+      el('strong', {}, 'Cada artículo es un mazo. '),
+      'Toca uno para estudiarlo con flashcards; marca las difíciles y repásalas aparte. En total: ' + total + ' palabras.'
+    ));
+    D.articleDecks.forEach((deck) => {
+      const b = el('div', { class: 'list-item', style: 'cursor:pointer' });
+      b.appendChild(el('h4', { style: 'margin:0' }, deck.emoji + ' ' + deck.titulo));
+      b.appendChild(el('p', { style: 'margin:2px 0 0 0' }, deck.cards.length + ' palabras'));
+      b.addEventListener('click', () => startFlashcards(deck.cards, deck.emoji + ' ' + deck.titulo));
+      c.appendChild(b);
+    });
+    show('listingScreen');
+  };
+
+  // Quiz de SER y ESTAR: reconocer el significado de cada frase hecha
+  window._deleHandlers.serEstarQuiz = () => {
+    const pool = D.serEstarExpr;
+    const items = shuffle(pool).slice(0, Math.min(12, pool.length)).map((e) => {
+      const distractores = shuffle(pool.filter((o) => o !== e)).slice(0, 2).map((o) => o.significado);
+      const opciones = shuffle([e.significado].concat(distractores));
+      return {
+        type: 'mc',
+        q: '¿Qué significa "' + e.expresion + '"?',
+        opciones,
+        correcta: opciones.indexOf(e.significado),
+        explicacion: e.expresion + ' — ' + e.significado + ' · ' + e.traduccion
+      };
+    });
+    startQuiz({ title: 'Quiz: SER y ESTAR (12)', mode: 'serestar', items });
+  };
+
+  // Nota de uso: TENDENCIA (calco frecuente + colocaciones útiles)
+  window._deleHandlers.tendencia = () => {
+    $('#listingTitle').textContent = 'Palabra clave: TENDENCIA';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    D.usageNotes.forEach((n) => {
+      const box = el('div', { class: 'list-item' });
+      box.appendChild(el('h4', { style: 'margin:0 0 6px 0' }, n.palabra));
+      box.appendChild(el('div', { class: 'feedback bad', style: 'margin:0 0 6px 0' }, '❌ ' + n.error));
+      const alt = el('div', { class: 'feedback ok', style: 'margin:0 0 8px 0' });
+      n.alternativas.forEach((a) => alt.appendChild(el('div', {}, '✓ ' + a)));
+      box.appendChild(alt);
+      box.appendChild(el('p', { style: 'margin:0' }, n.definicion));
+      c.appendChild(box);
+      n.colocaciones.forEach((col) => {
+        const cb = el('div', { class: 'list-item' });
+        cb.appendChild(el('h4', { style: 'margin:0' }, col.forma + ' — ' + col.ua));
+        cb.appendChild(el('div', { class: 'writing-prompt', style: 'margin:6px 0 0 0' },
+          el('div', {}, col.ejemplo),
+          el('div', { style: 'color:var(--muted);font-size:13px;margin-top:2px' }, col.ejemploUa)
+        ));
+        c.appendChild(cb);
+      });
+    });
+    show('listingScreen');
+  };
 
   // ---------- Sinónimos de TENER (pantalla de referencia) ----------
   window._deleHandlers.tenerSyn = () => {
@@ -919,6 +980,20 @@
   window._deleHandlers.speaking = () => {
     const c = $('#speakingContent');
     c.innerHTML = '';
+    // Muletillas para ganar tiempo (referencia rápida, plegable)
+    if (D.fillerPhrases && D.fillerPhrases.length) {
+      const det = el('details', { class: 'audio-placeholder' });
+      det.appendChild(el('summary', {}, '▸ Muletillas para ganar tiempo · Як заповнити тишу'));
+      const box = el('div', { style: 'margin-top:8px' });
+      D.fillerPhrases.forEach((f) => {
+        box.appendChild(el('div', { class: 'writing-prompt', style: 'margin:0 0 6px 0' },
+          el('div', { style: 'font-weight:600' }, f.es),
+          el('div', { style: 'color:var(--muted);font-size:13px;margin-top:2px' }, f.ua)
+        ));
+      });
+      det.appendChild(box);
+      c.appendChild(det);
+    }
     const groups = [
       { key: 'tarea1', label: 'Tarea 1 · Valorar propuestas (6-7 min)' },
       { key: 'tarea2', label: 'Tarea 2 · Situación a partir de una foto (5-6 min)' },
