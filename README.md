@@ -42,6 +42,11 @@ En el iPhone puedes hacer que se lean en voz alta con
 - Las 4 formas clave: yo presente · yo indefinido · yo subjuntivo · participio
 - Flashcards con repaso inteligente (marca "difícil" y repásalas aparte)
 
+**Vocabulario por temas · Ucraniano** (mazos de flashcards de artículos de estudio)
+- Psicología y relaciones (40), Inteligencias múltiples (41), Salud y sueño (15)
+- Frases hechas con SER y ESTAR (37) con definición en español y ucraniano
+- Sinónimos de TENER (poseer, contar con, disponer de…) para subir el nivel léxico
+
 **Expresiones idiomáticas** (30) — "dar en el clavo", "costar un ojo de la cara"...
 
 **Conectores discursivos** (29) organizados por función

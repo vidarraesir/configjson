@@ -688,6 +688,34 @@
   window._deleHandlers.connectors = () => startFlashcards(D.connectors, 'Conectores discursivos');
   window._deleHandlers.verbflash  = () => startFlashcards(D.verbs, 'Verbos clave');
 
+  // ---------- Mazos temáticos (listas de Yana, con ucraniano) ----------
+  window._deleHandlers.vocabPsico = () => startFlashcards(D.themedVocab.psicologia, 'Psicología y relaciones');
+  window._deleHandlers.vocabIntel = () => startFlashcards(D.themedVocab.inteligencias, 'Inteligencias múltiples');
+  window._deleHandlers.vocabSalud = () => startFlashcards(D.themedVocab.saludSueno, 'Salud y sueño');
+  window._deleHandlers.serEstar   = () => startFlashcards(D.serEstarExpr, 'Frases con SER y ESTAR');
+
+  // ---------- Sinónimos de TENER (pantalla de referencia) ----------
+  window._deleHandlers.tenerSyn = () => {
+    $('#listingTitle').textContent = 'Sinónimos de TENER · Синоніми до TENER';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    c.appendChild(el('div', { class: 'tip-box' },
+      el('strong', {}, 'Sube tu nivel: '),
+      'el verbo "tener" es correcto, pero repetirlo baja la nota en el DELE. Sustitúyelo por estos sinónimos según el contexto y tu expresión sonará mucho más rica.'
+    ));
+    D.tenerSyn.forEach((v) => {
+      const box = el('div', { class: 'list-item' });
+      box.appendChild(el('h4', {}, v.verbo + ' — ' + v.ua));
+      box.appendChild(el('p', { style: 'margin:2px 0 8px 0' }, v.uso));
+      box.appendChild(el('div', { class: 'writing-prompt', style: 'margin:0' },
+        el('div', {}, v.ejemplo),
+        el('div', { style: 'color:var(--muted);font-size:13px;margin-top:2px' }, v.ejemploUa)
+      ));
+      c.appendChild(box);
+    });
+    show('listingScreen');
+  };
+
   // =============================================================
   // TIEMPOS VERBALES (guía) Y VERBOS
   // =============================================================

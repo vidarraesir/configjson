@@ -1938,3 +1938,179 @@ window.DELE_DATA.tips.escritura.items = [
   'Revise al final: concordancias, tildes, puntuación y repeticiones.',
   'Varíe los conectores: no repita "también" y "pero" cuando puede usar "asimismo", "no obstante", "en cambio".'
 ];
+
+// =============================================================
+// VOCABULARIO POR TEMAS (listas de estudio de Yana) — con ucraniano
+// Cada lista es un mazo de flashcards propio: frente en español,
+// dorso en ucraniano. Transcrito fielmente del material de estudio.
+// =============================================================
+
+window.DELE_DATA.themedVocab = {
+  psicologia: [
+    { palabra: `Echar balones fuera`, traduccion: `уникати відповілальності` },
+    { palabra: `Atribuir (algo a alguien)`, traduccion: `присвоювати` },
+    { palabra: `Fomentar (algo)`, traduccion: `просувати, сприяти` },
+    { palabra: `Impedir (algo)`, traduccion: `заважати, запобігати` },
+    { palabra: `Malestar`, traduccion: `дискомфорт` },
+    { palabra: `Psicología ligera`, traduccion: `психологія "лайт", поверхнева психологія` },
+    { palabra: `De forma inherente`, traduccion: `за своєю природою, по суті` },
+    { palabra: `Emanar (algo)`, traduccion: `випромінювати` },
+    { palabra: `Delatar`, traduccion: `видавати` },
+    { palabra: `Retorcido (versión)`, traduccion: `викривлений, спотворений, зловмисний` },
+    { palabra: `Vampirismo energético`, traduccion: `енергетичний вампіризм` },
+    { palabra: `Manipulación sutil`, traduccion: `тонка маніпуляція` },
+    { palabra: `Sin fisuras`, traduccion: `без недоліків, бездоганно` },
+    { palabra: `Carecer de`, traduccion: `не мати чогось` },
+    { palabra: `Riguroso (estudio)`, traduccion: `ретельний (дослідження)` },
+    { palabra: `Correr de boca en boca`, traduccion: `переходити з вуст у вуста` },
+    { palabra: `Nocivo (relación)`, traduccion: `шкідливий` },
+    { palabra: `Subyacer a (algo)`, traduccion: `лежати в основі` },
+    { palabra: `Rastreo (por internet)`, traduccion: `пошук` },
+    { palabra: `Diluir`, traduccion: `розчиняти, розмивати` },
+    { palabra: `Dar por cierto`, traduccion: `вважати достовірним` },
+    { palabra: `Estar (esperar) a la vuelta de la esquina`, traduccion: `бути зовсім поруч (чекати за рогом)` },
+    { palabra: `Escalabrar (la paz mental)`, traduccion: `зруйнувати` },
+    { palabra: `Encender la mecha`, traduccion: `запалити ґніт (розпочати щось вибухове)` },
+    { palabra: `Tachar de tóxico`, traduccion: `називати токсичним` },
+    { palabra: `Dar un paso al costado`, traduccion: `відійти вбік` },
+    { palabra: `Colisiones y acoples`, traduccion: `зіткнення та зчеплення` },
+    { palabra: `Trastorno`, traduccion: `розлад` },
+    { palabra: `Patrones (antisociales)`, traduccion: `паттерни, моделі поведінки` },
+    { palabra: `Dar por hecho`, traduccion: `вважати само собою зрозумілим` },
+    { palabra: `Mala uva`, traduccion: `погана вдача` },
+    { palabra: `Foco (en)`, traduccion: `фокус` },
+    { palabra: `Narcisismo irredento`, traduccion: `невиправний нарцисизм` },
+    { palabra: `Pulular (por la red)`, traduccion: `кишіти` },
+    { palabra: `Proyección`, traduccion: `проєкція (психологічне перенесення)` },
+    { palabra: `Haber de + infinitivo (He de dejar)`, traduccion: `бути повинним` },
+    { palabra: `Ley del péndulo`, traduccion: `закон маятника` },
+    { palabra: `Represión emocional`, traduccion: `емоційне придушення` },
+    { palabra: `Salvo`, traduccion: `окрім` },
+    { palabra: `Poner límites`, traduccion: `встановлювати межі` }
+  ],
+  inteligencias: [
+    { palabra: `Poseer`, traduccion: `володіти` },
+    { palabra: `Rasgo`, traduccion: `риса` },
+    { palabra: `Constructo`, traduccion: `конструкт (теоретичне поняття або модель, створена для пояснення певного явища; абстрактна категорія, яку неможливо безпосередньо спостерігати)` },
+    { palabra: `Estar lleno de matices`, traduccion: `бути сповненим нюансів` },
+    { palabra: `A lo largo de`, traduccion: `протягом` },
+    { palabra: `Ser capaz de`, traduccion: `бути здатним` },
+    { palabra: `Dársele bien algo a alguien`, traduccion: `у когось добре виходить щось` },
+    { palabra: `Inteligencia unitaria`, traduccion: `унітарний інтелект` },
+    { palabra: `Inteligencias múltiples`, traduccion: `множинні інтелекти` },
+    { palabra: `A la hora de`, traduccion: `коли йдеться про` },
+    { palabra: `Inteligencia lingüística`, traduccion: `лінгвістичний інтелект` },
+    { palabra: `Dominar el lenguaje`, traduccion: `володіти мовою` },
+    { palabra: `Inteligencia lógico-matemática`, traduccion: `логіко-математичний інтелект` },
+    { palabra: `Razonar`, traduccion: `міркувати` },
+    { palabra: `Habilidad`, traduccion: `здібність` },
+    { palabra: `Inteligencia espacial`, traduccion: `просторовий інтелект` },
+    { palabra: `Inteligencia musical`, traduccion: `музичний інтелект` },
+    { palabra: `Elaborar`, traduccion: `розробляти` },
+    { palabra: `Inteligencia corporal y cinestésica`, traduccion: `тілесно-кінестетичний інтелект` },
+    { palabra: `Hacer visible`, traduccion: `робити видимим` },
+    { palabra: `No estar al alcance de nadie más`, traduccion: `недоступні для будь-кого іншого` },
+    { palabra: `Inteligencia intrapersonal`, traduccion: `внутрішньоособистісний інтелект` },
+    { palabra: `Gozar de`, traduccion: `користуватися, насолоджуватися` },
+    { palabra: `Inteligencia interpersonal`, traduccion: `міжособистісний інтелект` },
+    { palabra: `Llevarse bien con alguien`, traduccion: `добре ладнати з кимось` },
+    { palabra: `Emplear`, traduccion: `використовувати` },
+    { palabra: `Discernir las emociones`, traduccion: `розрізняти емоції` },
+    { palabra: `Inteligencia emocional`, traduccion: `емоційний інтелект` },
+    { palabra: `El rendimiento laboral`, traduccion: `продуктивність праці` },
+    { palabra: `Inteligencia naturalista`, traduccion: `натуралістичний інтелект` },
+    { palabra: `Sumamente importante`, traduccion: `надзвичайно важливий` },
+    { palabra: `Inteligencia existencial`, traduccion: `екзистенційний інтелект` },
+    { palabra: `Tender a`, traduccion: `мати схильність` },
+    { palabra: `El destino final`, traduccion: `кінцеве призначення` },
+    { palabra: `Escala de valores morales`, traduccion: `шкала моральних цінностей` },
+    { palabra: `La contemplación`, traduccion: `споглядання` },
+    { palabra: `El ejercicio de filosofar`, traduccion: `філософування` },
+    { palabra: `Inteligencia creativa`, traduccion: `творчий інтелект` },
+    { palabra: `Abordar`, traduccion: `розглядати, підходити до чогось` },
+    { palabra: `Inteligencia colaborativa`, traduccion: `колаборативний інтелект` },
+    { palabra: `Trabajar en conjunto`, traduccion: `працювати разом, спільно працювати` }
+  ],
+  saludSueno: [
+    { palabra: `El trastorno (tener / sufrir / padecer de)`, traduccion: `розлад` },
+    { palabra: `La sanidad pública`, traduccion: `охорона здоров'я` },
+    { palabra: `Problema DE sueño`, traduccion: `проблема зі сном` },
+    { palabra: `El desorden`, traduccion: `розлад, проблема` },
+    { palabra: `La ansiedad`, traduccion: `тривога` },
+    { palabra: `El riesgo de`, traduccion: `ризик (чогось)` },
+    { palabra: `La obesidad`, traduccion: `ожиріння` },
+    { palabra: `La diabetes`, traduccion: `діабет` },
+    { palabra: `La mortalidad prematura`, traduccion: `передчасна смертність` },
+    { palabra: `El mal dormir`, traduccion: `поганий сон` },
+    { palabra: `El desequilibrio`, traduccion: `дисбаланс` },
+    { palabra: `La salud mental`, traduccion: `психічне здоров'я` },
+    { palabra: `Los psicofármacos`, traduccion: `психотропні засоби` },
+    { palabra: `Incentivar los hábitos saludables`, traduccion: `заохочувати до здорових звичок` },
+    { palabra: `La calidad de vida`, traduccion: `якість життя` }
+  ]
+};
+
+// =============================================================
+// SINÓNIMOS DEL VERBO TENER (para enriquecer el nivel B2)
+// =============================================================
+
+window.DELE_DATA.tenerSyn = [
+  { verbo: `poseer`, ua: `володіти`, uso: `Propiedad, bienes o recursos.`, ejemplo: `La empresa tiene → posee varias filiales en América Latina.`, ejemploUa: `Компанія володіє кількома філіями в Латинській Америці.` },
+  { verbo: `contar con`, ua: `мати у своєму розпорядженні, розраховувати на когось`, uso: `Apoyo, recursos o personas con las que se cuenta.`, ejemplo: `El proyecto tiene → cuenta con el apoyo del gobierno.`, ejemploUa: `Проєкт має підтримку уряду.` },
+  { verbo: `disponer de`, ua: `мати в наявності`, uso: `Servicios, infraestructura o posibilidades.`, ejemplo: `El hotel tiene → dispone de piscina y gimnasio.`, ejemploUa: `Готель має басейн і тренажерний зал.` },
+  { verbo: `experimentar`, ua: `відчувати, переживати`, uso: `Emociones o estados.`, ejemplo: `Muchas personas tienen → experimentan estrés en el trabajo.`, ejemploUa: `Багато людей відчувають стрес на роботі.` },
+  { verbo: `padecer / sufrir`, ua: `страждати від`, uso: `Enfermedades o problemas serios.`, ejemplo: `Ella tiene → padece una enfermedad crónica.`, ejemploUa: `Вона страждає на хронічну хворобу.` },
+  { verbo: `mantener`, ua: `підтримувати, зберігати`, uso: `Relaciones o estados que se conservan.`, ejemplo: `El país tiene → mantiene relaciones diplomáticas con varios estados.`, ejemploUa: `Країна підтримує дипломатичні відносини з кількома державами.` },
+  { verbo: `gozar de`, ua: `користуватися (перевагами, правами)`, uso: `Cosas positivas: gozar de buena salud, de prestigio, de fama.`, ejemplo: `Este país tiene → goza de una economía estable.`, ejemploUa: `Ця країна користується стабільною економікою.` },
+  { verbo: `presentar`, ua: `мати (характеристику, проблему)`, uso: `Registro formal, frecuente al describir gráficos.`, ejemplo: `El informe tiene → presenta varios errores.`, ejemploUa: `Звіт має кілька помилок.` },
+  { verbo: `registrar`, ua: `фіксувати / демонструвати (дані, зміни)`, uso: `Datos, estadísticas, noticias, economía.`, ejemplo: `La empresa tuvo → registró pérdidas este año.`, ejemploUa: `Компанія зазнала збитків цього року.` },
+  { verbo: `contener`, ua: `містити`, uso: `Composición o contenido de algo.`, ejemplo: `Este producto tiene → contiene azúcar.`, ejemploUa: `Цей продукт містить цукор.` }
+];
+
+// =============================================================
+// FRASES HECHAS CON SER Y ESTAR (con ucraniano)
+// significado = definición en español; traduccion = ucraniano.
+// =============================================================
+
+window.DELE_DATA.serEstarExpr = [
+  // --- con SER ---
+  { expresion: `ser agua pasada`, verbo: `ser`, significado: `pertenecer al pasado, ya no tener importancia`, traduccion: `бути справою минулого` },
+  { expresion: `ser como echar margaritas a los cerdos`, verbo: `ser`, significado: `ofrecer algo valioso a quien no sabe apreciarlo`, traduccion: `метати бісер перед свинями` },
+  { expresion: `ser como encontrar una aguja en un pajar`, verbo: `ser`, significado: `ser muy difícil de encontrar`, traduccion: `шукати голку в сіні` },
+  { expresion: `ser coser y cantar`, verbo: `ser`, significado: `ser facilísimo de realizar`, traduccion: `простіше простого, як два пальці` },
+  { expresion: `ser el ojito derecho`, verbo: `ser`, significado: `ser la persona preferida de alguien`, traduccion: `бути улюбленцем` },
+  { expresion: `ser (un) gafe`, verbo: `ser`, significado: `tener o traer mala suerte`, traduccion: `бути невдахою, приносити нещастя` },
+  { expresion: `ser un creído`, verbo: `ser`, significado: `creerse superior a los demás`, traduccion: `бути зазнайкою` },
+  { expresion: `ser un manazas`, verbo: `ser`, significado: `ser poco hábil, torpe con las manos`, traduccion: `бути невмійком, мати руки-крюки` },
+  { expresion: `ser un manitas`, verbo: `ser`, significado: `ser muy hábil con las manos`, traduccion: `бути майстром на всі руки` },
+  { expresion: `ser un palillo`, verbo: `ser`, significado: `ser una persona muy delgada`, traduccion: `бути худим як тріска` },
+  { expresion: `ser un pelota`, verbo: `ser`, significado: `adular a los superiores para medrar`, traduccion: `бути підлабузником` },
+  { expresion: `ser un rollo / una lata`, verbo: `ser`, significado: `ser muy aburrido o pesado`, traduccion: `бути занудою, страшенно нудним` },
+  { expresion: `ser una celestina`, verbo: `ser`, significado: `entrometerse en las relaciones afectivas de los demás`, traduccion: `бути свахою, звідницею` },
+  // --- con ESTAR (infografía) ---
+  { expresion: `estar chupado`, verbo: `estar`, significado: `ser muy fácil`, traduccion: `бути дуже легким, простіше простого` },
+  { expresion: `estar como un tren`, verbo: `estar`, significado: `ser muy atractivo/a físicamente`, traduccion: `бути дуже привабливим, красенем/красунею` },
+  { expresion: `estar como una rosa`, verbo: `estar`, significado: `tener muy buen aspecto, estar resplandeciente`, traduccion: `чудово виглядати, бути як огірочок` },
+  { expresion: `estar cortado`, verbo: `estar`, significado: `estar desconcertado, tímido o vergonzoso`, traduccion: `бути збентеженим, сором'язливим` },
+  { expresion: `estar cuadrado`, verbo: `estar`, significado: `ser muy musculoso`, traduccion: `бути накачаним, м'язистим` },
+  { expresion: `estar en las nubes / en la luna`, verbo: `estar`, significado: `estar muy despistado`, traduccion: `витати в хмарах` },
+  { expresion: `estar enchufado`, verbo: `estar`, significado: `tener ventajas laborales inmerecidas`, traduccion: `влаштуватися по блату` },
+  { expresion: `al pan, pan y al vino, vino`, verbo: `dicho`, significado: `hablar claro, llamar a las cosas por su nombre`, traduccion: `називати речі своїми іменами` },
+  { expresion: `estar encima de alguien`, verbo: `estar`, significado: `supervisar o controlar de cerca`, traduccion: `пильно стежити за кимось, стояти над душею` },
+  { expresion: `estar hecho polvo / hecho migas`, verbo: `estar`, significado: `estar completamente roto, muy cansado o muy triste`, traduccion: `бути розбитим, украй виснаженим` },
+  { expresion: `estar más contento que unas castañuelas`, verbo: `estar`, significado: `estar muy feliz`, traduccion: `бути на сьомому небі від щастя` },
+  { expresion: `estar más fuerte que un roble`, verbo: `estar`, significado: `tener muy buena salud`, traduccion: `бути здоровим як бик` },
+  { expresion: `estar más sordo que una tapia`, verbo: `estar`, significado: `estar completamente sordo`, traduccion: `бути глухим як пень` },
+  { expresion: `estar tirado`, verbo: `estar`, significado: `ser muy barato o muy fácil`, traduccion: `коштувати копійки; бути дуже легким` },
+  // --- con ESTAR (lista adicional) ---
+  { expresion: `estar pez en algo`, verbo: `estar`, significado: `no tener ni idea de algo`, traduccion: `нічого не тямити в чомусь, бути "нульовим"` },
+  { expresion: `estar sin blanca`, verbo: `estar`, significado: `no tener nada de dinero`, traduccion: `не мати ні копійки` },
+  { expresion: `estar con la soga al cuello`, verbo: `estar`, significado: `estar en una situación muy difícil`, traduccion: `бути у важкому становищі, "з петлею на шиї"` },
+  { expresion: `estar en el ajo`, verbo: `estar`, significado: `estar implicado o al corriente de un asunto`, traduccion: `бути замішаним у чомусь, знати зсередини` },
+  { expresion: `estar para el arrastre`, verbo: `estar`, significado: `estar completamente agotado`, traduccion: `бути зовсім виснаженим, "готовим до списання"` },
+  { expresion: `estar en la gloria`, verbo: `estar`, significado: `sentirse estupendamente`, traduccion: `почуватися чудово, бути на сьомому небі` },
+  { expresion: `estar en el candelero`, verbo: `estar`, significado: `estar en el centro de atención`, traduccion: `бути в центрі уваги, на виду` },
+  { expresion: `estar a las duras y a las maduras`, verbo: `estar`, significado: `aceptar tanto lo bueno como lo malo`, traduccion: `бути готовим і до хорошого, і до важкого` },
+  { expresion: `estar en ascuas`, verbo: `estar`, significado: `estar impaciente o muy nervioso`, traduccion: `бути в нетерпінні, "сидіти як на голках"` },
+  { expresion: `estar al tanto`, verbo: `estar`, significado: `estar informado de la situación`, traduccion: `бути в курсі` }
+];
