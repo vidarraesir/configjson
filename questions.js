@@ -1752,3 +1752,189 @@ window.DELE_DATA.verbs = [
   { inf: 'morir', ua: 'помирати', formas: 'muero · morí · muera · muerto', ejemplo: 'Me muero de ganas de verte.' },
   { inf: 'llegar', ua: 'прибувати, приходити', formas: 'llego · llegué · llegue · llegado', ejemplo: 'Llegamos tarde por el tráfico.' }
 ];
+
+// =============================================================
+// AUDICIÓN - TAREA 2 (conversación: ¿quién lo dice?)
+// Formato oficial: conversación entre dos personas; 6 enunciados
+// que hay que atribuir a él, a ella o a ninguno de los dos.
+// =============================================================
+
+window.DELE_DATA.listening.t2 = [
+  {
+    id: 'a2-mudanza-campo',
+    titulo: 'Conversación: ¿mudarse al campo?',
+    instrucciones: 'Va a escuchar una conversación entre dos amigos, Marta y Pablo, sobre mudarse al campo. Indique si los enunciados (1-6) se refieren a lo que dice Marta (A), Pablo (B) o ninguno de los dos (C). Se escucha dos veces.',
+    hablantes: ['Marta', 'Pablo'],
+    transcripcion: `MARTA: ¿Sabes que Julia y Fer se han comprado una casa en un pueblo de Ávila? Me tienen loca con las fotos del huerto.
+
+PABLO: Algo vi en las redes. Yo la verdad es que los entiendo: desde que trabajo en remoto, cada vez me planteo más en serio salir de la ciudad. Lo que me frena es el tema del instituto de mis hijos.
+
+MARTA: Ya, eso es un problema. A mí lo que me echa para atrás es otra cosa: yo necesito gente alrededor, cafeterías, cines... Me conozco, y a los tres meses en un pueblo me subiría por las paredes.
+
+PABLO: Bueno, dicen que te acostumbras. Además, con lo que cuesta ahora un alquiler en el centro, allí vivirías por la mitad. Yo he echado cuentas y me ahorraría casi seiscientos euros al mes.
+
+MARTA: El dinero no lo es todo, Pablo. Y no te olvides de la sanidad: mi madre estuvo fatal el año pasado y menos mal que teníamos el hospital a diez minutos. En un pueblo pequeño eso no lo tienes.
+
+PABLO: En eso te doy la razón, es lo más serio de todo. Aun así, yo creo que el año que viene, cuando el mayor acabe el bachillerato, voy a probar una temporada. Alquilo algo unos meses y, si no funciona, vuelvo, no pasa nada.
+
+MARTA: Pues yo te visitaré encantada los fines de semana, eso sí. Para desconectar un par de días, el campo es maravilloso. Para vivir... prefiero mi barrio de toda la vida.`,
+    enunciados: [
+      { n: 1, texto: 'Trabaja desde casa actualmente.', correcta: 'B', explicacion: 'Pablo dice: "desde que trabajo en remoto, cada vez me planteo más en serio salir de la ciudad".' },
+      { n: 2, texto: 'Cree que echaría de menos la vida social de la ciudad.', correcta: 'A', explicacion: 'Marta: "yo necesito gente alrededor, cafeterías, cines... me subiría por las paredes".' },
+      { n: 3, texto: 'Ha calculado cuánto dinero ahorraría viviendo en un pueblo.', correcta: 'B', explicacion: 'Pablo: "he echado cuentas y me ahorraría casi seiscientos euros al mes".' },
+      { n: 4, texto: 'Ya ha vivido antes en un pueblo pequeño.', correcta: 'C', explicacion: 'Ninguno de los dos menciona haber vivido en un pueblo: hablan de hipótesis y planes, no de experiencias previas.' },
+      { n: 5, texto: 'Considera que la atención médica es el mayor inconveniente.', correcta: 'A', explicacion: 'Marta saca el tema de la sanidad y Pablo se limita a darle la razón; la preocupación es de ella. (Ojo: que él asienta no convierte el enunciado en suyo: lo introduce ella.)' },
+      { n: 6, texto: 'Tiene pensado probar a vivir en el campo de forma temporal.', correcta: 'B', explicacion: 'Pablo: "voy a probar una temporada. Alquilo algo unos meses y, si no funciona, vuelvo".' }
+    ]
+  }
+];
+
+// =============================================================
+// AUDICIÓN - TAREA 4 (relacionar personas con enunciados)
+// Formato oficial: 6 monólogos breves; relacionar cada persona
+// con uno de los 9 enunciados propuestos (sobran 3).
+// =============================================================
+
+window.DELE_DATA.listening.t4 = [
+  {
+    id: 'a4-aprender-idiomas',
+    titulo: 'Seis personas hablan de aprender idiomas',
+    instrucciones: 'Va a escuchar a seis personas hablando de su experiencia aprendiendo idiomas. Relacione a cada persona (1-6) con el enunciado que resume lo que dice (A-I). Hay tres enunciados que no debe elegir. Se escucha dos veces.',
+    personas: [
+      { n: 1, nombre: 'Persona 1', transcripcion: 'Yo estudié francés doce años en el colegio y, cuando fui a París, no era capaz ni de pedir un café. En cambio, con el español me pasó lo contrario: seis meses viviendo en Sevilla y hablaba mejor que tras una década de gramática. Para mí no hay color: o te metes de lleno donde se habla la lengua, o no avanzas de verdad.' },
+      { n: 2, nombre: 'Persona 2', transcripcion: 'Mi truco son las series. Empecé viendo telenovelas con subtítulos en mi idioma, luego con subtítulos en español, y al final sin nada. Sin darme cuenta se me quedaban las expresiones, la entonación... La gente se ríe cuando lo cuento, pero oye, a mí me funcionó mejor que cualquier academia.' },
+      { n: 3, nombre: 'Persona 3', transcripcion: 'Lo he intentado mil veces por mi cuenta con aplicaciones y siempre lo dejo a las tres semanas. Me falta disciplina, lo reconozco. Al final me apunté a clases presenciales dos días por semana precisamente por eso: si he pagado y hay un profesor esperándome, voy. Es la única manera de que no me rinda.' },
+      { n: 4, nombre: 'Persona 4', transcripcion: 'Trabajo de enfermera y en mi hospital cada vez hay más pacientes extranjeros. Empecé a estudiar idiomas por pura necesidad laboral, la verdad, sin ninguna ilusión. Y mira por dónde, lo que empezó siendo una obligación se ha convertido en mi pasatiempo favorito. Ahora estudio un tercer idioma solo por gusto.' },
+      { n: 5, nombre: 'Persona 5', transcripcion: 'Mi problema siempre fue el miedo al ridículo. Sabía la gramática perfectamente, aprobé todos los exámenes, pero en cuanto tenía delante a un nativo me quedaba en blanco. Lo que me cambió fue un grupo de intercambio de conversación: gente igual de perdida que yo, cero vergüenza. Ahí me solté por fin.' },
+      { n: 6, nombre: 'Persona 6', transcripcion: 'A mis sesenta y ocho años me matriculé en la escuela de idiomas y soy la mayor de mi clase con diferencia. Algunos pensarán que a mi edad ya no vale la pena, pero yo lo tengo clarísimo: la cabeza hay que ejercitarla como las piernas, y además siempre soñé con leer novelas en versión original. Nunca es tarde.' }
+    ],
+    enunciados: [
+      { letra: 'A', texto: 'Aprendió gracias al contenido audiovisual.' },
+      { letra: 'B', texto: 'Considera que la inmersión es la única forma eficaz de aprender.' },
+      { letra: 'C', texto: 'Empezó a estudiar por motivos de trabajo y acabó aficionándose.' },
+      { letra: 'D', texto: 'Necesita un compromiso externo para ser constante.' },
+      { letra: 'E', texto: 'Superó la vergüenza de hablar practicando con otros aprendices.' },
+      { letra: 'F', texto: 'Cree que la edad no es un obstáculo para aprender.' },
+      { letra: 'G', texto: 'Dejó de estudiar idiomas por falta de tiempo.' },
+      { letra: 'H', texto: 'Piensa que las academias son un engaño.' },
+      { letra: 'I', texto: 'Aprendió un idioma para poder emigrar.' }
+    ],
+    soluciones: [
+      { n: 1, correcta: 'B', explicacion: '"O te metes de lleno donde se habla la lengua, o no avanzas de verdad" = inmersión como única vía eficaz.' },
+      { n: 2, correcta: 'A', explicacion: 'Aprendió con telenovelas y series, quitando los subtítulos gradualmente.' },
+      { n: 3, correcta: 'D', explicacion: 'Se apuntó a clases presenciales porque "si he pagado y hay un profesor esperándome, voy": necesita compromiso externo.' },
+      { n: 4, correcta: 'C', explicacion: 'Empezó "por pura necesidad laboral" y ahora es su "pasatiempo favorito".' },
+      { n: 5, correcta: 'E', explicacion: 'El grupo de intercambio con "gente igual de perdida" le quitó el miedo al ridículo.' },
+      { n: 6, correcta: 'F', explicacion: '"Nunca es tarde": a los 68 años defiende que la edad no impide aprender.' }
+    ],
+    sobrantes: ['G', 'H', 'I']
+  }
+];
+
+// =============================================================
+// EXPRESIÓN ORAL - TAREA 3 OFICIAL (la encuesta)
+// El candidato opina sobre los datos de una encuesta y los compara
+// con sus propias respuestas (3-4 min, sin preparación previa).
+// =============================================================
+
+(function reorganizarOral() {
+  const S = window.DELE_DATA.speaking;
+  // Las antiguas tareas 3 (diálogos) y 4 (titulares) no forman parte
+  // del formato oficial del B2: pasan a "práctica extra".
+  S.extra = [].concat(S.tarea3 || [], S.tarea4 || []);
+  delete S.tarea4;
+
+  S.tarea3 = [
+    {
+      id: 'o3-encuesta-tiempo-libre',
+      titulo: 'Encuesta: el tiempo libre',
+      situacion: 'El entrevistador le muestra una encuesta sobre el tiempo libre realizada a 1.000 personas. Primero conteste usted a la pregunta y después compare sus respuestas con los resultados reales. Justifique sus opiniones (3-4 minutos).',
+      preguntaEncuesta: '¿Qué actividad prefiere hacer en su tiempo libre?',
+      opcionesEncuesta: [
+        'Ver series o películas en casa',
+        'Salir con amigos o familia',
+        'Hacer deporte',
+        'Leer',
+        'Viajar o hacer excursiones',
+        'Navegar por internet y redes sociales'
+      ],
+      datosReales: [
+        'Ver series o películas: 34 %',
+        'Salir con amigos o familia: 22 %',
+        'Navegar por internet: 18 %',
+        'Hacer deporte: 12 %',
+        'Viajar o hacer excursiones: 9 %',
+        'Leer: 5 %'
+      ],
+      estrategias: [
+        'Primero responda usted: "Yo, sin duda, elegiría... porque..."',
+        'Compare: "Me sorprende que solo un cinco por ciento lea, yo esperaba más" (¡subjuntivo con "me sorprende que"!)',
+        'Especule sobre las causas: "Quizás se deba a que las plataformas son muy cómodas..."',
+        'Use porcentajes y cuantificadores: la mayoría, uno de cada tres, apenas, casi nadie',
+        'Relacione con su país: "En Ucrania, en cambio, diría que..."'
+      ]
+    },
+    {
+      id: 'o3-encuesta-habitos-compra',
+      titulo: 'Encuesta: hábitos de compra',
+      situacion: 'El entrevistador le muestra una encuesta sobre hábitos de compra. Conteste primero usted y compare después con los datos reales, justificando sus respuestas (3-4 minutos).',
+      preguntaEncuesta: '¿Dónde hace usted la mayor parte de sus compras?',
+      opcionesEncuesta: [
+        'En grandes supermercados',
+        'En tiendas de barrio',
+        'En mercados tradicionales',
+        'Por internet',
+        'En centros comerciales'
+      ],
+      datosReales: [
+        'Grandes supermercados: 41 %',
+        'Por internet: 27 %',
+        'Tiendas de barrio: 15 %',
+        'Centros comerciales: 11 %',
+        'Mercados tradicionales: 6 %'
+      ],
+      estrategias: [
+        'Estructura en tres pasos: mi respuesta → comparación con los datos → valoración general',
+        'Exprese sorpresa o acuerdo: "No me extraña que...", "Me llama la atención que..." (+ subjuntivo)',
+        'Hable de tendencias: "cada vez más gente...", "las compras en línea van en aumento"',
+        'Cierre con una reflexión: el futuro del pequeño comercio, la comodidad frente al trato humano'
+      ]
+    }
+  ];
+})();
+
+// =============================================================
+// ACTUALIZACIÓN DE CONSEJOS con datos del formato oficial
+// =============================================================
+
+window.DELE_DATA.tips.audicion.items = [
+  'La prueba real tiene 5 tareas y 30 preguntas en 40 minutos. Cada audio se escucha DOS veces.',
+  'Tarea 1: 6 conversaciones cortas · Tarea 2: ¿quién lo dice, él o ella? · Tarea 3: entrevista · Tarea 4: relacionar 6 personas con enunciados · Tarea 5: conferencia.',
+  'Antes de cada audio hay unos segundos de preparación: lea las preguntas y subraye palabras clave.',
+  'En la Tarea 2, cuidado con las trampas: que una persona asienta ("te doy la razón") no significa que la idea sea suya.',
+  'En la Tarea 4 hay 3 enunciados que sobran: no se obsesione con usarlos todos.',
+  'Los distractores suelen ser palabras que SÍ aparecen en el audio pero asociadas a otra idea.',
+  'Para practicar oído: podcasts de RNE ("Un idioma sin fronteras"), Radio Ambulante y los audios de modelos oficiales en examenes.cervantes.es.'
+];
+
+window.DELE_DATA.tips.oral.items = [
+  'La prueba oral real tiene TRES tareas: 1) valorar propuestas (6-7 min), 2) describir una situación a partir de una fotografía (5-6 min), 3) opinar sobre los datos de una encuesta (3-4 min).',
+  'Tiene 20 minutos de preparación SOLO para las tareas 1 y 2; la encuesta (tarea 3) se hace sin preparación.',
+  'En la preparación haga esquemas con ideas y conectores, no frases completas para leer.',
+  'Tarea 1: hable de ventajas E inconvenientes de varias propuestas y justifique su elección.',
+  'Tarea 2: imagine la situación de la foto (quiénes son, qué ha pasado, qué pasará) y luego converse sobre el tema.',
+  'Tarea 3: primero dé su respuesta a la encuesta y luego compárela con los datos reales ("me sorprende que...", "no me extraña que..." + subjuntivo).',
+  'Si no sabe una palabra, PARAFRASEE; nunca se quede callada.',
+  'Errores leves no bajan la nota si la comunicación fluye. Practique grabándose con el móvil.'
+];
+
+window.DELE_DATA.tips.escritura.items = [
+  'La prueba dura 80 minutos y tiene 2 tareas de 150-180 palabras cada una. Administre: ~35 min por tarea + revisión.',
+  'OJO: en el examen real, la Tarea 1 (carta/correo) se redacta a partir de un AUDIO que se escucha dos veces; tome notas de los datos clave mientras escucha.',
+  'En la Tarea 2 podrá elegir entre dos opciones (por ejemplo, comentar un gráfico o escribir un artículo de opinión). Elija la que mejor domine.',
+  'Respete el número de palabras (150-180): pasarse mucho o quedarse corta resta.',
+  'Planifique 5 minutos: ideas, estructura y conectores antes de redactar.',
+  'Carta formal: saludo + motivo + desarrollo + petición + despedida. Nunca "hola".',
+  'Revise al final: concordancias, tildes, puntuación y repeticiones.',
+  'Varíe los conectores: no repita "también" y "pero" cuando puede usar "asimismo", "no obstante", "en cambio".'
+];
