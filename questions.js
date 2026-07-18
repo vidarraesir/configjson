@@ -1694,3 +1694,61 @@ window.DELE_DATA.tenseQuiz = [
   { tema: 'Futuro compuesto', q: 'Para diciembre ya ______ de pagar el coche.', opciones: ['a) habremos terminado', 'b) terminaremos', 'c) hemos terminado'], correcta: 0, explicacion: 'Acción que estará completa antes de un momento futuro ("para diciembre") → futuro compuesto.' },
   { tema: 'Gerundio / perífrasis', q: 'Llevo dos horas ______ el autobús y no llega.', opciones: ['a) esperar', 'b) esperando', 'c) esperado'], correcta: 1, explicacion: '"Llevar + tiempo + gerundio" expresa duración: "llevo dos horas esperando".' }
 ];
+
+// =============================================================
+// VERBOS CLAVE DELE B2 (con formas irregulares y ucraniano)
+// formas: yo presente · yo indefinido · yo subjuntivo · participio
+// =============================================================
+
+window.DELE_DATA.verbs = [
+  { inf: 'ser', ua: 'бути (постійна ознака)', formas: 'soy · fui · sea · sido', ejemplo: 'Mi madre es profesora.' },
+  { inf: 'estar', ua: 'бути, перебувати (стан, місце)', formas: 'estoy · estuve · esté · estado', ejemplo: 'Estoy cansada pero contenta.' },
+  { inf: 'haber', ua: 'допоміжне «мати» (he hablado); hay = є', formas: 'he · hube · haya · habido', ejemplo: 'Hay mucha gente en la plaza.' },
+  { inf: 'tener', ua: 'мати', formas: 'tengo · tuve · tenga · tenido', ejemplo: 'Tengo dos entradas para el teatro.' },
+  { inf: 'hacer', ua: 'робити', formas: 'hago · hice · haga · hecho', ejemplo: 'Hoy hace muy buen tiempo.' },
+  { inf: 'ir', ua: 'йти, їхати', formas: 'voy · fui · vaya · ido', ejemplo: 'Vamos al cine esta tarde.' },
+  { inf: 'venir', ua: 'приходити, приїжджати', formas: 'vengo · vine · venga · venido', ejemplo: '¿Vienes a la fiesta el sábado?' },
+  { inf: 'poder', ua: 'могти', formas: 'puedo · pude · pueda · podido', ejemplo: 'No pude dormir por el calor.' },
+  { inf: 'poner', ua: 'класти, ставити', formas: 'pongo · puse · ponga · puesto', ejemplo: 'Pon la mesa, por favor.' },
+  { inf: 'decir', ua: 'казати, говорити', formas: 'digo · dije · diga · dicho', ejemplo: 'Me dijo que llegaría tarde.' },
+  { inf: 'querer', ua: 'хотіти; любити', formas: 'quiero · quise · quiera · querido', ejemplo: 'Quiero aprobar el DELE B2.' },
+  { inf: 'saber', ua: 'знати; вміти', formas: 'sé · supe · sepa · sabido', ejemplo: 'No sabía que hablabas ucraniano.' },
+  { inf: 'conocer', ua: 'знати, бути знайомим', formas: 'conozco · conocí · conozca · conocido', ejemplo: 'Conocí a mi marido en Valencia.' },
+  { inf: 'dar', ua: 'давати', formas: 'doy · di · dé · dado', ejemplo: 'Me dieron una beca de estudios.' },
+  { inf: 'ver', ua: 'бачити', formas: 'veo · vi · vea · visto', ejemplo: '¿Has visto mis llaves?' },
+  { inf: 'salir', ua: 'виходити', formas: 'salgo · salí · salga · salido', ejemplo: 'El tren sale a las ocho.' },
+  { inf: 'volver', ua: 'повертатися', formas: 'vuelvo · volví · vuelva · vuelto', ejemplo: 'Volveré a casa antes de las diez.' },
+  { inf: 'seguir', ua: 'продовжувати; йти за', formas: 'sigo · seguí · siga · seguido', ejemplo: 'Sigo estudiando cada mañana.' },
+  { inf: 'conseguir', ua: 'досягати, здобувати', formas: 'consigo · conseguí · consiga · conseguido', ejemplo: 'Conseguí el trabajo que quería.' },
+  { inf: 'pedir', ua: 'просити; замовляти', formas: 'pido · pedí · pida · pedido', ejemplo: 'Pidió un café con leche.' },
+  { inf: 'sentir', ua: 'відчувати; шкодувати', formas: 'siento · sentí · sienta · sentido', ejemplo: 'Siento mucho lo de tu abuelo.' },
+  { inf: 'dormir', ua: 'спати', formas: 'duermo · dormí · duerma · dormido', ejemplo: 'Anoche dormí solo cinco horas.' },
+  { inf: 'traer', ua: 'приносити', formas: 'traigo · traje · traiga · traído', ejemplo: 'Trae algo de postre, si puedes.' },
+  { inf: 'caer', ua: 'падати', formas: 'caigo · caí · caiga · caído', ejemplo: 'Se cayó por las escaleras.' },
+  { inf: 'oír', ua: 'чути', formas: 'oigo · oí · oiga · oído', ejemplo: '¿Oyes ese ruido?' },
+  { inf: 'leer', ua: 'читати', formas: 'leo · leí · lea · leído', ejemplo: 'Leyó la carta dos veces.' },
+  { inf: 'creer', ua: 'вважати, вірити', formas: 'creo · creí · crea · creído', ejemplo: 'No creo que sea buena idea.' },
+  { inf: 'construir', ua: 'будувати', formas: 'construyo · construí · construya · construido', ejemplo: 'Construyeron un puente nuevo.' },
+  { inf: 'elegir', ua: 'обирати', formas: 'elijo · elegí · elija · elegido', ejemplo: 'Elige la opción correcta.' },
+  { inf: 'empezar', ua: 'починати', formas: 'empiezo · empecé · empiece · empezado', ejemplo: 'El curso empieza en octubre.' },
+  { inf: 'pensar', ua: 'думати', formas: 'pienso · pensé · piense · pensado', ejemplo: '¿Qué piensas del teletrabajo?' },
+  { inf: 'encontrar', ua: 'знаходити', formas: 'encuentro · encontré · encuentre · encontrado', ejemplo: 'No encuentro mis gafas.' },
+  { inf: 'contar', ua: 'розповідати; рахувати', formas: 'cuento · conté · cuente · contado', ejemplo: 'Cuéntame qué pasó ayer.' },
+  { inf: 'recordar', ua: 'пам’ятати, згадувати', formas: 'recuerdo · recordé · recuerde · recordado', ejemplo: 'No recuerdo su nombre.' },
+  { inf: 'jugar', ua: 'грати', formas: 'juego · jugué · juegue · jugado', ejemplo: 'Los niños juegan en el parque.' },
+  { inf: 'perder', ua: 'втрачати; програвати', formas: 'pierdo · perdí · pierda · perdido', ejemplo: 'Perdí el autobús por un minuto.' },
+  { inf: 'entender', ua: 'розуміти', formas: 'entiendo · entendí · entienda · entendido', ejemplo: 'Ahora entiendo la diferencia.' },
+  { inf: 'servir', ua: 'служити; подавати; годитися', formas: 'sirvo · serví · sirva · servido', ejemplo: 'Esta caja no sirve para nada.' },
+  { inf: 'repetir', ua: 'повторювати', formas: 'repito · repetí · repita · repetido', ejemplo: '¿Puede repetir la pregunta?' },
+  { inf: 'traducir', ua: 'перекладати', formas: 'traduzco · traduje · traduzca · traducido', ejemplo: 'Tradujo el poema al ucraniano.' },
+  { inf: 'andar', ua: 'ходити пішки', formas: 'ando · anduve · ande · andado', ejemplo: 'Anduvimos dos horas por la playa.' },
+  { inf: 'caber', ua: 'вміщатися', formas: 'quepo · cupe · quepa · cabido', ejemplo: 'No cabe nada más en la maleta.' },
+  { inf: 'valer', ua: 'коштувати; бути вартим', formas: 'valgo · valí · valga · valido', ejemplo: '¿Cuánto vale este bolso?' },
+  { inf: 'romper', ua: 'ламати, розбивати', formas: 'rompo · rompí · rompa · roto', ejemplo: 'Se me ha roto el móvil.' },
+  { inf: 'escribir', ua: 'писати', formas: 'escribo · escribí · escriba · escrito', ejemplo: 'He escrito la carta de queja.' },
+  { inf: 'abrir', ua: 'відчиняти, відкривати', formas: 'abro · abrí · abra · abierto', ejemplo: 'La tienda abre a las diez.' },
+  { inf: 'descubrir', ua: 'відкривати, виявляти', formas: 'descubro · descubrí · descubra · descubierto', ejemplo: 'Descubrí un restaurante genial.' },
+  { inf: 'resolver', ua: 'вирішувати, розв’язувати', formas: 'resuelvo · resolví · resuelva · resuelto', ejemplo: 'Resolvimos el problema juntas.' },
+  { inf: 'morir', ua: 'помирати', formas: 'muero · morí · muera · muerto', ejemplo: 'Me muero de ganas de verte.' },
+  { inf: 'llegar', ua: 'прибувати, приходити', formas: 'llego · llegué · llegue · llegado', ejemplo: 'Llegamos tarde por el tráfico.' }
+];
