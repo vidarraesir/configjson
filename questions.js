@@ -1458,3 +1458,239 @@ window.DELE_DATA.tips = {
   }
 };
 
+
+// =============================================================
+// TIEMPOS VERBALES DEL ESPAÑOL (guía B2 con ucraniano)
+// Estructura: { nombre, ua, formacion, usos:[], ejemplos:[{es,ua}], truco }
+// =============================================================
+
+window.DELE_DATA.tenses = [
+  {
+    nombre: 'Presente de indicativo',
+    ua: 'Теперішній час',
+    formacion: 'hablar → hablo, hablas, habla, hablamos, habláis, hablan · comer → como, comes... · vivir → vivo, vives...',
+    usos: [
+      'Acciones habituales: "Trabajo de nueve a cinco."',
+      'Verdades generales: "El agua hierve a cien grados."',
+      'Presente histórico y narración viva.',
+      'Futuro cercano planificado: "Mañana vuelo a Kiev."'
+    ],
+    ejemplos: [
+      { es: 'Estudio español todos los días.', ua: 'Я вивчаю іспанську щодня.' },
+      { es: 'Mañana empiezan las clases.', ua: 'Завтра починаються заняття.' }
+    ],
+    truco: 'Irregulares clave: e→ie (quiero), o→ue (puedo), e→i (pido), primera persona especial (hago, pongo, salgo, conozco).'
+  },
+  {
+    nombre: 'Pretérito perfecto',
+    ua: 'Минулий складений (недавнє минуле)',
+    formacion: 'he/has/ha/hemos/habéis/han + participio (-ado/-ido): he hablado, has comido, ha vivido',
+    usos: [
+      'Pasado reciente conectado con el presente: "Hoy he desayunado tarde."',
+      'Con: hoy, esta semana, este año, ya, todavía no, alguna vez, nunca.',
+      'Experiencias de la vida: "¿Has estado en Madrid?"'
+    ],
+    ejemplos: [
+      { es: 'Esta semana he trabajado mucho.', ua: 'Цього тижня я багато працювала.' },
+      { es: '¿Alguna vez has probado la paella?', ua: 'Ти колись куштувала паелью?' }
+    ],
+    truco: 'Participios irregulares: hecho, dicho, escrito, visto, puesto, vuelto, abierto, roto, muerto, descubierto.'
+  },
+  {
+    nombre: 'Pretérito indefinido',
+    ua: 'Минулий доконаний (завершена дія)',
+    formacion: 'hablar → hablé, hablaste, habló, hablamos, hablasteis, hablaron · comer/vivir → comí, comiste, comió...',
+    usos: [
+      'Acciones terminadas en un momento concreto del pasado: "Ayer llegué tarde."',
+      'Con: ayer, anoche, la semana pasada, en 2020, hace dos años.',
+      'Serie de acciones consecutivas en un relato.'
+    ],
+    ejemplos: [
+      { es: 'El año pasado viajamos a Valencia.', ua: 'Минулого року ми поїхали до Валенсії.' },
+      { es: 'Anoche vi una película ucraniana.', ua: 'Учора ввечері я подивилася український фільм.' }
+    ],
+    truco: 'Irregulares frecuentes: fui/fue (ser e ir iguales), tuve, estuve, hice, pude, puse, dije, vine, quise, supe, traje.'
+  },
+  {
+    nombre: 'Pretérito imperfecto',
+    ua: 'Минулий недоконаний (тло, звички)',
+    formacion: 'hablar → hablaba, hablabas... · comer/vivir → comía, vivía... Irregulares solo: ser (era), ir (iba), ver (veía)',
+    usos: [
+      'Descripciones en el pasado: "La casa era grande y tenía jardín."',
+      'Acciones habituales del pasado: "De niña jugaba en la calle."',
+      'Acción de fondo interrumpida: "Dormía cuando sonó el teléfono."',
+      'Cortesía: "Quería pedirte un favor."'
+    ],
+    ejemplos: [
+      { es: 'Cuando era pequeña, vivía en Járkov.', ua: 'Коли я була маленька, я жила в Харкові.' },
+      { es: 'Llovía y hacía frío.', ua: 'Дощило й було холодно.' }
+    ],
+    truco: 'INDEFINIDO = foto de la acción completa (una vez); IMPERFECTO = vídeo de fondo (descripción, costumbre). "Ayer comí" vs "Antes comía".'
+  },
+  {
+    nombre: 'Pretérito pluscuamperfecto',
+    ua: 'Давноминулий час',
+    formacion: 'había/habías/había/habíamos/habíais/habían + participio: había hablado',
+    usos: [
+      'Acción pasada anterior a otra acción pasada: "Cuando llegué, el tren ya había salido."',
+      'Imprescindible en el estilo indirecto: "Dijo que había estado enferma."'
+    ],
+    ejemplos: [
+      { es: 'Cuando llegamos, la película ya había empezado.', ua: 'Коли ми прийшли, фільм уже почався.' },
+      { es: 'Nunca había visto el mar hasta ese día.', ua: 'До того дня я ніколи не бачила моря.' }
+    ],
+    truco: 'Piensa en "ya + antes": si una acción pasada ocurre ANTES que otra pasada, usa pluscuamperfecto.'
+  },
+  {
+    nombre: 'Futuro simple',
+    ua: 'Майбутній простий час',
+    formacion: 'infinitivo + é, ás, á, emos, éis, án: hablaré, comerás, vivirá',
+    usos: [
+      'Predicciones y planes: "El lunes te llamaré."',
+      'Probabilidad en el presente: "Serán las tres." (= mabuть, зараз третя)',
+      'Promesas: "No lo volveré a hacer."'
+    ],
+    ejemplos: [
+      { es: 'El año que viene aprobaré el DELE.', ua: 'Наступного року я складу DELE.' },
+      { es: '—¿Dónde está Ana? —Estará en el trabajo.', ua: '—Де Ана? —Мабуть, на роботі.' }
+    ],
+    truco: 'Irregulares: diré, haré, podré, pondré, querré, sabré, saldré, tendré, vendré, habrá. La probabilidad ("estará") es un uso estrella en el DELE.'
+  },
+  {
+    nombre: 'Futuro compuesto',
+    ua: 'Майбутній доконаний час',
+    formacion: 'habré/habrás/habrá... + participio: habré terminado',
+    usos: [
+      'Acción futura terminada antes de otro momento futuro: "Para junio habré acabado el curso."',
+      'Probabilidad sobre el pasado reciente: "Habrá salido ya." (= мабуть, вже пішов)'
+    ],
+    ejemplos: [
+      { es: 'Para el viernes habremos terminado el proyecto.', ua: 'До п’ятниці ми вже закінчимо проєкт.' }
+    ],
+    truco: 'Fórmula: "para + fecha futura + habré + participio".'
+  },
+  {
+    nombre: 'Condicional simple',
+    ua: 'Умовний спосіб (теперішній)',
+    formacion: 'infinitivo + ía, ías, ía, íamos, íais, ían: hablaría, comería, viviría',
+    usos: [
+      'Cortesía: "¿Podrías ayudarme?"',
+      'Consejos: "Yo que tú, estudiaría más."',
+      'Hipótesis irreales del presente: "Si tuviera dinero, viajaría."',
+      'Probabilidad en el pasado: "Serían las diez cuando llegó."',
+      'Futuro del pasado (estilo indirecto): "Dijo que vendría."'
+    ],
+    ejemplos: [
+      { es: 'Me gustaría vivir cerca del mar.', ua: 'Мені хотілося б жити біля моря.' },
+      { es: 'Si pudiera, te acompañaría.', ua: 'Якби я могла, я б тебе супроводжувала.' }
+    ],
+    truco: 'Mismos irregulares que el futuro: diría, haría, podría, tendría, vendría, sabría...'
+  },
+  {
+    nombre: 'Condicional compuesto',
+    ua: 'Умовний минулий',
+    formacion: 'habría/habrías... + participio: habría hablado',
+    usos: [
+      'Hipótesis irreales del PASADO: "Si lo hubiera sabido, habría venido."',
+      'Probabilidad de una acción pasada anterior a otra: "Ya habrían cenado cuando llamaste."'
+    ],
+    ejemplos: [
+      { es: 'Con más tiempo, habríamos visitado el museo.', ua: 'Якби було більше часу, ми б відвідали музей.' }
+    ],
+    truco: 'Pareja fija del DELE: "si + hubiera hecho → habría hecho" (умовне речення 3-го типу).'
+  },
+  {
+    nombre: 'Presente de subjuntivo',
+    ua: 'Теперішній суб’юнктив',
+    formacion: 'Cambia la vocal: hablar → hable, comer → coma, vivir → viva. Se forma desde el presente de "yo": hago → haga, conozco → conozca',
+    usos: [
+      'Deseos y emociones: "Espero que apruebes." / "Me alegra que estés aquí."',
+      'Duda y negación de opinión: "No creo que sea verdad."',
+      'Finalidad: "para que entiendas".',
+      'Futuro tras "cuando, en cuanto, hasta que": "Cuando llegues, llámame."',
+      'Valoraciones: "Es importante que practiques."'
+    ],
+    ejemplos: [
+      { es: 'Ojalá apruebes el examen.', ua: 'Хоч би ти склала іспит.' },
+      { es: 'Cuando vengas a casa, cenaremos juntas.', ua: 'Коли ти прийдеш додому, ми повечеряємо разом.' }
+    ],
+    truco: 'Muy irregulares: sea, esté, vaya, haya, sepa, dé. El subjuntivo aparece casi siempre después de "que".'
+  },
+  {
+    nombre: 'Imperfecto de subjuntivo',
+    ua: 'Минулий суб’юнктив',
+    formacion: 'Desde la 3.ª plural del indefinido: hablaron → hablara/hablase, tuvieron → tuviera, fueron → fuera',
+    usos: [
+      'Subjuntivo en pasado: "Quería que vinieras."',
+      'Condiciones irreales: "Si tuviera tiempo, iría."',
+      'Cortesía muy formal: "Quisiera hacer una consulta."'
+    ],
+    ejemplos: [
+      { es: 'Me pidió que la ayudara con la mudanza.', ua: 'Вона попросила мене допомогти їй з переїздом.' },
+      { es: 'Si viviera en España, hablaría mejor.', ua: 'Якби я жила в Іспанії, я б говорила краще.' }
+    ],
+    truco: 'Las formas -ra y -se son equivalentes (hablara = hablase). El truco de la 3.ª plural del indefinido nunca falla: dijeron → dijera.'
+  },
+  {
+    nombre: 'Pretérito perfecto de subjuntivo',
+    ua: 'Минулий складений суб’юнктив',
+    formacion: 'haya/hayas/haya... + participio: haya hablado',
+    usos: [
+      'Emoción o duda sobre un pasado reciente: "Me alegro de que hayas venido."',
+      'Con marcadores de pasado conectado al presente: hoy, ya, todavía no.'
+    ],
+    ejemplos: [
+      { es: 'No creo que hayan llegado todavía.', ua: 'Не думаю, що вони вже приїхали.' }
+    ],
+    truco: 'Es el "pretérito perfecto" (he hablado) en modo subjuntivo: he → haya.'
+  },
+  {
+    nombre: 'Pluscuamperfecto de subjuntivo',
+    ua: 'Давноминулий суб’юнктив',
+    formacion: 'hubiera/hubieras... + participio: hubiera hablado',
+    usos: [
+      'Condicional irreal del pasado: "Si hubiera estudiado, habría aprobado."',
+      'Lamentos sobre el pasado: "Ojalá lo hubiera sabido antes."'
+    ],
+    ejemplos: [
+      { es: 'Si me lo hubieras dicho, te habría ayudado.', ua: 'Якби ти мені сказала, я б тобі допомогла.' }
+    ],
+    truco: 'Aparece en la Tarea 4 de lectura casi cada convocatoria, en condicionales del pasado.'
+  },
+  {
+    nombre: 'Imperativo',
+    ua: 'Наказовий спосіб',
+    formacion: 'Afirmativo tú: habla, come, vive (irregulares: di, haz, ve, pon, sal, sé, ten, ven). Negativo: subjuntivo (no hables). Usted: hable/no hable',
+    usos: [
+      'Órdenes, instrucciones, consejos, invitaciones.',
+      'Con pronombres detrás en afirmativo: "dímelo", delante en negativo: "no me lo digas".'
+    ],
+    ejemplos: [
+      { es: 'Pasa, siéntate y cuéntamelo todo.', ua: 'Заходь, сідай і розкажи мені все.' },
+      { es: 'No te preocupes por eso.', ua: 'Не хвилюйся через це.' }
+    ],
+    truco: 'El imperativo negativo SIEMPRE usa subjuntivo: no vayas, no hagas, no digas.'
+  }
+];
+
+// =============================================================
+// QUIZ DE CONJUGACIÓN (práctica de tiempos)
+// =============================================================
+
+window.DELE_DATA.tenseQuiz = [
+  { tema: 'Indefinido', q: 'Ayer (yo) no ______ venir porque estaba enferma.', opciones: ['a) podía', 'b) pude', 'c) podría'], correcta: 1, explicacion: 'Acción puntual y terminada ayer: indefinido "pude". "Podía" describiría una situación de fondo, no el hecho concreto de no poder venir ese día.' },
+  { tema: 'Imperfecto', q: 'De pequeña, mi abuela me ______ cuentos cada noche.', opciones: ['a) contó', 'b) contaba', 'c) ha contado'], correcta: 1, explicacion: 'Costumbre repetida en el pasado ("cada noche") → imperfecto "contaba".' },
+  { tema: 'Indefinido vs imperfecto', q: 'Mientras ______ la cena, ______ el teléfono.', opciones: ['a) preparaba / sonó', 'b) preparé / sonaba', 'c) preparaba / sonaba'], correcta: 0, explicacion: 'Acción de fondo (preparaba, imperfecto) interrumpida por acción puntual (sonó, indefinido).' },
+  { tema: 'Pretérito perfecto', q: 'Todavía no ______ la nueva película de Almodóvar.', opciones: ['a) vi', 'b) he visto', 'c) veía'], correcta: 1, explicacion: '"Todavía no" conecta el pasado con el presente → pretérito perfecto "he visto".' },
+  { tema: 'Pluscuamperfecto', q: 'Cuando llegué a la estación, el tren ya ______.', opciones: ['a) salió', 'b) había salido', 'c) ha salido'], correcta: 1, explicacion: 'Acción anterior a otra acción pasada → pluscuamperfecto "había salido".' },
+  { tema: 'Futuro (probabilidad)', q: '—¿Qué hora es? —No sé, ______ las cinco.', opciones: ['a) serán', 'b) serían', 'c) fueron'], correcta: 0, explicacion: 'Probabilidad sobre el PRESENTE → futuro simple: "serán las cinco" (мабуть, п’ята).' },
+  { tema: 'Condicional (probabilidad)', q: 'Cuando volvió anoche, ______ las tres de la madrugada.', opciones: ['a) serán', 'b) serían', 'c) sean'], correcta: 1, explicacion: 'Probabilidad sobre el PASADO → condicional: "serían las tres".' },
+  { tema: 'Presente de subjuntivo', q: 'Te lo repito para que lo ______ bien.', opciones: ['a) entiendes', 'b) entiendas', 'c) entenderás'], correcta: 1, explicacion: '"Para que" (finalidad) siempre exige subjuntivo: "entiendas".' },
+  { tema: 'Imperfecto de subjuntivo', q: 'El profesor nos pidió que ______ el ejercicio en casa.', opciones: ['a) hiciéramos', 'b) hagamos', 'c) hacíamos'], correcta: 0, explicacion: 'Verbo de petición en pasado ("pidió") → imperfecto de subjuntivo: "hiciéramos" (de "hicieron").' },
+  { tema: 'Condicional compuesto', q: 'Si me hubieras avisado, te ______ a buscar al aeropuerto.', opciones: ['a) habría ido', 'b) iría', 'c) hubiera ido'], correcta: 0, explicacion: 'Condicional irreal del pasado: "si + hubiera avisado → habría ido". (En lengua oral también se oye "hubiera ido", pero el estándar del examen es el condicional compuesto.)' },
+  { tema: 'Subjuntivo perfecto', q: 'Me sorprende que todavía no te ______ nadie.', opciones: ['a) ha llamado', 'b) haya llamado', 'c) llamó'], correcta: 1, explicacion: 'Emoción ("me sorprende") + pasado reciente → perfecto de subjuntivo "haya llamado".' },
+  { tema: 'Imperativo', q: 'No ______ eso, por favor, que es peligroso.', opciones: ['a) haz', 'b) hagas', 'c) haces'], correcta: 1, explicacion: 'Imperativo negativo = presente de subjuntivo: "no hagas".' },
+  { tema: 'Imperativo + pronombres', q: 'Es un secreto: no ______ a nadie.', opciones: ['a) se lo digas', 'b) díselo', 'c) se lo dices'], correcta: 0, explicacion: 'En imperativo negativo los pronombres van DELANTE del verbo: "no se lo digas".' },
+  { tema: 'Futuro compuesto', q: 'Para diciembre ya ______ de pagar el coche.', opciones: ['a) habremos terminado', 'b) terminaremos', 'c) hemos terminado'], correcta: 0, explicacion: 'Acción que estará completa antes de un momento futuro ("para diciembre") → futuro compuesto.' },
+  { tema: 'Gerundio / perífrasis', q: 'Llevo dos horas ______ el autobús y no llega.', opciones: ['a) esperar', 'b) esperando', 'c) esperado'], correcta: 1, explicacion: '"Llevar + tiempo + gerundio" expresa duración: "llevo dos horas esperando".' }
+];
