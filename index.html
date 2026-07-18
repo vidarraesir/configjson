@@ -531,12 +531,16 @@ textarea {
   <div id="homeScreen" class="screen active">
     <div class="hero">
       <h2>¡Hola! Prepara tu DELE B2</h2>
-      <p>Más de 200 preguntas tipo examen, vocabulario, gramática y simulacros completos basados en el modelo oficial del Instituto Cervantes.</p>
+      <p>Preguntas tipo examen, vocabulario y verbos con traducción al ucraniano, tiempos verbales explicados y simulacros según el modelo oficial del Instituto Cervantes.</p>
       <p class="hero-love">Te quiero Yana, tú puedes.</p>
       <div class="stats">
         <div class="stat"><div class="stat-val" id="statQuestions">0</div><div class="stat-lbl">Respondidas</div></div>
         <div class="stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl">Aciertos</div></div>
         <div class="stat"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">Racha (días)</div></div>
+      </div>
+      <div style="margin-top:12px">
+        <div id="dailyGoalText" style="font-size:13px;color:var(--muted);margin-bottom:4px">Meta diaria: 0 / 20 preguntas</div>
+        <div class="progress" style="margin-bottom:0"><div class="progress-bar" id="dailyGoalBar"></div></div>
       </div>
     </div>
 
@@ -578,22 +582,56 @@ textarea {
       </button>
     </div>
 
-    <div class="section-title">Prueba 2 — Comprensión auditiva</div>
+    <div class="section-title">Prueba 2 — Comprensión auditiva (5 tareas)</div>
     <div class="grid">
       <button class="card" data-action="listening" data-task="t1">
         <div class="card-icon dark">A1</div>
         <div class="card-title">Mensajes cortos</div>
         <div class="card-desc">Avisos y anuncios</div>
       </button>
+      <button class="card" data-action="listening" data-task="t2">
+        <div class="card-icon dark">A2</div>
+        <div class="card-title">¿Quién lo dice?</div>
+        <div class="card-desc">Conversación: él, ella o ninguno</div>
+      </button>
       <button class="card" data-action="listening" data-task="t3">
         <div class="card-icon dark">A3</div>
         <div class="card-title">Entrevistas</div>
         <div class="card-desc">Preguntas sobre entrevistas</div>
       </button>
+      <button class="card" data-action="listening" data-task="t4">
+        <div class="card-icon dark">A4</div>
+        <div class="card-title">Relacionar personas</div>
+        <div class="card-desc">6 personas, 9 enunciados</div>
+      </button>
       <button class="card" data-action="listening" data-task="t5">
         <div class="card-icon dark">A5</div>
         <div class="card-title">Conferencia</div>
         <div class="card-desc">Monólogo expositivo</div>
+      </button>
+    </div>
+
+    <div class="section-title">Verbos y tiempos · Дієслова</div>
+    <div class="grid">
+      <button class="card" data-action="tenses">
+        <div class="card-icon green">T</div>
+        <div class="card-title">Tiempos verbales</div>
+        <div class="card-desc">14 tiempos explicados con ucraniano</div>
+      </button>
+      <button class="card" data-action="verbs">
+        <div class="card-icon green">V</div>
+        <div class="card-title">Verbos clave</div>
+        <div class="card-desc">50 verbos con formas irregulares</div>
+      </button>
+      <button class="card" data-action="verbflash">
+        <div class="card-icon purple">F</div>
+        <div class="card-title">Flashcards de verbos</div>
+        <div class="card-desc">Repaso con ucraniano</div>
+      </button>
+      <button class="card" data-action="conjugation">
+        <div class="card-icon orange">C</div>
+        <div class="card-title">Quiz de conjugación</div>
+        <div class="card-desc">15 preguntas de práctica</div>
       </button>
     </div>
 

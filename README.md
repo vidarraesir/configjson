@@ -13,9 +13,11 @@ y funciona **sin conexión** una vez cargada la primera vez.
 - Tarea 3: texto con huecos de frases (elegir entre 8)
 - Tarea 4: texto con 14 huecos de gramática y léxico
 
-**Comprensión auditiva** (las tres tareas con transcripciones)
+**Comprensión auditiva** (las 5 tareas oficiales, con transcripciones)
 - Tarea 1: 6 mensajes cortos
+- Tarea 2: conversación — ¿quién lo dice: él, ella o ninguno?
 - Tarea 3: entrevista larga con 6 preguntas
+- Tarea 4: relacionar 6 personas con 9 enunciados (3 sobran)
 - Tarea 5: conferencia expositiva
 
 *Nota: los audios se presentan como transcripciones plegables.
@@ -28,9 +30,17 @@ En el iPhone puedes hacer que se lean en voz alta con
 - Por/Para, Ser/Estar, perífrasis, voz pasiva
 - Estilo indirecto, pronombres, conectores, preposiciones
 
-**Vocabulario temático** (57 flashcards)
+**Vocabulario temático** (57 flashcards **con traducción al ucraniano**)
 - Trabajo, medio ambiente, tecnología, salud, educación
 - Cultura, sociedad, adjetivos útiles B2
+
+**Tiempos verbales** (14 tiempos explicados **con nombres y ejemplos en ucraniano**)
+- Formación, usos, trucos y contraste indefinido/imperfecto
+- Quiz de conjugación con preguntas generadas
+
+**Verbos clave** (50 verbos con traducción ucraniana)
+- Las 4 formas clave: yo presente · yo indefinido · yo subjuntivo · participio
+- Flashcards con repaso inteligente (marca "difícil" y repásalas aparte)
 
 **Expresiones idiomáticas** (30) — "dar en el clavo", "costar un ojo de la cara"...
 
@@ -42,10 +52,11 @@ En el iPhone puedes hacer que se lean en voz alta con
 - 2 prompts de Tarea 2 (redacciones de opinión) con modelo
 - Editor con contador de palabras y autoguardado
 
-**Expresión oral** (con preparación para las 4 tareas)
-- Valorar propuestas, describir fotografías
-- Diálogos con el examinador, opinar sobre titulares
-- Preguntas guía, estrategias y vocabulario útil
+**Expresión oral** (las 3 tareas oficiales + práctica extra)
+- Tarea 1: valorar propuestas (6-7 min)
+- Tarea 2: situación a partir de una fotografía (5-6 min)
+- Tarea 3: opinar sobre los datos de una encuesta (3-4 min)
+- Práctica extra de conversación con preguntas guía y estrategias
 
 **Simulacro cronometrado** (60 min, lectura + audición)
 
