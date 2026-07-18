@@ -58,6 +58,7 @@
     }
   }
   function saveProgress(p) { localStorage.setItem(KEY, JSON.stringify(p)); }
+  const DAILY_GOAL = 20;
   function recordAnswer(ok, mode) {
     const p = loadProgress();
     p.totalQ += 1;
@@ -65,8 +66,12 @@
     p.byMode[mode] = p.byMode[mode] || { q: 0, c: 0 };
     p.byMode[mode].q += 1;
     if (ok) p.byMode[mode].c += 1;
+    const today = new Date().toISOString().slice(0, 10);
+    p.days = p.days || {};
+    p.days[today] = (p.days[today] || 0) + 1;
     updateStreak(p);
     saveProgress(p);
+    refreshStats();
   }
   function updateStreak(p) {
     const today = new Date().toISOString().slice(0, 10);
@@ -83,6 +88,17 @@
     const qEl = $('#statQuestions'); if (qEl) qEl.textContent = p.totalQ;
     const aEl = $('#statAccuracy');  if (aEl) aEl.textContent = acc + '%';
     const sEl = $('#statStreak');    if (sEl) sEl.textContent = p.streak || 0;
+    // Meta diaria
+    const today = new Date().toISOString().slice(0, 10);
+    const hoy = (p.days && p.days[today]) || 0;
+    const goalTxt = $('#dailyGoalText');
+    const goalBar = $('#dailyGoalBar');
+    if (goalTxt) {
+      goalTxt.textContent = hoy >= DAILY_GOAL
+        ? '¡Meta diaria cumplida! ' + hoy + ' preguntas hoy 🎉'
+        : 'Meta diaria: ' + hoy + ' / ' + DAILY_GOAL + ' preguntas';
+    }
+    if (goalBar) goalBar.style.width = Math.min(100, (hoy / DAILY_GOAL) * 100) + '%';
   }
 
   // ---------- Tema claro/oscuro ----------
@@ -199,18 +215,27 @@
     else container.appendChild(el('p', {}, 'Tipo de pregunta no reconocido.'));
   }
 
-  // ------- Opción múltiple (a/b/c) -------
-  function renderMC(container, item) {
-    const card = el('div', { class: 'question-card' });
+  // ------- Material de apoyo (texto o transcripción) junto a la pregunta -------
+  // Siempre visible en la misma página, pero plegable para quien prefiera ocultarlo.
+  function appendSupportMaterial(card, item) {
     if (item.reading) {
-      card.appendChild(el('div', { class: 'reading-text' }, item.reading));
+      const det = el('details', { class: 'audio-placeholder', open: '' });
+      det.appendChild(el('summary', {}, '▾ Texto de lectura (toca para ocultar/mostrar)'));
+      det.appendChild(el('div', { class: 'reading-text', style: 'margin-top:10px' }, item.reading));
+      card.appendChild(det);
     }
     if (item.transcript) {
-      const det = el('details', { class: 'audio-placeholder' });
-      det.appendChild(el('summary', {}, '▸ Audio (transcripción — léala en voz alta o use la lectura del sistema)'));
+      const det = el('details', { class: 'audio-placeholder', open: '' });
+      det.appendChild(el('summary', {}, '▾ Audio (transcripción — léela en voz alta o usa la lectura del sistema)'));
       det.appendChild(el('div', { class: 'transcript' }, item.transcript));
       card.appendChild(det);
     }
+  }
+
+  // ------- Opción múltiple (a/b/c) -------
+  function renderMC(container, item) {
+    const card = el('div', { class: 'question-card' });
+    appendSupportMaterial(card, item);
     card.appendChild(el('p', { class: 'question-text' }, item.q));
     const optsBox = el('div');
     card.appendChild(optsBox);
@@ -271,6 +296,7 @@
   // ------- Relacionar (matching: afirmación -> texto A/B/C/D) -------
   function renderMatch(container, item) {
     const card = el('div', { class: 'question-card' });
+    appendSupportMaterial(card, item);
     card.appendChild(el('p', { class: 'question-text' },
       el('strong', {}, 'Afirmación: '),
       document.createTextNode(item.afirmacion)
@@ -385,7 +411,7 @@
       text.preguntas.forEach((p, i) => {
         items.push({
           type: 'mc',
-          reading: i === 0 ? text.texto : null,
+          reading: text.texto,
           q: p.q,
           opciones: p.opciones,
           correcta: p.correcta,
@@ -403,7 +429,7 @@
       set.afirmaciones.forEach((af, idx) => {
         items.push({
           type: 'match',
-          reading: idx === 0 ? renderT2Texts(set.textos) : null,
+          reading: renderT2Texts(set.textos),
           afirmacion: af.texto,
           choices: set.textos.map((t) => ({ letter: t.letra, text: t.nombre })),
           correcta: af.correcta,
@@ -425,7 +451,7 @@
       set.huecos.forEach((h, idx) => {
         items.push({
           type: 'mc',
-          reading: idx === 0 ? set.texto : null,
+          reading: set.texto,
           q: 'Elija el fragmento que encaja en el hueco [' + h.n + ']:',
           opciones: frags.map((f) => f.letra + ') ' + f.texto),
           correcta: frags.findIndex((f) => f.letra === h.correcta),
@@ -442,7 +468,7 @@
       set.huecos.forEach((h, idx) => {
         items.push({
           type: 'mc',
-          reading: idx === 0 ? set.textoHtml : null,
+          reading: set.textoHtml,
           q: 'Hueco [' + h.n + ']: elija la opción correcta.',
           opciones: h.opciones,
           correcta: h.correcta,
@@ -456,9 +482,52 @@
   // ---------- Handlers de audición ----------
   window._deleHandlers.listening = (task) => {
     if (task === 't1') startListeningT1();
+    else if (task === 't2') startListeningT2();
     else if (task === 't3') startListeningT3();
+    else if (task === 't4') startListeningT4();
     else if (task === 't5') startListeningT5();
   };
+
+  function startListeningT2() {
+    const items = [];
+    D.listening.t2.forEach((set) => {
+      const choices = [
+        { letter: 'A', text: set.hablantes[0] },
+        { letter: 'B', text: set.hablantes[1] },
+        { letter: 'C', text: 'Ninguno de los dos' }
+      ];
+      set.enunciados.forEach((e) => {
+        items.push({
+          type: 'match',
+          transcript: set.transcripcion,
+          afirmacion: e.n + '. ' + e.texto + '  —  ¿Quién lo dice?',
+          choices,
+          correcta: e.correcta,
+          explicacion: e.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Audición · Tarea 2 (¿quién lo dice?)', mode: 'a2', items });
+  }
+
+  function startListeningT4() {
+    const items = [];
+    D.listening.t4.forEach((set) => {
+      const choices = set.enunciados.map((e) => ({ letter: e.letra, text: e.texto }));
+      set.soluciones.forEach((sol) => {
+        const persona = set.personas.find((p) => p.n === sol.n);
+        items.push({
+          type: 'match',
+          transcript: '[' + persona.nombre + ']\n' + persona.transcripcion,
+          afirmacion: '¿Qué enunciado resume lo que dice la ' + persona.nombre.toLowerCase() + '? (3 enunciados sobran en total)',
+          choices,
+          correcta: sol.correcta,
+          explicacion: sol.explicacion
+        });
+      });
+    });
+    startQuiz({ title: 'Audición · Tarea 4 (relacionar personas)', mode: 'a4', items });
+  }
 
   function startListeningT1() {
     const items = D.listening.t1.map((m) => ({
@@ -477,7 +546,7 @@
       e.preguntas.forEach((p, i) => {
         items.push({
           type: 'mc',
-          transcript: i === 0 ? e.transcripcion : null,
+          transcript: e.transcripcion,
           q: p.q,
           opciones: p.opciones,
           correcta: p.correcta,
@@ -493,7 +562,7 @@
       e.preguntas.forEach((p, i) => {
         items.push({
           type: 'mc',
-          transcript: i === 0 ? e.transcripcion : null,
+          transcript: e.transcripcion,
           q: p.q,
           opciones: p.opciones,
           correcta: p.correcta,
@@ -509,27 +578,63 @@
   // =============================================================
 
   let flashState = null;
-  function startFlashcards(cards, title = 'Vocabulario') {
-    flashState = { cards: shuffle(cards), idx: 0, flipped: false, title };
+  const DIFF_KEY = 'dele-b2-flash-difficult';
+  function loadDifficult() {
+    try { return JSON.parse(localStorage.getItem(DIFF_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveDifficult(d) { localStorage.setItem(DIFF_KEY, JSON.stringify(d)); }
+  function cardKey(c) { return c.palabra || c.expresion || c.conector || c.inf || ''; }
+
+  function startFlashcards(cards, title = 'Vocabulario', onlyDifficult = false) {
+    const diffs = loadDifficult()[title] || [];
+    let deck = cards;
+    if (onlyDifficult) {
+      deck = cards.filter((c) => diffs.includes(cardKey(c)));
+      if (!deck.length) { alert('No hay tarjetas marcadas como difíciles en este mazo. ¡Bien hecho!'); return; }
+    }
+    // Las difíciles primero: repetirlas más es la base del repaso eficaz.
+    const hard = deck.filter((c) => diffs.includes(cardKey(c)));
+    const rest = deck.filter((c) => !diffs.includes(cardKey(c)));
+    flashState = { cards: shuffle(hard).concat(shuffle(rest)), allCards: cards, idx: 0, flipped: false, title };
     $('#flashCategory').textContent = title;
     show('flashScreen');
     renderFlash();
   }
+
+  function markCard(difficult) {
+    const s = flashState;
+    const key = cardKey(s.cards[s.idx]);
+    const all = loadDifficult();
+    const list = all[s.title] || [];
+    if (difficult && !list.includes(key)) list.push(key);
+    if (!difficult) {
+      const i = list.indexOf(key);
+      if (i >= 0) list.splice(i, 1);
+    }
+    all[s.title] = list;
+    saveDifficult(all);
+    window.flashNext();
+  }
+
   function renderFlash() {
     const s = flashState;
     if (!s) return;
-    $('#flashProgress').textContent = (s.idx + 1) + ' / ' + s.cards.length;
+    const diffs = loadDifficult()[s.title] || [];
+    $('#flashProgress').textContent = (s.idx + 1) + ' / ' + s.cards.length +
+      (diffs.length ? ' · difíciles: ' + diffs.length : '');
     $('#flashProgressBar').style.width = (((s.idx + 1) / s.cards.length) * 100) + '%';
     const c = s.cards[s.idx];
     const box = $('#flashCardContainer');
     box.innerHTML = '';
     const card = el('div', { class: 'flashcard' });
-    card.appendChild(el('div', { class: 'flashcard-type' }, c.categoria || c.funcion || c.tipo || 'B2'));
-    card.appendChild(el('div', { class: 'flashcard-word' }, c.palabra || c.expresion || c.conector));
+    card.appendChild(el('div', { class: 'flashcard-type' }, c.categoria || c.funcion || c.tipo || (c.inf ? 'verbo' : 'B2')));
+    card.appendChild(el('div', { class: 'flashcard-word' }, c.palabra || c.expresion || c.conector || c.inf));
     if (s.flipped) {
       if (c.traduccion) card.appendChild(el('div', { class: 'flashcard-translation' }, c.traduccion));
-      if (c.significado) card.appendChild(el('div', { class: 'flashcard-translation' }, c.significado));
-      if (c.funcion && c.conector) card.appendChild(el('div', { class: 'flashcard-translation' }, c.funcion));
+      if (c.ua) card.appendChild(el('div', { class: 'flashcard-translation' }, c.ua));
+      if (c.significado) card.appendChild(el('div', { class: 'flashcard-example' }, c.significado));
+      if (c.formas) card.appendChild(el('div', { class: 'flashcard-example', style: 'font-style:normal;font-weight:600;margin-bottom:8px' }, c.formas));
+      if (c.funcion && c.conector) card.appendChild(el('div', { class: 'flashcard-example' }, 'Función: ' + c.funcion));
       if (c.ejemplo) card.appendChild(el('div', { class: 'flashcard-example' }, '"' + c.ejemplo + '"'));
     } else {
       card.appendChild(el('div', { class: 'flashcard-hint' }, 'Toca la tarjeta para ver la respuesta'));
@@ -539,6 +644,24 @@
       renderFlash();
     });
     box.appendChild(card);
+
+    if (s.flipped) {
+      const row = el('div', { class: 'nav-buttons' });
+      const hardBtn = el('button', { class: 'btn secondary' }, 'Difícil, repetir');
+      const okBtn = el('button', { class: 'btn' }, '¡La sé!');
+      hardBtn.addEventListener('click', () => markCard(true));
+      okBtn.addEventListener('click', () => markCard(false));
+      row.appendChild(hardBtn);
+      row.appendChild(okBtn);
+      box.appendChild(row);
+    } else {
+      const diffCount = (loadDifficult()[s.title] || []).length;
+      if (diffCount && s.allCards) {
+        const rev = el('button', { class: 'btn ghost', style: 'margin-top:10px' }, 'Repasar solo difíciles (' + diffCount + ')');
+        rev.addEventListener('click', () => startFlashcards(s.allCards, s.title, true));
+        box.appendChild(rev);
+      }
+    }
   }
   window.flashNext = () => {
     if (!flashState) return;
@@ -563,6 +686,106 @@
   window._deleHandlers.flashcards = () => startFlashcards(D.vocab, 'Vocabulario B2');
   window._deleHandlers.idioms     = () => startFlashcards(D.idioms, 'Expresiones y modismos');
   window._deleHandlers.connectors = () => startFlashcards(D.connectors, 'Conectores discursivos');
+  window._deleHandlers.verbflash  = () => startFlashcards(D.verbs, 'Verbos clave');
+
+  // =============================================================
+  // TIEMPOS VERBALES (guía) Y VERBOS
+  // =============================================================
+
+  window._deleHandlers.tenses = () => {
+    $('#listingTitle').textContent = 'Tiempos verbales · Дієслівні часи';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    c.appendChild(el('div', { class: 'tip-box' },
+      el('strong', {}, '¿Cómo estudiar los tiempos? '),
+      'Lee un tiempo al día, copia sus ejemplos a mano y luego haz el quiz de conjugación. El contraste indefinido/imperfecto y el subjuntivo son los que más caen en el examen.'
+    ));
+    const practicar = el('button', { class: 'btn' }, 'Practicar conjugación (quiz)');
+    practicar.addEventListener('click', () => window._deleHandlers.conjugation());
+    c.appendChild(practicar);
+    D.tenses.forEach((t) => {
+      const box = el('div', { class: 'list-item', style: 'margin-top:12px' });
+      box.appendChild(el('h4', {}, t.nombre));
+      box.appendChild(el('p', { style: 'color:var(--red);font-weight:600;margin:2px 0 8px 0' }, t.ua));
+      box.appendChild(el('p', { style: 'font-size:13px;margin:0 0 8px 0' }, el('strong', {}, 'Formación: '), document.createTextNode(t.formacion)));
+      const usos = el('div', { class: 'checklist' });
+      t.usos.forEach((u) => usos.appendChild(el('div', { class: 'checklist-item' }, u)));
+      box.appendChild(usos);
+      t.ejemplos.forEach((e) => {
+        box.appendChild(el('div', { class: 'writing-prompt', style: 'margin-top:8px;margin-bottom:0' },
+          el('div', {}, e.es),
+          el('div', { style: 'color:var(--muted);font-size:13px;margin-top:2px' }, e.ua)
+        ));
+      });
+      if (t.truco) {
+        box.appendChild(el('div', { class: 'tip-box', style: 'margin-bottom:0' }, el('strong', {}, 'Truco: '), document.createTextNode(t.truco)));
+      }
+      c.appendChild(box);
+    });
+    show('listingScreen');
+  };
+
+  window._deleHandlers.verbs = () => {
+    $('#listingTitle').textContent = 'Verbos clave · Ключові дієслова';
+    const c = $('#listingContent');
+    c.innerHTML = '';
+    c.appendChild(el('div', { class: 'tip-box' },
+      el('strong', {}, 'Formas mostradas: '),
+      'yo presente · yo indefinido · yo subjuntivo · participio. Domina estas cuatro y el resto de la conjugación sale sola.'
+    ));
+    const row = el('div', { class: 'nav-buttons' });
+    const fBtn = el('button', { class: 'btn' }, 'Estudiar con flashcards');
+    const qBtn = el('button', { class: 'btn secondary' }, 'Quiz de conjugación');
+    fBtn.addEventListener('click', () => window._deleHandlers.verbflash());
+    qBtn.addEventListener('click', () => window._deleHandlers.conjugation());
+    row.appendChild(fBtn); row.appendChild(qBtn);
+    c.appendChild(row);
+    D.verbs.forEach((v) => {
+      const box = el('div', { class: 'list-item' });
+      box.appendChild(el('h4', {}, v.inf + ' — ' + v.ua));
+      box.appendChild(el('p', { style: 'font-weight:600' }, v.formas));
+      box.appendChild(el('p', { style: 'font-style:italic' }, '"' + v.ejemplo + '"'));
+      c.appendChild(box);
+    });
+    show('listingScreen');
+  };
+
+  // Quiz de conjugación: preguntas fijas + preguntas generadas de los verbos
+  function buildVerbFormQuestions(n) {
+    const SLOTS = [
+      { idx: 1, label: 'yo, pretérito indefinido' },
+      { idx: 2, label: 'yo, presente de subjuntivo' },
+      { idx: 3, label: 'participio' }
+    ];
+    const verbs = shuffle(D.verbs).slice(0, n);
+    return verbs.map((v) => {
+      const slot = SLOTS[Math.floor(Math.random() * SLOTS.length)];
+      const parts = v.formas.split(' · ');
+      const correct = parts[slot.idx];
+      const others = shuffle(D.verbs.filter((o) => o !== v)).slice(0, 2)
+        .map((o) => o.formas.split(' · ')[slot.idx]);
+      const opts = shuffle([correct].concat(others));
+      return {
+        type: 'mc',
+        q: '¿Cuál es la forma correcta de "' + v.inf + '" (' + v.ua + ') — ' + slot.label + '?',
+        opciones: opts,
+        correcta: opts.indexOf(correct),
+        explicacion: v.inf + ': ' + v.formas + '. Ejemplo: "' + v.ejemplo + '"'
+      };
+    });
+  }
+
+  window._deleHandlers.conjugation = () => {
+    const fixed = shuffle(D.tenseQuiz).slice(0, 8).map((q) => ({
+      type: 'mc',
+      q: '[' + q.tema + '] ' + q.q,
+      opciones: q.opciones,
+      correcta: q.correcta,
+      explicacion: q.explicacion
+    }));
+    const generated = buildVerbFormQuestions(7);
+    startQuiz({ title: 'Conjugación (15 preguntas)', mode: 'conjugacion', items: shuffle(fixed.concat(generated)) });
+  };
 
   // =============================================================
   // GRAMÁTICA (quiz de 10 preguntas aleatorias por ejecución)
@@ -669,10 +892,10 @@
     const c = $('#speakingContent');
     c.innerHTML = '';
     const groups = [
-      { key: 'tarea1', label: 'Tarea 1 · Valorar propuestas (2-3 min)' },
-      { key: 'tarea2', label: 'Tarea 2 · Describir una fotografía (2-3 min)' },
-      { key: 'tarea3', label: 'Tarea 3 · Diálogo con el examinador (3-4 min)' },
-      { key: 'tarea4', label: 'Tarea 4 · Opinar sobre un titular (2-3 min)' }
+      { key: 'tarea1', label: 'Tarea 1 · Valorar propuestas (6-7 min)' },
+      { key: 'tarea2', label: 'Tarea 2 · Situación a partir de una foto (5-6 min)' },
+      { key: 'tarea3', label: 'Tarea 3 · Opinar sobre una encuesta (3-4 min)' },
+      { key: 'extra', label: 'Práctica extra de conversación (no entra en el examen)' }
     ];
     groups.forEach((g) => {
       c.appendChild(el('div', { class: 'section-title' }, g.label));
@@ -694,6 +917,9 @@
     const sit = p.situacion || p.escenaDescrita || p.titular || '';
     c.appendChild(el('div', { class: 'writing-prompt' }, sit));
     const lists = [
+      { key: 'preguntaEncuesta', label: 'Pregunta de la encuesta', single: true },
+      { key: 'opcionesEncuesta', label: 'Opciones (conteste usted primero)' },
+      { key: 'datosReales', label: 'Datos reales (compárelos con su respuesta)' },
       { key: 'propuestas', label: 'Propuestas a valorar' },
       { key: 'preguntasGuia', label: 'Preguntas guía' },
       { key: 'ayuda', label: 'Ayudas y vocabulario' },
@@ -762,6 +988,11 @@
       q: '[Audición] ' + m.pregunta, opciones: m.opciones,
       correcta: m.correcta, explicacion: m.explicacion
     }));
+    D.tenseQuiz.forEach((q) => items.push({
+      type: 'mc', q: '[Tiempos · ' + q.tema + '] ' + q.q,
+      opciones: q.opciones, correcta: q.correcta, explicacion: q.explicacion
+    }));
+    items.push(...buildVerbFormQuestions(6));
     return items;
   }
 
@@ -791,7 +1022,7 @@
     D.reading.t1.slice(0, 1).forEach((t) => {
       t.preguntas.forEach((p, i) => items.push({
         type: 'mc',
-        reading: i === 0 ? t.texto : null,
+        reading: t.texto,
         q: '[Lectura T1] ' + p.q, opciones: p.opciones,
         correcta: p.correcta, explicacion: p.explicacion
       }));
@@ -800,7 +1031,7 @@
     D.reading.t4.forEach((t) => {
       t.huecos.slice(0, 8).forEach((h, i) => items.push({
         type: 'mc',
-        reading: i === 0 ? t.textoHtml : null,
+        reading: t.textoHtml,
         q: '[Lectura T4] Hueco ' + h.n, opciones: h.opciones,
         correcta: h.correcta, explicacion: h.explicacion
       }));
@@ -815,7 +1046,7 @@
     D.listening.t3.forEach((e) => {
       e.preguntas.forEach((p, i) => items.push({
         type: 'mc',
-        transcript: i === 0 ? e.transcripcion : null,
+        transcript: e.transcripcion,
         q: '[Audición T3] ' + p.q, opciones: p.opciones,
         correcta: p.correcta, explicacion: p.explicacion
       }));
