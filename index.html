@@ -109,6 +109,27 @@ main { max-width: 900px; margin: 0 auto; padding: 16px; }
   font-style: italic;
   letter-spacing: 0.2px;
 }
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, var(--red), #7a0f13);
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+.countdown-num {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--yellow);
+  min-width: 56px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.countdown-lbl { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.countdown-lbl .sub { opacity: 0.85; font-weight: 500; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
 .stat {
   background: var(--bg);
@@ -530,6 +551,10 @@ textarea {
 <main>
   <div id="homeScreen" class="screen active">
     <div class="hero">
+      <div class="countdown" id="countdown">
+        <div class="countdown-num" id="countdownNum">—</div>
+        <div class="countdown-lbl" id="countdownLbl">Cargando cuenta atrás…</div>
+      </div>
       <h2>¡Hola! Prepara tu DELE B2</h2>
       <p>Preguntas tipo examen, vocabulario y verbos con traducción al ucraniano, tiempos verbales explicados y simulacros según el modelo oficial del Instituto Cervantes.</p>
       <p class="hero-love">Te quiero Yana, tú puedes.</p>

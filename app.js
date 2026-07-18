@@ -59,6 +59,39 @@
   }
   function saveProgress(p) { localStorage.setItem(KEY, JSON.stringify(p)); }
   const DAILY_GOAL = 20;
+
+  // ---------- Cuenta atrás para el examen ----------
+  const EXAM_DATE = new Date(2026, 9, 16); // 16 de octubre de 2026 (mes 0-indexado)
+  function updateCountdown() {
+    const numEl = $('#countdownNum');
+    const lblEl = $('#countdownLbl');
+    if (!numEl || !lblEl) return;
+    const now = new Date();
+    const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const days = Math.round((EXAM_DATE - todayMid) / 86400000);
+    if (days > 1) {
+      numEl.textContent = days;
+      numEl.style.fontSize = '40px';
+      const semanas = Math.round(days / 7);
+      lblEl.innerHTML = 'días para el DELE B2 · 16 de octubre' +
+        '<br><span class="sub">≈ ' + semanas + ' semanas · ¡tú puedes, Yana!</span>';
+    } else if (days === 1) {
+      numEl.textContent = '1';
+      numEl.style.fontSize = '40px';
+      lblEl.innerHTML = 'día para el DELE B2 · ¡mañana es el examen!' +
+        '<br><span class="sub">Descansa bien esta noche 💪</span>';
+    } else if (days === 0) {
+      numEl.textContent = '¡Hoy!';
+      numEl.style.fontSize = '22px';
+      lblEl.innerHTML = 'Es el día del DELE B2' +
+        '<br><span class="sub">¡Mucha suerte, Yana! 🍀</span>';
+    } else {
+      numEl.textContent = '🎉';
+      numEl.style.fontSize = '30px';
+      lblEl.innerHTML = 'El examen ya pasó' +
+        '<br><span class="sub">¡Esperamos que lo aprobaras!</span>';
+    }
+  }
   function recordAnswer(ok, mode) {
     const p = loadProgress();
     p.totalQ += 1;
@@ -99,6 +132,7 @@
         : 'Meta diaria: ' + hoy + ' / ' + DAILY_GOAL + ' preguntas';
     }
     if (goalBar) goalBar.style.width = Math.min(100, (hoy / DAILY_GOAL) * 100) + '%';
+    updateCountdown();
   }
 
   // ---------- Tema claro/oscuro ----------
