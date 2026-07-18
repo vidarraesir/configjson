@@ -691,6 +691,44 @@
   // ---------- Mazos temáticos (listas de Yana, con ucraniano) ----------
   window._deleHandlers.serEstar = () => startFlashcards(D.serEstarExpr, 'Frases con SER y ESTAR');
 
+  // Genera un quiz de opción múltiple a partir de un mazo {palabra, traduccion}.
+  // Mezcla dos direcciones: reconocer el significado (ES→UA) y producir la
+  // palabra (UA→ES). Los distractores salen del mismo mazo y se deduplican por
+  // la respuesta, de modo que nunca hay dos opciones correctas.
+  function buildVocabQuiz(cards, n) {
+    const pool = cards.filter((c) => c.palabra && c.traduccion);
+    if (pool.length < 3) return [];
+    const count = Math.min(n, pool.length);
+    return shuffle(pool).slice(0, count).map((c, i) => {
+      const askMeaning = i % 2 === 0; // alterna dirección
+      const answerKey = askMeaning ? 'traduccion' : 'palabra';
+      const correct = c[answerKey];
+      const distractores = [];
+      for (const o of shuffle(pool)) {
+        if (o[answerKey] === correct) continue;
+        if (distractores.includes(o[answerKey])) continue;
+        distractores.push(o[answerKey]);
+        if (distractores.length === 2) break;
+      }
+      const opciones = shuffle([correct].concat(distractores));
+      return {
+        type: 'mc',
+        q: askMeaning
+          ? '¿Qué significa «' + c.palabra + '»?'
+          : '¿Qué palabra o expresión significa «' + c.traduccion + '»?',
+        opciones,
+        correcta: opciones.indexOf(correct),
+        explicacion: c.palabra + ' — ' + c.traduccion
+      };
+    });
+  }
+
+  function startVocabQuiz(cards, title, n) {
+    const items = buildVocabQuiz(cards, n || 15);
+    if (!items.length) { alert('Este mazo es demasiado pequeño para un quiz.'); return; }
+    startQuiz({ title: title, mode: 'vocab-quiz', items });
+  }
+
   // Navegador de vocabulario de artículos (escalable: crece con cada lista nueva)
   window._deleHandlers.articleBrowser = () => {
     $('#listingTitle').textContent = 'Vocabulario de artículos · Ucraniano';
@@ -699,14 +737,28 @@
     const total = D.articleDecks.reduce((s, d) => s + d.cards.length, 0);
     c.appendChild(el('div', { class: 'tip-box' },
       el('strong', {}, 'Cada artículo es un mazo. '),
-      'Toca uno para estudiarlo con flashcards; marca las difíciles y repásalas aparte. En total: ' + total + ' palabras.'
+      'Estúdialo con flashcards o ponte a prueba con el quiz. Marca las difíciles y repásalas aparte. En total: ' + total + ' palabras.'
     ));
+    // Quiz mixto de TODO el vocabulario de artículos
+    const mix = el('button', { class: 'btn' }, '🎲 Quiz mixto de vocabulario (20)');
+    mix.addEventListener('click', () => {
+      const todo = D.articleDecks.reduce((acc, d) => acc.concat(d.cards), []);
+      startVocabQuiz(todo, 'Quiz mixto de vocabulario', 20);
+    });
+    c.appendChild(mix);
     D.articleDecks.forEach((deck) => {
-      const b = el('div', { class: 'list-item', style: 'cursor:pointer' });
-      b.appendChild(el('h4', { style: 'margin:0' }, deck.emoji + ' ' + deck.titulo));
-      b.appendChild(el('p', { style: 'margin:2px 0 0 0' }, deck.cards.length + ' palabras'));
-      b.addEventListener('click', () => startFlashcards(deck.cards, deck.emoji + ' ' + deck.titulo));
-      c.appendChild(b);
+      const box = el('div', { class: 'list-item' });
+      box.appendChild(el('h4', { style: 'margin:0' }, deck.emoji + ' ' + deck.titulo));
+      box.appendChild(el('p', { style: 'margin:2px 0 8px 0' }, deck.cards.length + ' palabras'));
+      const row = el('div', { class: 'nav-buttons', style: 'margin-top:0' });
+      const fBtn = el('button', { class: 'btn ghost' }, 'Tarjetas');
+      const qBtn = el('button', { class: 'btn secondary' }, 'Quiz');
+      fBtn.addEventListener('click', () => startFlashcards(deck.cards, deck.emoji + ' ' + deck.titulo));
+      qBtn.addEventListener('click', () => startVocabQuiz(deck.cards, 'Quiz · ' + deck.titulo, 15));
+      row.appendChild(fBtn);
+      row.appendChild(qBtn);
+      box.appendChild(row);
+      c.appendChild(box);
     });
     show('listingScreen');
   };
@@ -1096,6 +1148,11 @@
       opciones: q.opciones, correcta: q.correcta, explicacion: q.explicacion
     }));
     items.push(...buildVerbFormQuestions(6));
+    // Algo de vocabulario de artículos para variar el repaso diario.
+    if (D.articleDecks && D.articleDecks.length) {
+      const allVocab = D.articleDecks.reduce((a, d) => a.concat(d.cards), []);
+      buildVocabQuiz(allVocab, 8).forEach((it) => items.push(Object.assign({}, it, { q: '[Vocabulario] ' + it.q })));
+    }
     return items;
   }
 
