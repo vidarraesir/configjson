@@ -77,7 +77,13 @@ En el iPhone puedes hacer que se lean en voz alta con
 **Consejos y estrategias** por prueba y para el día del examen
 
 Progreso persistente: total respondidas, % aciertos, racha de días.
-Modo oscuro. Totalmente en español.
+Modo oscuro.
+
+**Interfaz en dos idiomas** — botón en la cabecera (ES / УКР) para cambiar
+toda la interfaz entre **español y ucraniano** al instante: menús, botones,
+mensajes, contador, resultados… El contenido de estudio (preguntas, textos y
+vocabulario español) permanece en español, que es lo que se aprende, con su
+traducción al ucraniano en las tarjetas.
 
 ## Instalación en iPhone (2 minutos)
 

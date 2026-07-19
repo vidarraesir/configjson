@@ -543,8 +543,9 @@ textarea {
 <header>
   <h1>DELE <span>B2</span></h1>
   <div class="header-buttons">
-    <button class="icon-btn" id="themeBtn" title="Cambiar tema">◐</button>
-    <button class="icon-btn" id="resetBtn" title="Reiniciar progreso">↺</button>
+    <button class="icon-btn" id="langBtn" data-i18n-title="btn_lang" title="Мова / Idioma" style="width:auto;padding:0 10px;font-weight:700;font-size:13px">УКР</button>
+    <button class="icon-btn" id="themeBtn" data-i18n-title="btn_theme" title="Cambiar tema">◐</button>
+    <button class="icon-btn" id="resetBtn" data-i18n-title="btn_reset" title="Reiniciar progreso">↺</button>
   </div>
 </header>
 
@@ -553,15 +554,15 @@ textarea {
     <div class="hero">
       <div class="countdown" id="countdown">
         <div class="countdown-num" id="countdownNum">—</div>
-        <div class="countdown-lbl" id="countdownLbl">Cargando cuenta atrás…</div>
+        <div class="countdown-lbl" id="countdownLbl" data-i18n="cd_loading">Cargando cuenta atrás…</div>
       </div>
-      <h2>¡Hola! Prepara tu DELE B2</h2>
-      <p>Preguntas tipo examen, vocabulario y verbos con traducción al ucraniano, tiempos verbales explicados y simulacros según el modelo oficial del Instituto Cervantes.</p>
-      <p class="hero-love">Te quiero Yana, tú puedes.</p>
+      <h2 data-i18n="hero_title">¡Hola! Prepara tu DELE B2</h2>
+      <p data-i18n="hero_desc">Preguntas tipo examen, vocabulario y verbos con traducción al ucraniano, tiempos verbales explicados y simulacros según el modelo oficial del Instituto Cervantes.</p>
+      <p class="hero-love" data-i18n="hero_love">Te quiero Yana, tú puedes.</p>
       <div class="stats">
-        <div class="stat"><div class="stat-val" id="statQuestions">0</div><div class="stat-lbl">Respondidas</div></div>
-        <div class="stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl">Aciertos</div></div>
-        <div class="stat"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">Racha (días)</div></div>
+        <div class="stat"><div class="stat-val" id="statQuestions">0</div><div class="stat-lbl" data-i18n="stat_answered">Respondidas</div></div>
+        <div class="stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl" data-i18n="stat_accuracy">Aciertos</div></div>
+        <div class="stat"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl" data-i18n="stat_streak">Racha (días)</div></div>
       </div>
       <div style="margin-top:12px">
         <div id="dailyGoalText" style="font-size:13px;color:var(--muted);margin-bottom:4px">Meta diaria: 0 / 20 preguntas</div>
@@ -569,172 +570,172 @@ textarea {
       </div>
     </div>
 
-    <div class="section-title">Simulacro completo</div>
+    <div class="section-title" data-i18n="sec_mock">Simulacro completo</div>
     <div class="grid">
       <button class="card" data-action="mockexam">
         <div class="card-icon">!</div>
-        <div class="card-title">Examen completo</div>
-        <div class="card-desc">Simulacro cronometrado de las 4 pruebas</div>
+        <div class="card-title" data-i18n="card_mock_t">Examen completo</div>
+        <div class="card-desc" data-i18n="card_mock_d">Simulacro cronometrado de las 4 pruebas</div>
       </button>
       <button class="card" data-action="random">
         <div class="card-icon yellow">≡</div>
-        <div class="card-title">Quiz rápido</div>
-        <div class="card-desc">20 preguntas mixtas aleatorias</div>
+        <div class="card-title" data-i18n="card_quick_t">Quiz rápido</div>
+        <div class="card-desc" data-i18n="card_quick_d">20 preguntas mixtas aleatorias</div>
       </button>
     </div>
 
-    <div class="section-title">Prueba 1 — Comprensión de lectura</div>
+    <div class="section-title" data-i18n="sec_reading">Prueba 1 — Comprensión de lectura</div>
     <div class="grid">
       <button class="card" data-action="reading" data-task="t1">
         <div class="card-icon">L1</div>
-        <div class="card-title">Tarea 1</div>
-        <div class="card-desc">Texto largo + opción múltiple</div>
+        <div class="card-title" data-i18n="card_r1_t">Tarea 1</div>
+        <div class="card-desc" data-i18n="card_r1_d">Texto largo + opción múltiple</div>
       </button>
       <button class="card" data-action="reading" data-task="t2">
         <div class="card-icon">L2</div>
-        <div class="card-title">Tarea 2</div>
-        <div class="card-desc">Relacionar textos con personas</div>
+        <div class="card-title" data-i18n="card_r2_t">Tarea 2</div>
+        <div class="card-desc" data-i18n="card_r2_d">Relacionar textos con personas</div>
       </button>
       <button class="card" data-action="reading" data-task="t3">
         <div class="card-icon">L3</div>
-        <div class="card-title">Tarea 3</div>
-        <div class="card-desc">Texto con huecos (frases)</div>
+        <div class="card-title" data-i18n="card_r3_t">Tarea 3</div>
+        <div class="card-desc" data-i18n="card_r3_d">Texto con huecos (frases)</div>
       </button>
       <button class="card" data-action="reading" data-task="t4">
         <div class="card-icon">L4</div>
-        <div class="card-title">Tarea 4</div>
-        <div class="card-desc">Gramática y léxico en contexto</div>
+        <div class="card-title" data-i18n="card_r4_t">Tarea 4</div>
+        <div class="card-desc" data-i18n="card_r4_d">Gramática y léxico en contexto</div>
       </button>
     </div>
 
-    <div class="section-title">Prueba 2 — Comprensión auditiva (5 tareas)</div>
+    <div class="section-title" data-i18n="sec_listening">Prueba 2 — Comprensión auditiva (5 tareas)</div>
     <div class="grid">
       <button class="card" data-action="listening" data-task="t1">
         <div class="card-icon dark">A1</div>
-        <div class="card-title">Mensajes cortos</div>
-        <div class="card-desc">Avisos y anuncios</div>
+        <div class="card-title" data-i18n="card_a1_t">Mensajes cortos</div>
+        <div class="card-desc" data-i18n="card_a1_d">Avisos y anuncios</div>
       </button>
       <button class="card" data-action="listening" data-task="t2">
         <div class="card-icon dark">A2</div>
-        <div class="card-title">¿Quién lo dice?</div>
-        <div class="card-desc">Conversación: él, ella o ninguno</div>
+        <div class="card-title" data-i18n="card_a2_t">¿Quién lo dice?</div>
+        <div class="card-desc" data-i18n="card_a2_d">Conversación: él, ella o ninguno</div>
       </button>
       <button class="card" data-action="listening" data-task="t3">
         <div class="card-icon dark">A3</div>
-        <div class="card-title">Entrevistas</div>
-        <div class="card-desc">Preguntas sobre entrevistas</div>
+        <div class="card-title" data-i18n="card_a3_t">Entrevistas</div>
+        <div class="card-desc" data-i18n="card_a3_d">Preguntas sobre entrevistas</div>
       </button>
       <button class="card" data-action="listening" data-task="t4">
         <div class="card-icon dark">A4</div>
-        <div class="card-title">Relacionar personas</div>
-        <div class="card-desc">6 personas, 9 enunciados</div>
+        <div class="card-title" data-i18n="card_a4_t">Relacionar personas</div>
+        <div class="card-desc" data-i18n="card_a4_d">6 personas, 9 enunciados</div>
       </button>
       <button class="card" data-action="listening" data-task="t5">
         <div class="card-icon dark">A5</div>
-        <div class="card-title">Conferencia</div>
-        <div class="card-desc">Monólogo expositivo</div>
+        <div class="card-title" data-i18n="card_a5_t">Conferencia</div>
+        <div class="card-desc" data-i18n="card_a5_d">Monólogo expositivo</div>
       </button>
     </div>
 
-    <div class="section-title">Verbos y tiempos · Дієслова</div>
+    <div class="section-title" data-i18n="sec_verbs">Verbos y tiempos · Дієслова</div>
     <div class="grid">
       <button class="card" data-action="tenses">
         <div class="card-icon green">T</div>
-        <div class="card-title">Tiempos verbales</div>
-        <div class="card-desc">14 tiempos explicados con ucraniano</div>
+        <div class="card-title" data-i18n="card_tenses_t">Tiempos verbales</div>
+        <div class="card-desc" data-i18n="card_tenses_d">14 tiempos explicados con ucraniano</div>
       </button>
       <button class="card" data-action="verbs">
         <div class="card-icon green">V</div>
-        <div class="card-title">Verbos clave</div>
-        <div class="card-desc">50 verbos con formas irregulares</div>
+        <div class="card-title" data-i18n="card_verbs_t">Verbos clave</div>
+        <div class="card-desc" data-i18n="card_verbs_d">50 verbos con formas irregulares</div>
       </button>
       <button class="card" data-action="verbflash">
         <div class="card-icon purple">F</div>
-        <div class="card-title">Flashcards de verbos</div>
-        <div class="card-desc">Repaso con ucraniano</div>
+        <div class="card-title" data-i18n="card_verbflash_t">Flashcards de verbos</div>
+        <div class="card-desc" data-i18n="card_verbflash_d">Repaso con ucraniano</div>
       </button>
       <button class="card" data-action="conjugation">
         <div class="card-icon orange">C</div>
-        <div class="card-title">Quiz de conjugación</div>
-        <div class="card-desc">15 preguntas de práctica</div>
+        <div class="card-title" data-i18n="card_conj_t">Quiz de conjugación</div>
+        <div class="card-desc" data-i18n="card_conj_d">15 preguntas de práctica</div>
       </button>
     </div>
 
-    <div class="section-title">Vocabulario y gramática</div>
+    <div class="section-title" data-i18n="sec_vocab_grammar">Vocabulario y gramática</div>
     <div class="grid">
       <button class="card" data-action="flashcards">
         <div class="card-icon purple">V</div>
-        <div class="card-title">Flashcards</div>
-        <div class="card-desc">Vocabulario temático B2</div>
+        <div class="card-title" data-i18n="card_flash_t">Flashcards</div>
+        <div class="card-desc" data-i18n="card_flash_d">Vocabulario temático B2</div>
       </button>
       <button class="card" data-action="grammar">
         <div class="card-icon green">G</div>
-        <div class="card-title">Gramática</div>
-        <div class="card-desc">Subjuntivo, condicional, ser/estar…</div>
+        <div class="card-title" data-i18n="card_grammar_t">Gramática</div>
+        <div class="card-desc" data-i18n="card_grammar_d">Subjuntivo, condicional, ser/estar…</div>
       </button>
       <button class="card" data-action="idioms">
         <div class="card-icon orange">M</div>
-        <div class="card-title">Expresiones</div>
-        <div class="card-desc">Modismos y frases hechas</div>
+        <div class="card-title" data-i18n="card_idioms_t">Expresiones</div>
+        <div class="card-desc" data-i18n="card_idioms_d">Modismos y frases hechas</div>
       </button>
       <button class="card" data-action="connectors">
         <div class="card-icon purple">C</div>
-        <div class="card-title">Conectores</div>
-        <div class="card-desc">Marcadores discursivos</div>
+        <div class="card-title" data-i18n="card_connectors_t">Conectores</div>
+        <div class="card-desc" data-i18n="card_connectors_d">Marcadores discursivos</div>
       </button>
     </div>
 
-    <div class="section-title">Vocabulario por temas · Ucraniano 🇺🇦</div>
+    <div class="section-title" data-i18n="sec_vocab_themes">Vocabulario por temas · Ucraniano 🇺🇦</div>
     <div class="grid">
       <button class="card" data-action="articleBrowser">
         <div class="card-icon purple">Ar</div>
-        <div class="card-title">Vocabulario de artículos</div>
-        <div class="card-desc">18 listas temáticas · ucraniano</div>
+        <div class="card-title" data-i18n="card_articles_t">Vocabulario de artículos</div>
+        <div class="card-desc" data-i18n="card_articles_d">18 listas temáticas · ucraniano</div>
       </button>
       <button class="card" data-action="serEstar">
         <div class="card-icon orange">SE</div>
-        <div class="card-title">Frases: SER y ESTAR</div>
-        <div class="card-desc">37 frases hechas · ucraniano</div>
+        <div class="card-title" data-i18n="card_serestar_t">Frases: SER y ESTAR</div>
+        <div class="card-desc" data-i18n="card_serestar_d">37 frases hechas · ucraniano</div>
       </button>
       <button class="card" data-action="serEstarQuiz">
         <div class="card-icon orange">Q</div>
-        <div class="card-title">Quiz: SER y ESTAR</div>
-        <div class="card-desc">Adivina el significado</div>
+        <div class="card-title" data-i18n="card_serestarquiz_t">Quiz: SER y ESTAR</div>
+        <div class="card-desc" data-i18n="card_serestarquiz_d">Adivina el significado</div>
       </button>
       <button class="card" data-action="tenerSyn">
         <div class="card-icon yellow">Tn</div>
-        <div class="card-title">Sinónimos de TENER</div>
-        <div class="card-desc">Sube tu nivel léxico B2</div>
+        <div class="card-title" data-i18n="card_tener_t">Sinónimos de TENER</div>
+        <div class="card-desc" data-i18n="card_tener_d">Sube tu nivel léxico B2</div>
       </button>
       <button class="card" data-action="tendencia">
         <div class="card-icon green">Te</div>
-        <div class="card-title">Palabra: TENDENCIA</div>
-        <div class="card-desc">Calco frecuente + colocaciones</div>
+        <div class="card-title" data-i18n="card_tendencia_t">Palabra: TENDENCIA</div>
+        <div class="card-desc" data-i18n="card_tendencia_d">Calco frecuente + colocaciones</div>
       </button>
     </div>
 
-    <div class="section-title">Expresión</div>
+    <div class="section-title" data-i18n="sec_expression">Expresión</div>
     <div class="grid">
       <button class="card" data-action="writing">
         <div class="card-icon">E</div>
-        <div class="card-title">Escritura</div>
-        <div class="card-desc">Prácticas de Tarea 1 y 2</div>
+        <div class="card-title" data-i18n="card_writing_t">Escritura</div>
+        <div class="card-desc" data-i18n="card_writing_d">Prácticas de Tarea 1 y 2</div>
       </button>
       <button class="card" data-action="speaking">
         <div class="card-icon yellow">O</div>
-        <div class="card-title">Oral</div>
-        <div class="card-desc">Temas y fotos para hablar</div>
+        <div class="card-title" data-i18n="card_speaking_t">Oral</div>
+        <div class="card-desc" data-i18n="card_speaking_d">Temas y fotos para hablar</div>
       </button>
       <button class="card" data-action="tips">
         <div class="card-icon dark">?</div>
-        <div class="card-title">Consejos</div>
-        <div class="card-desc">Estrategias de examen</div>
+        <div class="card-title" data-i18n="card_tips_t">Consejos</div>
+        <div class="card-desc" data-i18n="card_tips_d">Estrategias de examen</div>
       </button>
     </div>
   </div>
 
   <div id="quizScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
     <div class="quiz-header">
       <span id="quizTitle">Quiz</span>
       <span id="quizTimer" class="timer" style="display:none;">00:00</span>
@@ -747,20 +748,20 @@ textarea {
   <div id="resultScreen" class="screen">
     <div class="result-screen">
       <div class="result-score" id="resultScore">0%</div>
-      <div class="result-label" id="resultLabel">¡Buen trabajo!</div>
+      <div class="result-label" id="resultLabel" data-i18n="res_default">¡Buen trabajo!</div>
       <div class="result-summary">
-        <div class="stat"><div class="stat-val" id="resCorrect" style="color:var(--ok)">0</div><div class="stat-lbl">Aciertos</div></div>
-        <div class="stat"><div class="stat-val" id="resWrong" style="color:var(--bad)">0</div><div class="stat-lbl">Fallos</div></div>
-        <div class="stat"><div class="stat-val" id="resTotal">0</div><div class="stat-lbl">Total</div></div>
+        <div class="stat"><div class="stat-val" id="resCorrect" style="color:var(--ok)">0</div><div class="stat-lbl" data-i18n="res_correct">Aciertos</div></div>
+        <div class="stat"><div class="stat-val" id="resWrong" style="color:var(--bad)">0</div><div class="stat-lbl" data-i18n="res_wrong">Fallos</div></div>
+        <div class="stat"><div class="stat-val" id="resTotal">0</div><div class="stat-lbl" data-i18n="res_total">Total</div></div>
       </div>
       <div id="resultFeedback"></div>
-      <button class="btn" onclick="goHome()">Volver al inicio</button>
-      <button class="btn ghost" onclick="repeatQuiz()">Repetir</button>
+      <button class="btn" onclick="goHome()" data-i18n="result_back">Volver al inicio</button>
+      <button class="btn ghost" onclick="repeatQuiz()" data-i18n="result_repeat">Repetir</button>
     </div>
   </div>
 
   <div id="flashScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
     <div class="quiz-header">
       <span id="flashCategory">Vocabulario</span>
       <span id="flashProgress">1 / 50</span>
@@ -768,44 +769,45 @@ textarea {
     <div class="progress"><div class="progress-bar" id="flashProgressBar"></div></div>
     <div id="flashCardContainer"></div>
     <div class="nav-buttons">
-      <button class="btn ghost" onclick="flashPrev()">‹ Anterior</button>
-      <button class="btn" onclick="flashNext()">Siguiente ›</button>
+      <button class="btn ghost" onclick="flashPrev()" data-i18n="prev">‹ Anterior</button>
+      <button class="btn" onclick="flashNext()" data-i18n="next">Siguiente ›</button>
     </div>
-    <button class="btn secondary" onclick="flashShuffle()">Mezclar</button>
+    <button class="btn secondary" onclick="flashShuffle()" data-i18n="shuffle">Mezclar</button>
   </div>
 
   <div id="writingScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
-    <h2 id="writingTitle">Expresión escrita</h2>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
+    <h2 id="writingTitle" data-i18n="title_writing">Expresión escrita</h2>
     <div id="writingContent"></div>
   </div>
 
   <div id="speakingScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
-    <h2>Expresión oral</h2>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
+    <h2 data-i18n="title_speaking">Expresión oral</h2>
     <div id="speakingContent"></div>
   </div>
 
   <div id="infoScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
     <div id="infoContent"></div>
   </div>
 
   <div id="listingScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">‹ Volver</button>
+    <button class="back-btn" onclick="goHome()" data-i18n="back">‹ Volver</button>
     <h2 id="listingTitle"></h2>
     <div id="listingContent"></div>
   </div>
 </main>
 
 <div class="bottom-tabs">
-  <button class="tab active" data-screen="homeScreen"><span class="tab-icon">⌂</span>Inicio</button>
-  <button class="tab" data-action="flashcards"><span class="tab-icon">V</span>Vocab</button>
-  <button class="tab" data-action="grammar"><span class="tab-icon">G</span>Gramática</button>
-  <button class="tab" data-action="random"><span class="tab-icon">Q</span>Quiz</button>
-  <button class="tab" data-action="tips"><span class="tab-icon">?</span>Tips</button>
+  <button class="tab active" data-screen="homeScreen"><span class="tab-icon">⌂</span><span data-i18n="tab_home">Inicio</span></button>
+  <button class="tab" data-action="flashcards"><span class="tab-icon">V</span><span data-i18n="tab_vocab">Vocab</span></button>
+  <button class="tab" data-action="grammar"><span class="tab-icon">G</span><span data-i18n="tab_grammar">Gramática</span></button>
+  <button class="tab" data-action="random"><span class="tab-icon">Q</span><span data-i18n="tab_quiz">Quiz</span></button>
+  <button class="tab" data-action="tips"><span class="tab-icon">?</span><span data-i18n="tab_tips">Tips</span></button>
 </div>
 
+<script src="i18n.js"></script>
 <script src="questions.js"></script>
 <script src="app.js"></script>
 <script>

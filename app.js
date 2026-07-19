@@ -6,6 +6,10 @@
   'use strict';
 
   const D = window.DELE_DATA;
+  const tr = (k, vars) => window.t(k, vars);
+
+  // Re-render de la vista dinámica actual al cambiar de idioma.
+  let activeRerender = null;
 
   // ---------- Utilidades DOM ----------
   const $  = (sel) => document.querySelector(sel);
@@ -41,8 +45,9 @@
     window.scrollTo(0, 0);
   }
   window.goHome = () => {
+    activeRerender = null;
     show('homeScreen');
-    $$('.tab').forEach((t) => t.classList.toggle('active', t.dataset.screen === 'homeScreen'));
+    $$('.tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.screen === 'homeScreen'));
     refreshStats();
   };
 
@@ -69,27 +74,23 @@
     const now = new Date();
     const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const days = Math.round((EXAM_DATE - todayMid) / 86400000);
+    const sub = (txt) => '<br><span class="sub">' + txt + '</span>';
     if (days > 1) {
       numEl.textContent = days;
       numEl.style.fontSize = '40px';
-      const semanas = Math.round(days / 7);
-      lblEl.innerHTML = 'días para el DELE B2 · 16 de octubre' +
-        '<br><span class="sub">≈ ' + semanas + ' semanas · ¡tú puedes, Yana!</span>';
+      lblEl.innerHTML = tr('cd_days_label') + sub(tr('cd_weeks_sub', { n: Math.round(days / 7) }));
     } else if (days === 1) {
       numEl.textContent = '1';
       numEl.style.fontSize = '40px';
-      lblEl.innerHTML = 'día para el DELE B2 · ¡mañana es el examen!' +
-        '<br><span class="sub">Descansa bien esta noche 💪</span>';
+      lblEl.innerHTML = tr('cd_one_label') + sub(tr('cd_one_sub'));
     } else if (days === 0) {
-      numEl.textContent = '¡Hoy!';
+      numEl.textContent = tr('cd_today_num');
       numEl.style.fontSize = '22px';
-      lblEl.innerHTML = 'Es el día del DELE B2' +
-        '<br><span class="sub">¡Mucha suerte, Yana! 🍀</span>';
+      lblEl.innerHTML = tr('cd_today_label') + sub(tr('cd_today_sub'));
     } else {
       numEl.textContent = '🎉';
       numEl.style.fontSize = '30px';
-      lblEl.innerHTML = 'El examen ya pasó' +
-        '<br><span class="sub">¡Esperamos que lo aprobaras!</span>';
+      lblEl.innerHTML = tr('cd_past_label') + sub(tr('cd_past_sub'));
     }
   }
   function recordAnswer(ok, mode) {
@@ -128,8 +129,8 @@
     const goalBar = $('#dailyGoalBar');
     if (goalTxt) {
       goalTxt.textContent = hoy >= DAILY_GOAL
-        ? '¡Meta diaria cumplida! ' + hoy + ' preguntas hoy 🎉'
-        : 'Meta diaria: ' + hoy + ' / ' + DAILY_GOAL + ' preguntas';
+        ? tr('goal_done', { n: hoy })
+        : tr('goal_progress', { n: hoy, g: DAILY_GOAL });
     }
     if (goalBar) goalBar.style.width = Math.min(100, (hoy / DAILY_GOAL) * 100) + '%';
     updateCountdown();
@@ -147,11 +148,21 @@
     localStorage.setItem('theme', next);
   });
   resetBtn && resetBtn.addEventListener('click', () => {
-    if (confirm('¿Reiniciar todo el progreso guardado?')) {
+    if (confirm(tr('reset_confirm'))) {
       localStorage.removeItem(KEY);
       refreshStats();
     }
   });
+
+  // ---------- Interruptor de idioma ----------
+  const langBtn = $('#langBtn');
+  langBtn && langBtn.addEventListener('click', () => window.toggleLang());
+  // Al cambiar de idioma: refresca stats/contador y vuelve a pintar la
+  // vista dinámica activa (si la hay) en el nuevo idioma.
+  window._deleOnLangChange = () => {
+    refreshStats();
+    if (typeof activeRerender === 'function') activeRerender();
+  };
 
   // ---------- Pestañas inferiores ----------
   $$('.tab').forEach((tab) => {
@@ -174,7 +185,7 @@
     // Las funciones concretas se enganchan en sub-tandas siguientes.
     const handler = window._deleHandlers[action];
     if (typeof handler === 'function') handler(task);
-    else alert('Esta sección estará disponible en breve.');
+    else alert(tr('soon'));
   }
 
   // Exponemos para añadir handlers desde otros bloques.
@@ -187,6 +198,7 @@
 
   let quizState = null;
   function startQuiz({ title, mode, items, timerSec = 0 }) {
+    activeRerender = null; // en un quiz, cambiar idioma no debe reiniciarlo
     quizState = {
       title, mode, items,
       idx: 0,
@@ -221,7 +233,7 @@
       el.classList.toggle('bad', remain < 30);
       if (remain <= 0) {
         clearInterval(quizState.timerId);
-        finishQuiz('¡Tiempo agotado!');
+        finishQuiz(tr('time_up'));
       }
     };
     tick();
@@ -254,13 +266,13 @@
   function appendSupportMaterial(card, item) {
     if (item.reading) {
       const det = el('details', { class: 'audio-placeholder', open: '' });
-      det.appendChild(el('summary', {}, '▾ Texto de lectura (toca para ocultar/mostrar)'));
+      det.appendChild(el('summary', {}, tr('support_reading')));
       det.appendChild(el('div', { class: 'reading-text', style: 'margin-top:10px' }, item.reading));
       card.appendChild(det);
     }
     if (item.transcript) {
       const det = el('details', { class: 'audio-placeholder', open: '' });
-      det.appendChild(el('summary', {}, '▾ Audio (transcripción — léela en voz alta o usa la lectura del sistema)'));
+      det.appendChild(el('summary', {}, tr('support_audio')));
       det.appendChild(el('div', { class: 'transcript' }, item.transcript));
       card.appendChild(det);
     }
@@ -293,14 +305,14 @@
       optsBox.appendChild(btn);
     });
 
-    const confirm = el('button', { class: 'btn' }, 'Comprobar');
-    const next = el('button', { class: 'btn ghost' }, 'Siguiente ›');
+    const confirm = el('button', { class: 'btn' }, tr('check'));
+    const next = el('button', { class: 'btn ghost' }, tr('next'));
     next.style.display = 'none';
     card.appendChild(confirm);
     card.appendChild(next);
 
     confirm.addEventListener('click', () => {
-      if (selected === null) return alert('Elige una opción primero.');
+      if (selected === null) return alert(tr('pick_first'));
       answered = true;
       confirm.style.display = 'none';
       next.style.display = '';
@@ -314,9 +326,9 @@
       if (ok) quizState.correct += 1;
       recordAnswer(ok, quizState.mode);
       feedback.innerHTML = '';
-      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? '¡Correcto!' : 'Incorrecto.'));
+      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? tr('correct') : tr('incorrect')));
       if (item.explicacion) {
-        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, 'Explicación: '), document.createTextNode(item.explicacion)));
+        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, tr('explanation')), document.createTextNode(item.explicacion)));
       }
     });
     next.addEventListener('click', nextItem);
@@ -332,7 +344,7 @@
     const card = el('div', { class: 'question-card' });
     appendSupportMaterial(card, item);
     card.appendChild(el('p', { class: 'question-text' },
-      el('strong', {}, 'Afirmación: '),
+      el('strong', {}, tr('afirmacion')),
       document.createTextNode(item.afirmacion)
     ));
     const opts = item.choices;
@@ -357,15 +369,15 @@
       optsBox.appendChild(btn);
     });
 
-    const confirm = el('button', { class: 'btn' }, 'Comprobar');
-    const next = el('button', { class: 'btn ghost' }, 'Siguiente ›');
+    const confirm = el('button', { class: 'btn' }, tr('check'));
+    const next = el('button', { class: 'btn ghost' }, tr('next'));
     next.style.display = 'none';
     card.appendChild(confirm);
     card.appendChild(next);
     container.appendChild(card);
 
     confirm.addEventListener('click', () => {
-      if (selected === null) return alert('Elige una opción.');
+      if (selected === null) return alert(tr('pick_one'));
       answered = true;
       confirm.style.display = 'none';
       next.style.display = '';
@@ -379,9 +391,9 @@
       if (ok) quizState.correct += 1;
       recordAnswer(ok, quizState.mode);
       feedback.innerHTML = '';
-      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? '¡Correcto!' : 'Incorrecto.'));
+      feedback.appendChild(el('div', { class: 'feedback ' + (ok ? 'ok' : 'bad') }, ok ? tr('correct') : tr('incorrect')));
       if (item.explicacion) {
-        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, 'Explicación: '), document.createTextNode(item.explicacion)));
+        feedback.appendChild(el('div', { class: 'feedback-explain' }, el('strong', {}, tr('explanation')), document.createTextNode(item.explicacion)));
       }
     });
     next.addEventListener('click', nextItem);
@@ -412,13 +424,9 @@
     const pct = Math.round((correct / total) * 100);
     $('#resultScore').textContent = pct + '%';
     const labels = [
-      [90, '¡Excelente! Nivel sobresaliente.'],
-      [75, '¡Muy bien! Estás lista para el examen.'],
-      [60, 'Aprobado. Sigue practicando puntos débiles.'],
-      [40, 'Por debajo del aprobado. Revisa las explicaciones.'],
-      [0,  'Mucho por repasar. No te rindas, ¡es el principio!']
+      [90, 'res_l_90'], [75, 'res_l_75'], [60, 'res_l_60'], [40, 'res_l_40'], [0, 'res_l_0']
     ];
-    const label = labels.find(([m]) => pct >= m)[1];
+    const label = tr(labels.find(([m]) => pct >= m)[1]);
     $('#resultLabel').textContent = msg ? msg + ' ' + label : label;
     $('#resCorrect').textContent = correct;
     $('#resWrong').textContent = wrong;
@@ -453,7 +461,7 @@
         });
       });
     });
-    startQuiz({ title: 'Lectura · Tarea 1', mode: 'r1', items });
+    startQuiz({ title: tr('qt_r1'), mode: 'r1', items });
   }
 
   function startReadingT2() {
@@ -472,7 +480,7 @@
       });
     });
     // Los textos se muestran con detalles plegables en cada item.
-    startQuiz({ title: 'Lectura · Tarea 2', mode: 'r2', items });
+    startQuiz({ title: tr('qt_r2'), mode: 'r2', items });
   }
   function renderT2Texts(textos) {
     return textos.map((t) => `[${t.letra}] ${t.nombre}\n${t.contenido}`).join('\n\n');
@@ -493,7 +501,7 @@
         });
       });
     });
-    startQuiz({ title: 'Lectura · Tarea 3', mode: 'r3', items });
+    startQuiz({ title: tr('qt_r3'), mode: 'r3', items });
   }
 
   function startReadingT4() {
@@ -510,7 +518,7 @@
         });
       });
     });
-    startQuiz({ title: 'Lectura · Tarea 4', mode: 'r4', items });
+    startQuiz({ title: tr('qt_r4'), mode: 'r4', items });
   }
 
   // ---------- Handlers de audición ----------
@@ -528,20 +536,20 @@
       const choices = [
         { letter: 'A', text: set.hablantes[0] },
         { letter: 'B', text: set.hablantes[1] },
-        { letter: 'C', text: 'Ninguno de los dos' }
+        { letter: 'C', text: tr('ninguno') }
       ];
       set.enunciados.forEach((e) => {
         items.push({
           type: 'match',
           transcript: set.transcripcion,
-          afirmacion: e.n + '. ' + e.texto + '  —  ¿Quién lo dice?',
+          afirmacion: e.n + '. ' + e.texto + tr('quien_dice'),
           choices,
           correcta: e.correcta,
           explicacion: e.explicacion
         });
       });
     });
-    startQuiz({ title: 'Audición · Tarea 2 (¿quién lo dice?)', mode: 'a2', items });
+    startQuiz({ title: tr('qt_a2'), mode: 'a2', items });
   }
 
   function startListeningT4() {
@@ -560,7 +568,7 @@
         });
       });
     });
-    startQuiz({ title: 'Audición · Tarea 4 (relacionar personas)', mode: 'a4', items });
+    startQuiz({ title: tr('qt_a4'), mode: 'a4', items });
   }
 
   function startListeningT1() {
@@ -572,7 +580,7 @@
       correcta: m.correcta,
       explicacion: m.explicacion
     }));
-    startQuiz({ title: 'Audición · Tarea 1 (mensajes cortos)', mode: 'a1', items });
+    startQuiz({ title: tr('qt_a1'), mode: 'a1', items });
   }
   function startListeningT3() {
     const items = [];
@@ -588,7 +596,7 @@
         });
       });
     });
-    startQuiz({ title: 'Audición · Tarea 3 (entrevista)', mode: 'a3', items });
+    startQuiz({ title: tr('qt_a3'), mode: 'a3', items });
   }
   function startListeningT5() {
     const items = [];
@@ -604,7 +612,7 @@
         });
       });
     });
-    startQuiz({ title: 'Audición · Tarea 5 (conferencia)', mode: 'a5', items });
+    startQuiz({ title: tr('qt_a5'), mode: 'a5', items });
   }
 
   // =============================================================
@@ -620,11 +628,12 @@
   function cardKey(c) { return c.palabra || c.expresion || c.conector || c.inf || ''; }
 
   function startFlashcards(cards, title = 'Vocabulario', onlyDifficult = false) {
+    activeRerender = null; // en flashcards, cambiar idioma no debe reiniciarlas
     const diffs = loadDifficult()[title] || [];
     let deck = cards;
     if (onlyDifficult) {
       deck = cards.filter((c) => diffs.includes(cardKey(c)));
-      if (!deck.length) { alert('No hay tarjetas marcadas como difíciles en este mazo. ¡Bien hecho!'); return; }
+      if (!deck.length) { alert(tr('no_hard')); return; }
     }
     // Las difíciles primero: repetirlas más es la base del repaso eficaz.
     const hard = deck.filter((c) => diffs.includes(cardKey(c)));
@@ -655,7 +664,7 @@
     if (!s) return;
     const diffs = loadDifficult()[s.title] || [];
     $('#flashProgress').textContent = (s.idx + 1) + ' / ' + s.cards.length +
-      (diffs.length ? ' · difíciles: ' + diffs.length : '');
+      (diffs.length ? tr('flash_progress_hard') + diffs.length : '');
     $('#flashProgressBar').style.width = (((s.idx + 1) / s.cards.length) * 100) + '%';
     const c = s.cards[s.idx];
     const box = $('#flashCardContainer');
@@ -671,7 +680,7 @@
       if (c.funcion && c.conector) card.appendChild(el('div', { class: 'flashcard-example' }, 'Función: ' + c.funcion));
       if (c.ejemplo) card.appendChild(el('div', { class: 'flashcard-example' }, '"' + c.ejemplo + '"'));
     } else {
-      card.appendChild(el('div', { class: 'flashcard-hint' }, 'Toca la tarjeta para ver la respuesta'));
+      card.appendChild(el('div', { class: 'flashcard-hint' }, tr('flash_hint')));
     }
     card.addEventListener('click', () => {
       s.flipped = !s.flipped;
@@ -681,8 +690,8 @@
 
     if (s.flipped) {
       const row = el('div', { class: 'nav-buttons' });
-      const hardBtn = el('button', { class: 'btn secondary' }, 'Difícil, repetir');
-      const okBtn = el('button', { class: 'btn' }, '¡La sé!');
+      const hardBtn = el('button', { class: 'btn secondary' }, tr('flash_hard'));
+      const okBtn = el('button', { class: 'btn' }, tr('flash_know'));
       hardBtn.addEventListener('click', () => markCard(true));
       okBtn.addEventListener('click', () => markCard(false));
       row.appendChild(hardBtn);
@@ -691,7 +700,7 @@
     } else {
       const diffCount = (loadDifficult()[s.title] || []).length;
       if (diffCount && s.allCards) {
-        const rev = el('button', { class: 'btn ghost', style: 'margin-top:10px' }, 'Repasar solo difíciles (' + diffCount + ')');
+        const rev = el('button', { class: 'btn ghost', style: 'margin-top:10px' }, tr('flash_review_hard', { n: diffCount }));
         rev.addEventListener('click', () => startFlashcards(s.allCards, s.title, true));
         box.appendChild(rev);
       }
@@ -759,36 +768,37 @@
 
   function startVocabQuiz(cards, title, n) {
     const items = buildVocabQuiz(cards, n || 15);
-    if (!items.length) { alert('Este mazo es demasiado pequeño para un quiz.'); return; }
+    if (!items.length) { alert(tr('ab_too_small')); return; }
     startQuiz({ title: title, mode: 'vocab-quiz', items });
   }
 
   // Navegador de vocabulario de artículos (escalable: crece con cada lista nueva)
   window._deleHandlers.articleBrowser = () => {
-    $('#listingTitle').textContent = 'Vocabulario de artículos · Ucraniano';
+    activeRerender = window._deleHandlers.articleBrowser;
+    $('#listingTitle').textContent = tr('title_articles');
     const c = $('#listingContent');
     c.innerHTML = '';
     const total = D.articleDecks.reduce((s, d) => s + d.cards.length, 0);
     c.appendChild(el('div', { class: 'tip-box' },
-      el('strong', {}, 'Cada artículo es un mazo. '),
-      'Estúdialo con flashcards o ponte a prueba con el quiz. Marca las difíciles y repásalas aparte. En total: ' + total + ' palabras.'
+      el('strong', {}, tr('ab_intro_strong')),
+      tr('ab_intro_rest', { n: total })
     ));
     // Quiz mixto de TODO el vocabulario de artículos
-    const mix = el('button', { class: 'btn' }, '🎲 Quiz mixto de vocabulario (20)');
+    const mix = el('button', { class: 'btn' }, tr('ab_mixed'));
     mix.addEventListener('click', () => {
       const todo = D.articleDecks.reduce((acc, d) => acc.concat(d.cards), []);
-      startVocabQuiz(todo, 'Quiz mixto de vocabulario', 20);
+      startVocabQuiz(todo, tr('qt_vocab_mixed'), 20);
     });
     c.appendChild(mix);
     D.articleDecks.forEach((deck) => {
       const box = el('div', { class: 'list-item' });
       box.appendChild(el('h4', { style: 'margin:0' }, deck.emoji + ' ' + deck.titulo));
-      box.appendChild(el('p', { style: 'margin:2px 0 8px 0' }, deck.cards.length + ' palabras'));
+      box.appendChild(el('p', { style: 'margin:2px 0 8px 0' }, tr('ab_words', { n: deck.cards.length })));
       const row = el('div', { class: 'nav-buttons', style: 'margin-top:0' });
-      const fBtn = el('button', { class: 'btn ghost' }, 'Tarjetas');
-      const qBtn = el('button', { class: 'btn secondary' }, 'Quiz');
+      const fBtn = el('button', { class: 'btn ghost' }, tr('ab_cards'));
+      const qBtn = el('button', { class: 'btn secondary' }, tr('ab_quiz'));
       fBtn.addEventListener('click', () => startFlashcards(deck.cards, deck.emoji + ' ' + deck.titulo));
-      qBtn.addEventListener('click', () => startVocabQuiz(deck.cards, 'Quiz · ' + deck.titulo, 15));
+      qBtn.addEventListener('click', () => startVocabQuiz(deck.cards, tr('qt_vocab_prefix') + deck.titulo, 15));
       row.appendChild(fBtn);
       row.appendChild(qBtn);
       box.appendChild(row);
@@ -811,12 +821,13 @@
         explicacion: e.expresion + ' — ' + e.significado + ' · ' + e.traduccion
       };
     });
-    startQuiz({ title: 'Quiz: SER y ESTAR (12)', mode: 'serestar', items });
+    startQuiz({ title: tr('qt_serestar'), mode: 'serestar', items });
   };
 
   // Nota de uso: TENDENCIA (calco frecuente + colocaciones útiles)
   window._deleHandlers.tendencia = () => {
-    $('#listingTitle').textContent = 'Palabra clave: TENDENCIA';
+    activeRerender = window._deleHandlers.tendencia;
+    $('#listingTitle').textContent = tr('title_tendencia');
     const c = $('#listingContent');
     c.innerHTML = '';
     D.usageNotes.forEach((n) => {
@@ -843,12 +854,13 @@
 
   // ---------- Sinónimos de TENER (pantalla de referencia) ----------
   window._deleHandlers.tenerSyn = () => {
-    $('#listingTitle').textContent = 'Sinónimos de TENER · Синоніми до TENER';
+    activeRerender = window._deleHandlers.tenerSyn;
+    $('#listingTitle').textContent = tr('title_tener');
     const c = $('#listingContent');
     c.innerHTML = '';
     c.appendChild(el('div', { class: 'tip-box' },
-      el('strong', {}, 'Sube tu nivel: '),
-      'el verbo "tener" es correcto, pero repetirlo baja la nota en el DELE. Sustitúyelo por estos sinónimos según el contexto y tu expresión sonará mucho más rica.'
+      el('strong', {}, tr('tn_level_strong')),
+      tr('tn_level_rest')
     ));
     D.tenerSyn.forEach((v) => {
       const box = el('div', { class: 'list-item' });
@@ -868,32 +880,33 @@
   // =============================================================
 
   window._deleHandlers.tenses = () => {
-    $('#listingTitle').textContent = 'Tiempos verbales · Дієслівні часи';
+    activeRerender = window._deleHandlers.tenses;
+    $('#listingTitle').textContent = tr('title_tenses');
     const c = $('#listingContent');
     c.innerHTML = '';
     c.appendChild(el('div', { class: 'tip-box' },
-      el('strong', {}, '¿Cómo estudiar los tiempos? '),
-      'Lee un tiempo al día, copia sus ejemplos a mano y luego haz el quiz de conjugación. El contraste indefinido/imperfecto y el subjuntivo son los que más caen en el examen.'
+      el('strong', {}, tr('tn_how_strong')),
+      tr('tn_how_rest')
     ));
-    const practicar = el('button', { class: 'btn' }, 'Practicar conjugación (quiz)');
+    const practicar = el('button', { class: 'btn' }, tr('tn_practice'));
     practicar.addEventListener('click', () => window._deleHandlers.conjugation());
     c.appendChild(practicar);
-    D.tenses.forEach((t) => {
+    D.tenses.forEach((tense) => {
       const box = el('div', { class: 'list-item', style: 'margin-top:12px' });
-      box.appendChild(el('h4', {}, t.nombre));
-      box.appendChild(el('p', { style: 'color:var(--red);font-weight:600;margin:2px 0 8px 0' }, t.ua));
-      box.appendChild(el('p', { style: 'font-size:13px;margin:0 0 8px 0' }, el('strong', {}, 'Formación: '), document.createTextNode(t.formacion)));
+      box.appendChild(el('h4', {}, tense.nombre));
+      box.appendChild(el('p', { style: 'color:var(--red);font-weight:600;margin:2px 0 8px 0' }, tense.ua));
+      box.appendChild(el('p', { style: 'font-size:13px;margin:0 0 8px 0' }, el('strong', {}, tr('tn_formation')), document.createTextNode(tense.formacion)));
       const usos = el('div', { class: 'checklist' });
-      t.usos.forEach((u) => usos.appendChild(el('div', { class: 'checklist-item' }, u)));
+      tense.usos.forEach((u) => usos.appendChild(el('div', { class: 'checklist-item' }, u)));
       box.appendChild(usos);
-      t.ejemplos.forEach((e) => {
+      tense.ejemplos.forEach((e) => {
         box.appendChild(el('div', { class: 'writing-prompt', style: 'margin-top:8px;margin-bottom:0' },
           el('div', {}, e.es),
           el('div', { style: 'color:var(--muted);font-size:13px;margin-top:2px' }, e.ua)
         ));
       });
-      if (t.truco) {
-        box.appendChild(el('div', { class: 'tip-box', style: 'margin-bottom:0' }, el('strong', {}, 'Truco: '), document.createTextNode(t.truco)));
+      if (tense.truco) {
+        box.appendChild(el('div', { class: 'tip-box', style: 'margin-bottom:0' }, el('strong', {}, tr('tn_trick')), document.createTextNode(tense.truco)));
       }
       c.appendChild(box);
     });
@@ -901,16 +914,17 @@
   };
 
   window._deleHandlers.verbs = () => {
-    $('#listingTitle').textContent = 'Verbos clave · Ключові дієслова';
+    activeRerender = window._deleHandlers.verbs;
+    $('#listingTitle').textContent = tr('title_verbs');
     const c = $('#listingContent');
     c.innerHTML = '';
     c.appendChild(el('div', { class: 'tip-box' },
-      el('strong', {}, 'Formas mostradas: '),
-      'yo presente · yo indefinido · yo subjuntivo · participio. Domina estas cuatro y el resto de la conjugación sale sola.'
+      el('strong', {}, tr('vb_forms_strong')),
+      tr('vb_forms_rest')
     ));
     const row = el('div', { class: 'nav-buttons' });
-    const fBtn = el('button', { class: 'btn' }, 'Estudiar con flashcards');
-    const qBtn = el('button', { class: 'btn secondary' }, 'Quiz de conjugación');
+    const fBtn = el('button', { class: 'btn' }, tr('vb_study_flash'));
+    const qBtn = el('button', { class: 'btn secondary' }, tr('vb_quiz'));
     fBtn.addEventListener('click', () => window._deleHandlers.verbflash());
     qBtn.addEventListener('click', () => window._deleHandlers.conjugation());
     row.appendChild(fBtn); row.appendChild(qBtn);
@@ -928,9 +942,9 @@
   // Quiz de conjugación: preguntas fijas + preguntas generadas de los verbos
   function buildVerbFormQuestions(n) {
     const SLOTS = [
-      { idx: 1, label: 'yo, pretérito indefinido' },
-      { idx: 2, label: 'yo, presente de subjuntivo' },
-      { idx: 3, label: 'participio' }
+      { idx: 1, key: 'slot_indef' },
+      { idx: 2, key: 'slot_subj' },
+      { idx: 3, key: 'slot_part' }
     ];
     const verbs = shuffle(D.verbs).slice(0, n);
     return verbs.map((v) => {
@@ -942,7 +956,7 @@
       const opts = shuffle([correct].concat(others));
       return {
         type: 'mc',
-        q: '¿Cuál es la forma correcta de "' + v.inf + '" (' + v.ua + ') — ' + slot.label + '?',
+        q: tr('conj_q', { inf: v.inf, ua: v.ua, slot: tr(slot.key) }),
         opciones: opts,
         correcta: opts.indexOf(correct),
         explicacion: v.inf + ': ' + v.formas + '. Ejemplo: "' + v.ejemplo + '"'
@@ -959,7 +973,7 @@
       explicacion: q.explicacion
     }));
     const generated = buildVerbFormQuestions(7);
-    startQuiz({ title: 'Conjugación (15 preguntas)', mode: 'conjugacion', items: shuffle(fixed.concat(generated)) });
+    startQuiz({ title: tr('qt_conj'), mode: 'conjugacion', items: shuffle(fixed.concat(generated)) });
   };
 
   // =============================================================
@@ -975,7 +989,7 @@
       correcta: q.correcta,
       explicacion: q.explicacion
     }));
-    startQuiz({ title: 'Gramática B2 (10 preguntas)', mode: 'gramatica', items });
+    startQuiz({ title: tr('qt_grammar'), mode: 'gramatica', items });
   };
 
   // =============================================================
@@ -983,12 +997,13 @@
   // =============================================================
 
   window._deleHandlers.writing = () => {
+    activeRerender = window._deleHandlers.writing;
     const list = $('#writingContent');
     list.innerHTML = '';
-    $('#writingTitle').textContent = 'Expresión escrita — elige una tarea';
+    $('#writingTitle').textContent = tr('title_writing_choose');
     const both = [
-      { prompts: D.writing.tarea1, label: 'Tarea 1 · Carta formal' },
-      { prompts: D.writing.tarea2, label: 'Tarea 2 · Redacción' }
+      { prompts: D.writing.tarea1, label: tr('w_group1') },
+      { prompts: D.writing.tarea2, label: tr('w_group2') }
     ];
     both.forEach((group) => {
       list.appendChild(el('div', { class: 'section-title' }, group.label));
@@ -996,7 +1011,7 @@
         const item = el('div', { class: 'list-item' });
         item.appendChild(el('h4', {}, p.titulo));
         item.appendChild(el('p', {}, p.instrucciones));
-        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, 'Empezar');
+        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, tr('w_start'));
         open.addEventListener('click', () => renderWritingPrompt(p));
         item.appendChild(open);
         list.appendChild(item);
@@ -1014,19 +1029,19 @@
     if (p.estimulo) list.appendChild(el('div', { class: 'reading-text' }, p.estimulo));
 
     if (p.ideasClave && p.ideasClave.length) {
-      const tip = el('div', { class: 'tip-box' }, el('strong', {}, 'Ideas clave: '));
+      const tip = el('div', { class: 'tip-box' }, el('strong', {}, tr('w_ideas')));
       p.ideasClave.forEach((i) => tip.appendChild(el('div', {}, '• ' + i)));
       list.appendChild(tip);
     }
 
-    list.appendChild(el('p', { class: 'section-title' }, 'Tu redacción'));
-    const textarea = el('textarea', { placeholder: 'Escribe aquí tu texto...' });
-    const wc = el('div', { class: 'word-count' }, '0 palabras');
+    list.appendChild(el('p', { class: 'section-title' }, tr('w_your_text')));
+    const textarea = el('textarea', { placeholder: tr('w_placeholder') });
+    const wc = el('div', { class: 'word-count' }, tr('w_words', { n: 0 }));
     const saveKey = 'writing-' + p.id;
     textarea.value = localStorage.getItem(saveKey) || '';
     function updateCount() {
       const n = (textarea.value.trim().match(/\S+/g) || []).length;
-      wc.textContent = n + ' palabras (objetivo: 150–180)';
+      wc.textContent = tr('w_words', { n: n });
       wc.className = 'word-count';
       if (n === 0) wc.classList.add('bad');
       else if (n < 120 || n > 200) wc.classList.add('bad');
@@ -1040,21 +1055,21 @@
     updateCount();
 
     if (p.checklist && p.checklist.length) {
-      list.appendChild(el('p', { class: 'section-title' }, 'Criterios a revisar'));
+      list.appendChild(el('p', { class: 'section-title' }, tr('w_criteria')));
       const cl = el('div', { class: 'checklist' });
       p.checklist.forEach((c) => cl.appendChild(el('div', { class: 'checklist-item' }, c)));
       list.appendChild(cl);
     }
 
     if (p.modelo) {
-      list.appendChild(el('p', { class: 'section-title' }, 'Texto modelo (tras escribir el tuyo)'));
+      list.appendChild(el('p', { class: 'section-title' }, tr('w_model')));
       const details = el('details', { class: 'audio-placeholder' });
-      details.appendChild(el('summary', {}, '▸ Ver texto modelo'));
+      details.appendChild(el('summary', {}, tr('w_model_toggle')));
       details.appendChild(el('div', { class: 'transcript' }, p.modelo));
       list.appendChild(details);
     }
 
-    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, '‹ Volver a la lista');
+    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, tr('w_back_list'));
     back.addEventListener('click', () => window._deleHandlers.writing());
     list.appendChild(back);
   }
@@ -1064,12 +1079,13 @@
   // =============================================================
 
   window._deleHandlers.speaking = () => {
+    activeRerender = window._deleHandlers.speaking;
     const c = $('#speakingContent');
     c.innerHTML = '';
     // Muletillas para ganar tiempo (referencia rápida, plegable)
     if (D.fillerPhrases && D.fillerPhrases.length) {
       const det = el('details', { class: 'audio-placeholder' });
-      det.appendChild(el('summary', {}, '▸ Muletillas para ganar tiempo · Як заповнити тишу'));
+      det.appendChild(el('summary', {}, tr('sp_fillers_toggle')));
       const box = el('div', { style: 'margin-top:8px' });
       D.fillerPhrases.forEach((f) => {
         box.appendChild(el('div', { class: 'writing-prompt', style: 'margin:0 0 6px 0' },
@@ -1081,17 +1097,17 @@
       c.appendChild(det);
     }
     const groups = [
-      { key: 'tarea1', label: 'Tarea 1 · Valorar propuestas (6-7 min)' },
-      { key: 'tarea2', label: 'Tarea 2 · Situación a partir de una foto (5-6 min)' },
-      { key: 'tarea3', label: 'Tarea 3 · Opinar sobre una encuesta (3-4 min)' },
-      { key: 'extra', label: 'Práctica extra de conversación (no entra en el examen)' }
+      { key: 'tarea1', label: tr('sp_g1') },
+      { key: 'tarea2', label: tr('sp_g2') },
+      { key: 'tarea3', label: tr('sp_g3') },
+      { key: 'extra', label: tr('sp_extra') }
     ];
     groups.forEach((g) => {
       c.appendChild(el('div', { class: 'section-title' }, g.label));
       (D.speaking[g.key] || []).forEach((p) => {
         const item = el('div', { class: 'list-item' });
         item.appendChild(el('h4', {}, p.titulo));
-        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, 'Abrir');
+        const open = el('button', { class: 'btn ghost', style: 'margin-top:8px' }, tr('sp_open'));
         open.addEventListener('click', () => renderSpeakingPrompt(p, g.key));
         item.appendChild(open);
         c.appendChild(item);
@@ -1106,23 +1122,23 @@
     const sit = p.situacion || p.escenaDescrita || p.titular || '';
     c.appendChild(el('div', { class: 'writing-prompt' }, sit));
     const lists = [
-      { key: 'preguntaEncuesta', label: 'Pregunta de la encuesta', single: true },
-      { key: 'opcionesEncuesta', label: 'Opciones (conteste usted primero)' },
-      { key: 'datosReales', label: 'Datos reales (compárelos con su respuesta)' },
-      { key: 'propuestas', label: 'Propuestas a valorar' },
-      { key: 'preguntasGuia', label: 'Preguntas guía' },
-      { key: 'ayuda', label: 'Ayudas y vocabulario' },
-      { key: 'vocabularioUtil', label: 'Vocabulario útil' },
-      { key: 'supuestoExaminador', label: 'Papel del examinador', single: true },
-      { key: 'suPapel', label: 'Tu papel', single: true },
-      { key: 'estrategias', label: 'Estrategias' },
-      { key: 'estructura', label: 'Estructura sugerida' },
-      { key: 'ideasClave', label: 'Ideas clave' }
+      { key: 'preguntaEncuesta', single: true },
+      { key: 'opcionesEncuesta' },
+      { key: 'datosReales' },
+      { key: 'propuestas' },
+      { key: 'preguntasGuia' },
+      { key: 'ayuda' },
+      { key: 'vocabularioUtil' },
+      { key: 'supuestoExaminador', single: true },
+      { key: 'suPapel', single: true },
+      { key: 'estrategias' },
+      { key: 'estructura' },
+      { key: 'ideasClave' }
     ];
     lists.forEach((l) => {
       const v = p[l.key];
       if (!v) return;
-      c.appendChild(el('p', { class: 'section-title' }, l.label));
+      c.appendChild(el('p', { class: 'section-title' }, tr('lbl_' + l.key)));
       if (l.single) {
         c.appendChild(el('div', { class: 'writing-prompt' }, v));
       } else {
@@ -1131,7 +1147,7 @@
         c.appendChild(box);
       }
     });
-    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, '‹ Volver');
+    const back = el('button', { class: 'btn ghost', style: 'margin-top:12px' }, tr('back'));
     back.addEventListener('click', () => window._deleHandlers.speaking());
     c.appendChild(back);
   }
@@ -1141,7 +1157,8 @@
   // =============================================================
 
   window._deleHandlers.tips = () => {
-    $('#listingTitle').textContent = 'Consejos y estrategias';
+    activeRerender = window._deleHandlers.tips;
+    $('#listingTitle').textContent = tr('title_tips');
     const c = $('#listingContent');
     c.innerHTML = '';
     Object.values(D.tips).forEach((section) => {
@@ -1160,32 +1177,32 @@
   function buildRandomPool() {
     const items = [];
     D.grammar.forEach((q) => items.push({
-      type: 'mc', q: '[Gramática · ' + q.tema + '] ' + q.q,
+      type: 'mc', q: '[' + tr('tag_grammar') + ' · ' + q.tema + '] ' + q.q,
       opciones: q.opciones, correcta: q.correcta, explicacion: q.explicacion
     }));
-    D.reading.t1.forEach((t) => t.preguntas.forEach((p) => items.push({
-      type: 'mc', q: '[Lectura] ' + p.q.replace(/^\d+\.\s*/, ''),
-      reading: t.texto.length > 600 ? null : t.texto,
+    D.reading.t1.forEach((txt) => txt.preguntas.forEach((p) => items.push({
+      type: 'mc', q: '[' + tr('tag_reading') + '] ' + p.q.replace(/^\d+\.\s*/, ''),
+      reading: txt.texto.length > 600 ? null : txt.texto,
       opciones: p.opciones, correcta: p.correcta, explicacion: p.explicacion
     })));
-    D.reading.t4.forEach((t) => t.huecos.forEach((h) => items.push({
-      type: 'mc', q: '[Léxico/Gramática] Complete: ' + h.opciones.join(' / '),
+    D.reading.t4.forEach((txt) => txt.huecos.forEach((h) => items.push({
+      type: 'mc', q: '[' + tr('tag_lexgram') + '] Complete: ' + h.opciones.join(' / '),
       opciones: h.opciones, correcta: h.correcta, explicacion: h.explicacion
     })));
     D.listening.t1.forEach((m) => items.push({
       type: 'mc', transcript: m.transcripcion,
-      q: '[Audición] ' + m.pregunta, opciones: m.opciones,
+      q: '[' + tr('tag_listening') + '] ' + m.pregunta, opciones: m.opciones,
       correcta: m.correcta, explicacion: m.explicacion
     }));
     D.tenseQuiz.forEach((q) => items.push({
-      type: 'mc', q: '[Tiempos · ' + q.tema + '] ' + q.q,
+      type: 'mc', q: '[' + tr('tag_tenses') + ' · ' + q.tema + '] ' + q.q,
       opciones: q.opciones, correcta: q.correcta, explicacion: q.explicacion
     }));
     items.push(...buildVerbFormQuestions(6));
     // Algo de vocabulario de artículos para variar el repaso diario.
     if (D.articleDecks && D.articleDecks.length) {
       const allVocab = D.articleDecks.reduce((a, d) => a.concat(d.cards), []);
-      buildVocabQuiz(allVocab, 8).forEach((it) => items.push(Object.assign({}, it, { q: '[Vocabulario] ' + it.q })));
+      buildVocabQuiz(allVocab, 8).forEach((it) => items.push(Object.assign({}, it, { q: '[' + tr('tag_vocab') + '] ' + it.q })));
     }
     return items;
   }
@@ -1193,7 +1210,7 @@
   window._deleHandlers.random = () => {
     const pool = buildRandomPool();
     const items = shuffle(pool).slice(0, Math.min(20, pool.length));
-    startQuiz({ title: 'Quiz rápido (20 mixtas)', mode: 'random', items });
+    startQuiz({ title: tr('qt_random'), mode: 'random', items });
   };
 
   // =============================================================
@@ -1201,13 +1218,7 @@
   // =============================================================
 
   window._deleHandlers.mockexam = () => {
-    const confirmStart = confirm(
-      'Simulacro DELE B2:\n\n' +
-      '• Lectura (≈20 preguntas) + Audición (≈18 preguntas)\n' +
-      '• Tiempo total: 60 minutos con cronómetro\n' +
-      '• Las escritas y orales se practican aparte.\n\n' +
-      '¿Empezar?'
-    );
+    const confirmStart = confirm(tr('mock_confirm'));
     if (!confirmStart) return;
 
     const items = [];
@@ -1246,7 +1257,7 @@
       }));
     });
 
-    startQuiz({ title: 'Simulacro DELE B2', mode: 'simulacro', items, timerSec: 60 * 60 });
+    startQuiz({ title: tr('qt_mock'), mode: 'simulacro', items, timerSec: 60 * 60 });
   };
 
   // ---------- Inicialización ----------
@@ -1261,8 +1272,8 @@
       const hero = $('#homeScreen .hero');
       if (!hero) return;
       const hint = el('div', { class: 'tip-box', style: 'margin-top:14px' },
-        el('strong', {}, 'Instálala en tu iPhone:'),
-        ' pulsa el botón Compartir en Safari y elige "Añadir a pantalla de inicio" para usarla como una app.'
+        el('strong', {}, tr('ios_hint_strong')),
+        tr('ios_hint_rest')
       );
       hero.appendChild(hint);
     }, 400);
