@@ -64,6 +64,7 @@ window.I18N = {
     card_serestarquiz_t: 'Quiz: SER y ESTAR', card_serestarquiz_d: 'Adivina el significado',
     card_tener_t: 'Sinónimos de TENER', card_tener_d: 'Sube tu nivel léxico B2',
     card_tendencia_t: 'Palabra: TENDENCIA', card_tendencia_d: 'Calco frecuente + colocaciones',
+    card_uaes_t: 'Quiz: ucraniano → español', card_uaes_d: 'Palabra UA, 4 opciones ES',
     card_writing_t: 'Escritura', card_writing_d: 'Prácticas de Tarea 1 y 2',
     card_speaking_t: 'Oral', card_speaking_d: 'Temas y fotos para hablar',
     card_tips_t: 'Consejos', card_tips_d: 'Estrategias de examen',
@@ -99,6 +100,7 @@ window.I18N = {
     qt_grammar: 'Gramática B2 (10 preguntas)', qt_conj: 'Conjugación (15 preguntas)',
     qt_random: 'Quiz rápido (20 mixtas)', qt_serestar: 'Quiz: SER y ESTAR (12)',
     qt_mock: 'Simulacro DELE B2', qt_vocab_mixed: 'Quiz mixto de vocabulario', qt_vocab_prefix: 'Quiz · ',
+    qt_uaes: 'Ucraniano → español (4 opciones)',
     // Materiales de apoyo
     support_reading: '▾ Texto de lectura (toca para ocultar/mostrar)',
     support_audio: '▾ Audio (transcripción — léela en voz alta o usa la lectura del sistema)',
@@ -207,6 +209,7 @@ window.I18N = {
     card_serestarquiz_t: 'Тест: SER та ESTAR', card_serestarquiz_d: 'Вгадай значення',
     card_tener_t: 'Синоніми до TENER', card_tener_d: 'Підвищ свій рівень лексики B2',
     card_tendencia_t: 'Слово: TENDENCIA', card_tendencia_d: 'Часта калька + колокації',
+    card_uaes_t: 'Тест: українська → іспанська', card_uaes_d: 'Слово укр, 4 варіанти ісп',
     card_writing_t: 'Письмо', card_writing_d: 'Практика завдань 1 і 2',
     card_speaking_t: 'Усне мовлення', card_speaking_d: 'Теми й фото для розмови',
     card_tips_t: 'Поради', card_tips_d: 'Стратегії іспиту',
@@ -242,6 +245,7 @@ window.I18N = {
     qt_grammar: 'Граматика B2 (10 питань)', qt_conj: 'Дієвідміна (15 питань)',
     qt_random: 'Швидкий тест (20 змішаних)', qt_serestar: 'Тест: SER та ESTAR (12)',
     qt_mock: 'Пробний іспит DELE B2', qt_vocab_mixed: 'Змішаний тест з лексики', qt_vocab_prefix: 'Тест · ',
+    qt_uaes: 'Українська → іспанська (4 варіанти)',
     // Materiales de apoyo
     support_reading: '▾ Текст для читання (торкнись, щоб сховати/показати)',
     support_audio: '▾ Аудіо (транскрипція — читай уголос або скористайся озвучкою системи)',

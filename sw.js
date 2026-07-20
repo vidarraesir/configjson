@@ -2,7 +2,7 @@
 // enseguida cuando hay conexión) + cache-first como red de seguridad
 // offline. Al cambiar la versión del cache se invalida la anterior.
 
-const CACHE = 'dele-b2-v8';
+const CACHE = 'dele-b2-v9';
 const ASSETS = [
   './',
   './index.html',

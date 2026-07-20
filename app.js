@@ -772,6 +772,53 @@
     startQuiz({ title: title, mode: 'vocab-quiz', items });
   }
 
+  // Reúne TODO el vocabulario disponible como pares {es, ua}.
+  function uaEsPool() {
+    const pool = [];
+    (D.articleDecks || []).forEach((d) => d.cards.forEach((c) => {
+      if (c.palabra && c.traduccion) pool.push({ es: c.palabra, ua: c.traduccion });
+    }));
+    (D.vocab || []).forEach((c) => { if (c.palabra && c.traduccion) pool.push({ es: c.palabra, ua: c.traduccion }); });
+    (D.verbs || []).forEach((v) => { if (v.inf && v.ua) pool.push({ es: v.inf, ua: v.ua }); });
+    return pool;
+  }
+
+  // Quiz UA→ES con 4 opciones. La palabra ucraniana es la pregunta y hay
+  // que elegir la española correcta entre cuatro. Los distractores tienen un
+  // significado ucraniano DISTINTO al de la pregunta (para que no haya dos
+  // respuestas válidas cuando dos palabras comparten traducción) y palabras
+  // españolas diferentes entre sí.
+  function buildUaToEsQuiz(pool, n) {
+    const clean = pool.filter((x) => x.es && x.ua);
+    if (clean.length < 4) return [];
+    const count = Math.min(n, clean.length);
+    return shuffle(clean).slice(0, count).map((item) => {
+      const correct = item.es;
+      const distr = [];
+      for (const o of shuffle(clean)) {
+        if (o.es === correct) continue;
+        if (o.ua === item.ua) continue;      // mismo significado → no vale como distractor
+        if (distr.includes(o.es)) continue;  // sin españolas repetidas
+        distr.push(o.es);
+        if (distr.length === 3) break;
+      }
+      const opciones = shuffle([correct].concat(distr));
+      return {
+        type: 'mc',
+        q: item.ua,
+        opciones,
+        correcta: opciones.indexOf(correct),
+        explicacion: item.es + ' — ' + item.ua
+      };
+    });
+  }
+
+  window._deleHandlers.uaEsQuiz = () => {
+    const items = buildUaToEsQuiz(uaEsPool(), 30);
+    if (!items.length) { alert(tr('ab_too_small')); return; }
+    startQuiz({ title: tr('qt_uaes'), mode: 'ua-es', items });
+  };
+
   // Navegador de vocabulario de artículos (escalable: crece con cada lista nueva)
   window._deleHandlers.articleBrowser = () => {
     activeRerender = window._deleHandlers.articleBrowser;
