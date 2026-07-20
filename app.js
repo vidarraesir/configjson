@@ -182,10 +182,17 @@
   });
 
   function routeAction(action, task) {
-    // Las funciones concretas se enganchan en sub-tandas siguientes.
     const handler = window._deleHandlers[action];
-    if (typeof handler === 'function') handler(task);
-    else alert(tr('soon'));
+    if (typeof handler === 'function') { handler(task); return; }
+    // Handler ausente: casi siempre es una versión desactualizada en caché
+    // (menú nuevo con motor viejo). Forzamos una recarga limpia una sola vez;
+    // al volver a cargarse, el motor coincidirá con el menú.
+    if (!sessionStorage.getItem('deleReloadedForUpdate')) {
+      sessionStorage.setItem('deleReloadedForUpdate', '1');
+      location.reload();
+      return;
+    }
+    alert(tr('soon'));
   }
 
   // Exponemos para añadir handlers desde otros bloques.

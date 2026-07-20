@@ -2,13 +2,16 @@
 // enseguida cuando hay conexión) + cache-first como red de seguridad
 // offline. Al cambiar la versión del cache se invalida la anterior.
 
-const CACHE = 'dele-b2-v9';
+const CACHE = 'dele-b2-v10';
+// Los scripts llevan ?v=10 para que el HTML nuevo pida siempre el motor que le
+// corresponde (evita mezclar menú nuevo con motor viejo). Precacheamos ambas
+// formas para que funcione offline desde la primera carga.
 const ASSETS = [
   './',
   './index.html',
-  './i18n.js',
-  './app.js',
-  './questions.js',
+  './i18n.js?v=10',
+  './questions.js?v=10',
+  './app.js?v=10',
   './manifest.json',
   './icon.svg',
   './icon.png'
